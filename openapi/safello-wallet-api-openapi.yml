@@ -1,0 +1,436 @@
+openapi: 3.1.0
+info:
+  title: Safello account wallet API
+  description: Powering your app with crypto
+  version: 0.1.0
+  license:
+    name: Private
+    url: TBD
+servers:
+- url: https://app.safello.com
+tags:
+- name: wallet
+  x-displayName: Wallet
+  description: User's wallet
+paths:
+  /v1/wallet:
+    get:
+      operationId: getWallet
+      security:
+      - AccessToken: []
+      tags:
+      - wallet
+      summary: Get wallet
+      description: 'Retrieves the user''s wallet
+
+        '
+      responses:
+        '200':
+          description: Wallet retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet'
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError'
+  /v2/wallet:
+    get:
+      operationId: getWallet
+      security:
+      - OAuth2:
+        - wallet
+      tags:
+      - wallet
+      summary: Wallet
+      description: 'Retrieves the user''s wallet
+
+        '
+      responses:
+        '200':
+          description: Wallet retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet_2'
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError_2'
+  /v2/wallet/performance:
+    get:
+      operationId: getWalletPerformance
+      security:
+      - OAuth2:
+        - wallet
+      tags:
+      - wallet
+      summary: Wallet performance
+      description: 'Retrieves the user''s current wallet performance right now
+
+        '
+      responses:
+        '200':
+          description: Wallet performance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletPerformance'
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError_2'
+  /v2/wallet/performance-history:
+    get:
+      operationId: getWalletPerformanceHistory
+      security:
+      - OAuth2:
+        - wallet
+      tags:
+      - wallet
+      summary: Wallet performance history
+      description: "Retrieves the user's wallet performance history. Each data point is one day at midnight UTC. \n\nFor example a data point at 2022-01-01 would mean what the performance was at 2022-01-01 00:00 UTC\n"
+      parameters:
+      - name: crypto
+        in: query
+        explode: false
+        required: true
+        description: Cryptocurrency code
+        schema:
+          type: array
+          example:
+          - BTC
+          - ETH
+          items:
+            type: string
+      - name: fiat
+        in: query
+        description: Fiat currency
+        schema:
+          type: string
+          default: SEK
+      - name: timePeriod
+        in: query
+        required: true
+        description: Time period to get performance history.
+        schema:
+          type: string
+          default: ALL_TIME
+          enum:
+          - ALL_TIME
+          - THIS_YEAR
+          - THREE_YEARS
+          - ONE_YEAR
+          - THREE_MONTHS
+          - ONE_MONTH
+          - ONE_WEEK
+          - CUSTOM
+      - name: start
+        description: Start date if timePeriod is CUSTOM
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: end
+        description: End date if timePeriod is CUSTOM
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: performanceSince
+        description: Date where to calculate the performance from. Default to wallet creation date when timePeriod is CUSTOM or the first date on all other time periods
+        in: query
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: Wallet performance history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletPerformanceHistory'
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError_2'
+components:
+  responses:
+    NotAuthenticatedError_2:
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            title: NotAuthenticatedErrorResponse
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
+    NotAuthenticatedError:
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
+  schemas:
+    Wallet:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Wallet ID
+          example: 40
+        owner:
+          type: integer
+          example: 18454
+          description: ID of the user who owns this wallet
+        balances:
+          type: object
+          description: Current crypto holdings
+          properties:
+            BTC:
+              type: number
+              example: 0.0536256
+              description: Amount of Bitcoin stored in the wallet
+            ETH:
+              type: number
+              example: 1.05258976
+              description: Amount of Ethereum stored in the wallet
+            DOT:
+              type: number
+              example: 3.21198403
+              description: Amount of Polkadot stored in the wallet
+            LINK:
+              type: number
+              example: 1.49877354
+              description: Amount of Chainlink stored in the wallet
+            MATIC:
+              type: number
+              example: 2.46843299
+              description: Amount of Polygon stored in the wallet
+        created:
+          type: integer
+          example: 1633507676000
+          description: 'Timestamp representing the number of milliseconds since
+
+            [UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time).
+
+            '
+        depositAddresses:
+          type: array
+          description: Crypto addresses used to deposit to this wallet
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Identifier for this address
+              active:
+                type: boolean
+                example: true
+                description: Is this address active?
+              address:
+                type: string
+                example: tb1qrk9j3rgnc8vdjy7vdtfcj6hez8csd5surx3wmu
+                description: Crypto address
+              created:
+                type: integer
+                example: 1634041941000
+                description: 'Date at which the address was created.
+
+                  Timestamp representing the number of milliseconds since
+
+                  [UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time).
+
+                  '
+              currency:
+                type: string
+                description: Crypto currency stored in this address
+                example: BTC
+              wallet:
+                type: integer
+                description: ID of the wallet this address belongs to
+        withdrawalAddresses:
+          type: array
+          description: Crypto addresses associated with this wallet for withdrawals
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 37
+                description: Identifier for this address
+              name:
+                type: string
+                example: My wallet
+                description: Name given to this wallet
+              active:
+                type: boolean
+                example: true
+                description: Is this address active?
+              status:
+                type: string
+                enum:
+                - ACCEPTED
+              address:
+                type: string
+                example: tb1qrk9j3rgnc8vdjy7vdtfcj6hez8csd5surx3wmu
+                description: Crypto address
+              created:
+                type: integer
+                example: 1634041941000
+                description: 'Date at which the address was created.
+
+                  Timestamp representing the number of milliseconds since
+
+                  [UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time).
+
+                  '
+              currency:
+                type: string
+                description: Crypto currency stored in this address
+                example: BTC
+              wallet:
+                type: integer
+                description: ID of the wallet this address belongs to
+    WalletPerformanceCrypto:
+      type: object
+      title: WalletPerformanceCrypto
+      properties:
+        amount:
+          type: string
+          description: Current holdings in crypto
+        fiatValue:
+          type: string
+          description: Current fiat value
+        performance:
+          type: object
+          title: Performance
+          properties:
+            absoluteChange:
+              type: string
+              description: How the performance of the crypto holdings is now in fiat
+            percentageChange:
+              type: string
+              description: How the performance of the crypto holdings in now in percentage (decimal 0.1 = 10%)
+    WalletPerformanceHistoryDataPoint:
+      type: object
+      title: WalletPerformanceHistoryDataPoint
+      properties:
+        date:
+          type: string
+          format: date
+          description: The date of the data point
+        assetValues:
+          type: array
+          items:
+            type: object
+            title: AssetValue
+            properties:
+              crypto:
+                type: string
+                description: Crypto currency
+              amount:
+                type: string
+                description: How much of crypto the wallet was holding at the time
+              fiatValue:
+                type: string
+                description: How much the crypto was worth in fiat at the time
+              percentageChange:
+                type: string
+                description: How the performance of the crypto holdings was at the time in percentage (decimal 0.1 = 10%)
+              absoluteChange:
+                type: string
+                description: How the performance of the crypto holdings was at the time in fiat
+        combined:
+          type: object
+          title: Combined
+          properties:
+            fiatValue:
+              type: string
+              description: How much the combined wallet value was worth in fiat at the time
+            percentageChange:
+              type: string
+              description: How the combined performance of the wallet was at the time in percentage (decimal 0.1 = 10%)
+            absoluteChange:
+              type: string
+              description: How the combined performance of the wallet was at the time in fiat
+    CurrencyAmount:
+      type: object
+      required:
+      - currency
+      - amount
+      properties:
+        currency:
+          type: string
+          description: Currency (fiat or crypto) code
+          example: SEK
+        amount:
+          type: string
+          description: Value of the currency with the number of decimals as defined in the Market API.
+          example: '510.00'
+    WalletPerformance:
+      type: object
+      title: WalletPerformance
+      properties:
+        fiat:
+          type: string
+          description: Fiat currency
+        cryptos:
+          description: Individual performance for each crypto
+          additionalProperties:
+            $ref: '#/components/schemas/WalletPerformanceCrypto'
+          example:
+            BTC:
+              amount: '1.0000000'
+              fiatValue: '11000.0'
+              performance:
+                absoluteChange: '1000.0'
+                percentageChange: '0.1'
+        total:
+          $ref: '#/components/schemas/WalletPerformanceCrypto'
+    WalletPerformanceHistory:
+      type: object
+      title: WalletPerformanceHistory
+      properties:
+        start:
+          type: string
+          format: date
+        end:
+          type: string
+          format: date
+        performanceSince:
+          type: string
+          format: date
+        fiat:
+          type: string
+          description: Fiat currency
+        timePeriod:
+          type: string
+        data:
+          type: array
+          description: Data points
+          items:
+            $ref: '#/components/schemas/WalletPerformanceHistoryDataPoint'
+    Wallet_2:
+      type: object
+      properties:
+        balances:
+          type: array
+          description: Current crypto holdings
+          items:
+            $ref: '#/components/schemas/CurrencyAmount'
+        created:
+          type: string
+          format: date-time
+          example: '2022-02-03T09:44:13.000Z'
+          description: 'Creation time in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+
+            '
+  securitySchemes:
+    AccessToken:
+      type: apiKey
+      in: header
+      name: Access-Token
+    AppId:
+      type: apiKey
+      in: header
+      name: App-Id

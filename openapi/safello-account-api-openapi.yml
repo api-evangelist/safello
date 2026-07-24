@@ -1,0 +1,718 @@
+openapi: 3.1.0
+info:
+  title: Safello account API
+  description: Powering your app with crypto
+  version: 0.1.0
+  license:
+    name: Private
+    url: TBD
+servers:
+- url: https://app.safello.com
+tags:
+- name: account
+  x-displayName: Account
+  description: Account management
+paths:
+  /v1/system/acceptTerms:
+    post:
+      operationId: acceptTerms
+      security:
+      - AccessToken: []
+      tags:
+      - account
+      summary: Accept T&C
+      description: Accept Terms and Conditions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                marketingEmails:
+                  type: boolean
+                  description: Opt in to receiving marketing emails from Safello
+                  default: false
+                  example: true
+      responses:
+        '200':
+          description: Successfully accepted terms
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError'
+  /v1/email:
+    post:
+      operationId: sendVerificationEmail
+      security:
+      - AccessToken: []
+      tags:
+      - account
+      summary: Send verification email
+      description: Send email to verify the user has access to that account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - emailAddress
+              properties:
+                emailAddress:
+                  type: string
+                  format: email
+                  description: Email address to verify
+                  example: user@example.com
+      responses:
+        '200':
+          description: Email verification sent
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError'
+  /v1/email/verify:
+    put:
+      operationId: verifyEmail
+      security:
+      - AccessToken: []
+      tags:
+      - account
+      summary: Verify email
+      description: Verify user's email address
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - code
+              properties:
+                code:
+                  type: integer
+                  description: Verification code sent to the user's email
+                  example: 123456
+      responses:
+        '200':
+          description: Email verified successfully
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError'
+  /v1/kyc/require:
+    get:
+      operationId: requireKyc
+      security:
+      - AccessToken: []
+      tags:
+      - account
+      summary: Check if KYC is required
+      description: 'Use this endpoint to check is the user is required to complete the KYC questionaire to
+
+        continue trading
+
+        '
+      responses:
+        '200':
+          description: Check result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requireKyc:
+                    type: boolean
+                    description: Indicates if the user is required to complete the KYC questionaire
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError'
+  /v1/kyc:
+    get:
+      operationId: kycQuestions
+      security:
+      - AccessToken: []
+      tags:
+      - account
+      summary: KYC questions
+      description: 'Gets a list of questions to ask the user in order to complete the "Know Your Customer" (KYC)
+
+        questionnaire.
+
+        '
+      parameters:
+      - name: lang
+        in: query
+        schema:
+          type: string
+          description: 'Two-letter language code, [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+
+            '
+          example: sv
+      responses:
+        '200':
+          description: List of KYC questions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  questions:
+                    type: array
+                    description: Array of KYC questions
+                    items:
+                      type: object
+                      description: Quetion object
+                      properties:
+                        id:
+                          type: integer
+                          description: Question ID
+                          example: 11
+                        question:
+                          type: string
+                          description: Stated question to present to the user
+                          example: Är du bosatt i ett annat land än Sverige?
+                        multipleChoice:
+                          type: boolean
+                          description: Indicates if the question offers multiple choice answers
+                          example: true
+                        alternatives:
+                          type: array
+                          description: 'If the question is multiple choice, this array contains the
+
+                            choice options to present to the user
+
+                            '
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                description: Answer ID
+                                example: 1
+                              answer:
+                                type: string
+                                description: Answer text
+                                example: Nej
+                        questionVersion:
+                          type: integer
+                          description: Question version
+                          example: 1
+                        status:
+                          type: string
+                          description: Status for this question
+                          example: waiting
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError'
+    post:
+      operationId: answerKYC
+      security:
+      - AccessToken: []
+      tags:
+      - account
+      summary: Answer KYC questionaire
+      description: 'Submits the user''s answers to the KYC questionaire
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                answers:
+                  type: array
+                  description: Array of answers
+                  items:
+                    type: object
+                    required:
+                    - questionId
+                    properties:
+                      questionId:
+                        type: integer
+                        description: Question ID
+                      alternativeId:
+                        type: integer
+                        description: If the question is multiple-choice, here you send the answer ID
+                        example: 1
+                      textAnswer:
+                        type: string
+                        description: Free text answer
+      responses:
+        '200':
+          description: KYC questionaire submitted
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError'
+  /v2/account/user:
+    get:
+      operationId: getUser
+      security:
+      - OAuth2:
+        - account.base
+        - account.base:read
+      tags:
+      - account
+      summary: Get logged in user
+      description: Returns information about the logged in user
+      responses:
+        '200':
+          description: An object with user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError_2'
+  /v2/account/terms:
+    put:
+      operationId: acceptTerms
+      security:
+      - OAuth2:
+        - account.base
+      tags:
+      - account
+      summary: Accept T&C
+      description: Accept Terms and Conditions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: AcceptTermsRequest
+              type: object
+              properties:
+                marketingEmails:
+                  type: boolean
+                  description: Opt in to receiving marketing emails from Safello
+                  default: false
+                  example: true
+      responses:
+        '200':
+          description: Successfully accepted terms
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError_2'
+  /v2/account/email:
+    post:
+      operationId: sendVerificationEmail
+      security:
+      - OAuth2:
+        - account.base
+      tags:
+      - account
+      summary: Send verification email
+      description: Send email to verify the user has access to that account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: SendVerificationEmailRequest
+              type: object
+              required:
+              - email
+              properties:
+                email:
+                  type: string
+                  description: Email to send the verification code to
+                  example: mail@test.com
+      responses:
+        '200':
+          description: Email verification sent
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError_2'
+    put:
+      operationId: verifyEmail
+      security:
+      - OAuth2:
+        - account.base
+      tags:
+      - account
+      summary: Verify email
+      description: Verify user's email address
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: VerifyEmailRequest
+              type: object
+              required:
+              - code
+              properties:
+                code:
+                  type: string
+                  description: Verification code sent to the user's email
+                  example: 123456
+      responses:
+        '200':
+          description: Email verified successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError_2'
+  /v2/account/kyc:
+    get:
+      operationId: requireKyc
+      security:
+      - OAuth2:
+        - account.base
+        - account.base:read
+      tags:
+      - account
+      summary: Check if KYC is required
+      description: 'Use this endpoint to check is the user is required to complete the KYC questionnaire to
+
+        continue trading
+
+        '
+      responses:
+        '200':
+          description: Check result
+          content:
+            application/json:
+              schema:
+                title: RequireKycCheck
+                type: object
+                properties:
+                  requireKyc:
+                    type: boolean
+                    description: Indicates if the user is required to complete the KYC questionnaire
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError_2'
+  /v2/account/kyc-questions:
+    get:
+      operationId: kycQuestions
+      security:
+      - OAuth2:
+        - account.base
+        - account.base:read
+      tags:
+      - account
+      summary: KYC questions
+      description: 'Gets a list of questions to ask the user in order to complete the "Know Your Customer" (KYC)
+
+        questionnaire.
+
+        '
+      parameters:
+      - name: lang
+        in: query
+        schema:
+          type: string
+          description: 'Two-letter language code, [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+
+            '
+          example: sv
+      - name: questionnaire
+        in: query
+        schema:
+          type: string
+          description: Which questionnaire questions to get
+          example: BASIC
+      responses:
+        '200':
+          description: List of KYC questions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/KycQuestion'
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError_2'
+    post:
+      operationId: answerKyc
+      security:
+      - OAuth2:
+        - account.base
+      tags:
+      - account
+      summary: Answer KYC questionnaire
+      description: 'Submits the user''s answers to the KYC questionnaire
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KycAnswerInput'
+      responses:
+        '200':
+          description: KYC questionnaire submitted
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError_2'
+  /v2/account/bank-account:
+    get:
+      operationId: getBankAccounts
+      security:
+      - OAuth2:
+        - account.bank-account
+        - account.bank-account:read
+      tags:
+      - account
+      summary: Get user bank accounts
+      description: Get a list of all bank account the user has connected
+      responses:
+        '200':
+          description: List of bank accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BankAccount'
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError_2'
+    put:
+      operationId: addBankAccount
+      security:
+      - OAuth2:
+        - account.bank-account
+      tags:
+      - account
+      summary: Add or update bank account
+      description: A unique bank account (clearing number + bank account number) can only be added once to a user. Adding the same bank account a second time will update the existing and return the same Bank Account ID.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BankAccountInput'
+      responses:
+        '200':
+          description: The bank account added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankAccount'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError_2'
+components:
+  schemas:
+    KycQuestion:
+      type: object
+      title: KycQuestion
+      description: Question object
+      properties:
+        id:
+          type: integer
+          description: Question ID
+          example: 11
+        questionnaire:
+          type: string
+          description: Which questionnaire the question belongs to
+          example: BASIC
+        question:
+          type: string
+          description: Stated question to present to the user
+          example: Är du bosatt i ett annat land än Sverige?
+        alternatives:
+          type: array
+          description: Choice options to present to the user
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Answer ID
+                example: 1
+              answer:
+                type: string
+                description: Answer text
+                example: Nej
+              textAnswerOption:
+                type: boolean
+                description: If the alternative is a free text answer
+                example: false
+        questionVersion:
+          type: integer
+          description: Question version
+          example: 1
+        status:
+          type: string
+          description: Status for this question
+          example: waiting
+    BankAccount:
+      type: object
+      title: BankAccount
+      description: Bank account object
+      properties:
+        id:
+          type: string
+          description: Bank account ID
+          example: e6eb08e1-b966-4ee9-b43f-db83dd958479
+          format: uuid
+        name:
+          type: string
+          description: Name of the account
+          example: Savings
+        accountNumber:
+          type: string
+          description: Bank account number
+          example: '123456789'
+        clearingNumber:
+          type: string
+          description: Clearing number
+          example: '1234'
+        currency:
+          type: string
+          description: Currency of the bank account
+          example: SEK
+        bank:
+          type: string
+          description: Name of bank
+          example: SHB
+        default:
+          type: boolean
+          description: If bank account is the default selected
+          example: true
+    BankAccountInput:
+      type: object
+      title: BankAccountInput
+      description: Bank account input object
+      required:
+      - accountNumber
+      - clearingNumber
+      - currency
+      properties:
+        name:
+          type: string
+          description: Name of the account
+          example: Savings
+        accountNumber:
+          type: string
+          description: Bank account number
+          example: '123456789'
+          pattern: ^(\d{7}|\d{11})$
+        clearingNumber:
+          type: string
+          description: Clearing number
+          example: '1234'
+          pattern: ^\d{4,5}$
+        currency:
+          type: string
+          description: Currency of the bank account
+          example: SEK
+    KycAnswerInput:
+      title: KycAnswerRequest
+      type: object
+      description: Answer object (i.e. the user's response to a KycQuestion)
+      required:
+      - questionnaire
+      - answers
+      properties:
+        questionnaire:
+          type: string
+          description: Which questionnaire to answer
+          example: BASIC
+        answers:
+          type: array
+          description: Array of answers
+          items:
+            type: object
+            required:
+            - questionId
+            properties:
+              questionId:
+                type: integer
+                description: Question ID
+              alternativeId:
+                type: integer
+                description: Multiple-choice answer ID
+                example: 1
+              textAnswer:
+                type: string
+                description: Text answer if the alternativ was free text
+                example: Free text
+    User:
+      type: object
+      properties:
+        country:
+          type: string
+          description: Two-letter country code. [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+          example: SE
+        email:
+          type: string
+          format: email
+          description: User's email
+          example: user@example.com
+        emailActive:
+          type: boolean
+          example: true
+          description: Indicates if a user has completed the process of email verification
+        firstName:
+          type: string
+          example: John
+          description: User's first name
+        lastName:
+          type: string
+          example: Doe
+          description: User's last name
+        hasAcceptedLatestTerms:
+          type: boolean
+          example: true
+          description: Indicates whether or not the user has accepted the latest Terms and Conditions for using Safello.
+        language:
+          type: string
+          example: sv
+          description: Two-letter language code, [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+        level:
+          type: integer
+          example: 1
+          description: Defines what percentage fee the user gets
+        safeEnvironment:
+          type: boolean
+          example: false
+          description: Indicates if the user was put under safe mode
+        telephoneNumber:
+          type: string
+          format: phoneNumber
+          example: 46555555555
+          description: User's contact number
+        tier:
+          type: integer
+          example: 3
+          description: Relates to the maximum amount of money this user is allowed to buy
+  responses:
+    NotAuthenticatedError_2:
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            title: NotAuthenticatedErrorResponse
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
+    BadRequest:
+      description: The data you have sent is not valid
+      content:
+        application/json:
+          schema:
+            title: BadRequestResponse
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
+                example: You cannot place an order higher than your buy limit of 500 SEK
+              status:
+                type: integer
+                description: Status code number
+                example: 400
+              code:
+                type: string
+                description: Short string identifying the error
+                example: BUY_LIMIT_EXCEEDED
+    NotAuthenticatedError:
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
+  securitySchemes:
+    AccessToken:
+      type: apiKey
+      in: header
+      name: Access-Token
+    AppId:
+      type: apiKey
+      in: header
+      name: App-Id

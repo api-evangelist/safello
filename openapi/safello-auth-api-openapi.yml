@@ -1,0 +1,630 @@
+openapi: 3.1.0
+info:
+  title: Safello account auth API
+  description: Powering your app with crypto
+  version: 0.1.0
+  license:
+    name: Private
+    url: TBD
+servers:
+- url: https://app.safello.com
+tags:
+- name: auth
+  x-displayName: Authentication
+  description: Authentication flow
+paths:
+  /v1/auth:
+    post:
+      operationId: startAuth
+      tags:
+      - auth
+      summary: Start authentication
+      description: Starts an authentication request
+      security:
+      - AppId: []
+      parameters:
+      - name: method
+        in: query
+        description: Authentication method to use
+        schema:
+          type: string
+          enum:
+          - bankid_se
+          default: bankid_se
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                redirectPath:
+                  description: Relative path inside the safello webapp to redirect the user to after logging in.
+                  type: string
+      responses:
+        '200':
+          description: Authentication request started successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Object with information to complete the authentication process
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - redirect
+                    description: Describes the type of response
+                  pollingUrl:
+                    type: string
+                    format: url
+                    description: The URL you should call for checking the status of the authentication process
+                    example: https://app.safello.com/v1/auth?method=bankid_se&token=1b36b7ef-1bd2-4739-94cf-4df3e374f848
+                  qrCodes:
+                    type: array
+                    example:
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.0.4b7dbdaba727420352a1a752d1ba5cd8c650ec131cf10e477eca140fd8d1d259
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.1.8469c1f109735e1bbc6b6107d4112401b9446c1caea4611f171e02b7c8eea127
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.2.0a536926783b52e8837f2bba7f3738d5de641c65b7325e1fc643da7cdc64427a
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.3.afca20f1bb0ca126924679ea4832e31642653f47c63457987495a06f7a2881e7
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.4.dd0db3170ce1e91b6f1098a2e0b2a020dc3c4356b032f71db0a79e0f0d12fab9
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.5.993e453c28e5e78768b1a1c418e6ce3f7316e19dee2606a1880a757e959cc8c4
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.6.48e6e9181a684c3be7a44bd30d5738de83541c65a0c2a515ee034c0754437078
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.7.6442dde57ac0c1e0c29254da48fc33163166678bfa94af514d7dc469cc750b09
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.8.e19e127b7227d3fce01c69f98cd9cccb8979c157b19ee9720edca4c03903b54f
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.9.c099b293a9f5f1714a1aed5e7cf97b4a482794e00d14f2589180806526fb3247
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.10.e003d65ff82ee66d44a347d9c25567278a7fd04aecfdf97e1cd316118eccefc6
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.11.6d6ed759392e2d1faa5c4024770937afc50df35ecb2d217945c757f1ca846752
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.12.c09a8114bb2bb2a5a7e3680553f6848d5be714e41bd367a1f6e6b351abbd6328
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.13.863fbcf444c57707b0d44080e6afd55d4060c568f92817007963ccd337cbe747
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.14.3894cc97e94b282828f5175b9e75099f83aa566d8bc497f944d45b61b293f299
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.15.d1b2d859308ca1c57e50d53708f37a49869716dcd3d826909811ca1e4c5745f2
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.16.b5b29ca20d50362862dd893771750d0e32b4ed4eea3436e96661b42aa28ebb5e
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.17.30511a502e4a63cdcdb8f8162acd28ef35fc0e9e302438e1aeddfed4764e28c3
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.18.ae76fdedcd4711185e576bb5e3161520c15f29df6bdd62a317b5b3df7b307acf
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.19.12ad2ca8d0e7a8605147d55d1fc11f14cbe81b487c1aa567aca95f51623e98ed
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.20.2394cf188b5c41f391a22d9c34f62af54bb508285e5de46704a4defe7bfbe26f
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.21.4702aade9b50bfc87d0a28582af2acf2fd8d011bbaf37a2bba689087c72639f7
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.22.6d6f633f934c9c480deeb5009001e4d92d81b31beaec87c9f3a70ef5940d30c1
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.23.5e08553a79441a08d7f1b3afac3805dadb44d67d36dc76f5f0eb9bbb909d80c1
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.24.c769e4cbc6a15220fce70cae83cb288b3b80dabd1b48ac4a75148a4c2659e4c0
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.25.9ee3892d4fb3a7a2a9beb50b00f10a572ed4b7a9a16475d77be7628e1b7d24eb
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.26.0ee2729dc7fe72043c67e245baee23b4380d0dd729cf864b4ff09c5de57e736c
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.27.4d6fc7e05f1c1990d8251c6c5bcdf30ca48ce35b90fdbaadc6b58fb8fa2769d2
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.28.0e8e89a192f01b30d108bd17e652d988f408a8b96626243150806fc87008f248
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.29.220b823f1d8326994180e0ee42f6b6a61ffc5107e27c7859b7a1412294df2825
+                    - bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.30.dab46b87905527b38a44ae6eac955942db3f86152c16301bc0f5572e96eb6ac0
+                    description: 'Array with strings to be displayed as QR codes for scanning using the BankID app.
+
+
+                      You must iterate through the array and display one QR code at a time for each
+
+                      second elapsed since the moment you receive the response.
+
+
+                      Once you exhaust the elements in this array, you need to start a new authentication request.
+
+                      '
+                    items:
+                      type: string
+                      example: bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.0.4b7dbdaba727420352a1a752d1ba5cd8c650ec131cf10e477eca140fd8d1d259
+                  redirectUrl:
+                    type: string
+                    format: url
+                    example: bankid:///?autostarttoken=92bbfe55-daf3-4b3a-803b-177b8b800364&redirect=https%3A%2F%2Fapp.safello.com%3FbankIdPollingRef%3D1b36b7ef-1bd2-4739-94cf-4df3e374f848%26redirect%3D%252Faccount
+                    description: URL to use for redirecting your user to the BankID app if they have it installed.
+        '498':
+          $ref: '#/components/responses/AppIdRequired'
+    get:
+      operationId: checkAuthStatus
+      tags:
+      - auth
+      summary: Authentication status
+      description: "Checks the status for an authentication request.\n\nAfter creating an authentication request, you should call this endpoint every 1-2 seconds\n to check wether or not the user has finished authenticating with BankID.\n"
+      security:
+      - AppId: []
+      parameters:
+      - name: token
+        in: query
+        required: true
+        description: Token
+      - name: method
+        in: query
+        schema:
+          type: string
+          enum:
+          - bankid_se
+          default: bankid_se
+          description: Authentication method to use
+      responses:
+        '200':
+          description: Status retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    enum:
+                    - WAITING_FOR_CONFIRMATION
+                    - WAITING_FOR_SIGN
+                    - ERROR
+                    description: 'While we wait for the user to identify, this code represents the latest status of the authentication request.
+
+
+                      - `WAITING_FOR_CONFIRMATION`: The user needs to open the BankID app and start authenticating.
+
+                      - `WAITING_FOR_SIGN`: The user has interacted with the BankID app but hasn''t submitted a signature.
+
+                      - `ERROR`: Either the authorization request timed out, or the user has canceled the process, or some other error ocurred.
+
+                      '
+                  message:
+                    type: string
+                    description: If the status is not successful, this attribute describes the current state
+                    example: User has not yet confirmed their identity with the given ref
+                  accessToken:
+                    type: string
+                    description: 'Upon completion, this attribute contains the JWT token to be included in
+
+                      any request that requires authentication.
+
+                      '
+        '412':
+          $ref: '#/components/responses/PreconditionFailed'
+  /v1/auth/user:
+    get:
+      operationId: getUser
+      security:
+      - AccessToken: []
+      tags:
+      - auth
+      summary: Get logged in user
+      description: Returns information about the logged in user
+      responses:
+        '200':
+          description: An object with user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError'
+  /oauth2/bankid:
+    post:
+      operationId: startAuth
+      tags:
+      - auth
+      summary: BankID Auth Grant
+      description: Starts an authorization request
+      security:
+      - BasicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/sourceIpParam'
+      - $ref: '#/components/parameters/userAgentParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BankIdRequest'
+        required: true
+      responses:
+        '200':
+          description: Authorization request started successfully
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Pragma:
+              $ref: '#/components/headers/Pragma'
+          content:
+            application/json:
+              schema:
+                title: StartAuthentication
+                type: object
+                description: Object with information to complete the authentication process
+                properties:
+                  request_id:
+                    type: string
+                    format: uuid
+                    description: Request ID to provide when requesting access token
+                  auto_start_token:
+                    type: string
+                    description: Token to start bank id app
+                  auto_start_qr_code:
+                    type: string
+                    description: QR code data used to generate the QR code for bank id
+                  interval:
+                    type: integer
+                    description: time to wait between polling requests
+                  expires_in:
+                    type: integer
+                    description: how long the request will last before timing out
+                example:
+                  request_id: 123e4567-e89b-12d3-a456-426614174000
+                  auto_start_token: sagtuvAgOax1
+                  interval: 2
+                  expires_in: 120
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuth2Error'
+              examples:
+                InvalidRequest:
+                  $ref: '#/components/examples/OAuth2InvalidRequest'
+                InvalidClient:
+                  $ref: '#/components/examples/OAuth2InvalidClient'
+                InvalidGrant:
+                  $ref: '#/components/examples/OAuth2InvalidGrant'
+                UnauthorizedClient:
+                  $ref: '#/components/examples/OAuth2UnauthorizedClient'
+                UnsupportedGrantType:
+                  $ref: '#/components/examples/OAuth2UnsupportedGrantType'
+                InvalidScope:
+                  $ref: '#/components/examples/OAuth2InvalidScope'
+  /oauth2/token:
+    post:
+      tags:
+      - auth
+      summary: Request Access Token
+      operationId: obtainToken
+      security:
+      - BasicAuth: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OAuth2TokenRequest'
+        required: true
+      responses:
+        '200':
+          description: Issuance of access token
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Pragma:
+              $ref: '#/components/headers/Pragma'
+          content:
+            application/json:
+              schema:
+                title: OAuth2TokenResponse
+                description: Access Token
+                type: object
+                properties:
+                  access_token:
+                    description: The access token issued by the authorization server.
+                    type: string
+                  token_type:
+                    description: The type of the token issued.
+                    type: string
+                  expires_in:
+                    description: The lifetime in seconds of the access token.
+                    type: integer
+                  refresh_token:
+                    description: The refresh token, which can be used to obtain new access tokens.
+                    type: string
+                  scope:
+                    description: The scope of the access token.
+                    type: string
+              example:
+                access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                token_type: Bearer
+                expires_in: 3600
+                refresh_token: tGzv3JOkF0XG5Qx2TlKWIA
+                scope: read write
+        '400':
+          description: Error response
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Pragma:
+              $ref: '#/components/headers/Pragma'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuth2Error'
+              examples:
+                BankIDExpired:
+                  summary: BankID request has expired
+                  description: The "auto_start_token" has expired, and the session has concluded.
+                  value:
+                    error: expired_token
+                    error_description: Client authentication failed
+                    error_uri: http://example.test/token_expired.html
+                BankIDSlowDown:
+                  summary: Slow down
+                  description: If the client is polling too frequently, the authorization server will return the slow_down error.
+                  value:
+                    error: slow_down
+                BankIDDenied:
+                  summary: User denied
+                  description: If the user denies the request, the authorization server will return the access_denied error.
+                  value:
+                    error: access_denied
+                BankIDPending:
+                  summary: Pending authorization
+                  description: If the user has not either allowed or denied the request yet, the authorization server will return the authorization_pending error.
+                  value:
+                    error: authorization_pending
+                InvalidRequest:
+                  $ref: '#/components/examples/OAuth2InvalidRequest'
+                InvalidClient:
+                  $ref: '#/components/examples/OAuth2InvalidClient'
+                InvalidGrant:
+                  $ref: '#/components/examples/OAuth2InvalidGrant'
+                UnauthorizedClient:
+                  $ref: '#/components/examples/OAuth2UnauthorizedClient'
+                UnsupportedGrantType:
+                  $ref: '#/components/examples/OAuth2UnsupportedGrantType'
+                InvalidScope:
+                  $ref: '#/components/examples/OAuth2InvalidScope'
+components:
+  examples:
+    OAuth2InvalidClient:
+      summary: Invalid client
+      description: Client authentication failed.
+      value:
+        error: invalid_client
+        error_description: Authentication failed.
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1
+    OAuth2InvalidScope:
+      summary: Scope invalid
+      description: The requested scope is invalid, unknown, malformed, or exceeds the scope granted by the resource owner.
+      value:
+        error: invalid_scope
+        error_description: Invalid scope
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-3.3
+    OAuth2InvalidRequest:
+      summary: Invalid request
+      description: "The request is missing a required parameter, includes an \nunsupported parameter value (other than grant type), \nrepeats a parameter, includes multiple credentials, \nutilizes more than one mechanism for authenticating the \nclient, or is otherwise malformed.\n"
+      value:
+        error: invalid_request
+        error_description: Missing a required parameter
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
+    OAuth2InvalidGrant:
+      summary: Authorization grant invalid
+      description: 'The provided authorization grant or refresh token is
+
+        invalid, expired, revoked or was issued to another client.
+
+        '
+      value:
+        error: invalid_grant
+        error_description: Authorization grant invalid
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
+    OAuth2UnauthorizedClient:
+      summary: Client Unauthorized
+      description: 'The authenticated client is not authorized to use this
+
+        authorization grant type.
+
+        '
+      value:
+        error: unauthorized_client
+    OAuth2UnsupportedGrantType:
+      summary: Unsupported grant type
+      description: The authorization grant type is not supported by the authorization server.
+      value:
+        error: unsupported_grant_type
+        error_description: Grant type not supported by server
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
+  schemas:
+    OAuth2TokenRequest:
+      type: object
+      title: OAuth2TokenRequest
+      required:
+      - grant_type
+      properties:
+        grant_type:
+          description: 'Grant types:
+
+            - `urn:safello:params:oauth:grant-type:bankid`
+
+            - `client_credentials`
+
+            - `refresh_token`
+
+            '
+          type: string
+          example: urn:ietf:params:oauth:grant-type:bankid
+        request_id:
+          description: The request_id retrieved from /oauth2/bankid request
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+        refresh_token:
+          description: The refresh token previously issued to the client.
+        scope:
+          description: The scope of the access request
+          type: string
+          example: read write
+    OAuth2Error:
+      type: object
+      title: TokenError
+      properties:
+        error:
+          description: Type of error.
+          type: string
+        error_description:
+          description: Additional information for understanding the error that occurred.
+          type: string
+        error_uri:
+          description: A URI to a web page with information about the error.
+          type: string
+        bank_id_qr_data:
+          description: Bank id qr code data for starting bank id
+          type: string
+        bank_id_hint:
+          description: The current progress for bank id
+          type: string
+    BankIdRequest:
+      type: object
+      title: BankIdRequest
+      required:
+      - pnr
+      properties:
+        pnr:
+          description: Personal Identity Number (12 digits)
+          type: string
+          example:
+            pnr: '195505120028'
+        corporate:
+          required: false
+          description: Set to true to get the first corporate account connected to the bank id (if it exists)
+          type: boolean
+        orgNr:
+          required: false
+          description: Specific organization number to get the corporate account connected to the bank id (if it exists)
+          type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: User ID
+          example: 123456
+        country:
+          type: string
+          description: Two-letter country code
+          example: SE
+        email:
+          type: string
+          format: email
+          description: User's email
+          example: user@example.com
+        emailActive:
+          type: boolean
+          example: true
+          description: Indicates if a user has completed the process of email verification
+        features:
+          type: object
+          description: Indicates the list of features this user has access to
+        firstName:
+          type: string
+          example: John
+          description: User's first name
+        lastName:
+          type: string
+          example: Doe
+          description: User's last name
+        hasAcceptedLatestTerms:
+          type: boolean
+          example: true
+          description: Indicates wether or not the user has accepted the latest Terms and Conditions for using Safello.
+        hasAcceptedOldTerms:
+          type: boolean
+          example: true
+          description: Indicates wether or not the user has ever accepted any previous version of Safello's Terms and Conditions.
+        intercomHash:
+          description: To be documented
+          example: F5E92CF0430E769964F2B8E3231E53AC2721B8C447C2D24FC07CBE1933CCA57D
+        language:
+          type: string
+          example: sv
+          description: Two-letter language code, [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+        level:
+          type: integer
+          example: 1
+          description: Defines what percentage fee the user gets
+        premium:
+          type: boolean
+          example: false
+          description: Indicates if the user has a premium account
+        safeEnvironment:
+          type: boolean
+          example: false
+          description: Indicates if the user was put under safe mode
+        telephoneNumber:
+          type: string
+          format: phoneNumber
+          example: 46555555555
+          description: User's contact number
+        tier:
+          type: integer
+          example: 3
+          description: Relates to the maximum amount of money this user is allowed to buy
+  headers:
+    Cache-Control:
+      schema:
+        type: string
+      example: no-store
+    Pragma:
+      schema:
+        type: string
+      example: no-cache
+  responses:
+    AppIdRequired:
+      description: This request requires you to send an App ID
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
+              status:
+                type: integer
+                description: Status code number
+                example: 498
+              code:
+                type: string
+                enum:
+                - MISSING_APP_ID
+                description: Short string identifying the error
+                example: MISSING_APP_ID
+    PreconditionFailed:
+      description: Some required parameter was not sent
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
+                example: \"token\" is required
+              status:
+                type: integer
+                description: Status code number
+                example: 412
+              code:
+                type: string
+                description: Short string identifying the error
+                example: VALIDATION_ERROR
+    NotAuthenticatedError:
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
+  parameters:
+    sourceIpParam:
+      in: header
+      name: Source-IP-Address
+      description: IP Address of the originator of the request
+      schema:
+        type: string
+      required: true
+      example: 192.168.0.1
+    userAgentParam:
+      in: header
+      name: Source-User-Agent
+      description: User-Agent of the originator of the request
+      schema:
+        type: string
+      required: true
+      example: curl/7.37.0
+  securitySchemes:
+    AccessToken:
+      type: apiKey
+      in: header
+      name: Access-Token
+    AppId:
+      type: apiKey
+      in: header
+      name: App-Id

@@ -1,0 +1,858 @@
+openapi: 3.1.0
+info:
+  title: Safello account market API
+  description: Powering your app with crypto
+  version: 0.1.0
+  license:
+    name: Private
+    url: TBD
+servers:
+- url: https://app.safello.com
+tags:
+- name: market
+  x-displayName: Market
+  description: Market endpoints
+paths:
+  /v2/market/symbols/crypto:
+    get:
+      operationId: listCryptoSymbols
+      tags:
+      - market
+      summary: List Cryptocurrency symbols
+      security:
+      - OAuth2:
+        - market
+      description: 'Lists the crypto currency symbols supported by Safello
+
+        '
+      responses:
+        '200':
+          description: Cryptocurrency Symbols retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CryptoSymbol'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /v2/market/symbols/fiat:
+    get:
+      operationId: listFiatSymbols
+      tags:
+      - market
+      summary: List Fiat currency symbols
+      security:
+      - OAuth2:
+        - market
+      description: 'Lists the fiat currency symbols supported by Safello
+
+        '
+      responses:
+        '200':
+          description: Fiat Symbols retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FiatSymbol'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /v2/market/symbols/pairs:
+    get:
+      operationId: listTradingPairs
+      tags:
+      - market
+      summary: List trading pairs
+      security:
+      - OAuth2:
+        - market
+      description: 'Lists the trading pairs supported by Safello
+
+        '
+      responses:
+        '200':
+          description: Trading pairs retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TradingPair'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /v2/market/chart/{pair}:
+    get:
+      operationId: getMarketChart
+      tags:
+      - market
+      summary: Market chart
+      security:
+      - OAuth2:
+        - market
+      description: 'Get the chart for the selected market
+
+        '
+      parameters:
+      - name: pair
+        in: path
+        required: true
+        example: BTC_SEK
+        description: Trading pair symbol using underscore as delimiter.
+        schema:
+          type: string
+      - name: interval
+        in: query
+        description: Time interval for the result
+        schema:
+          type: string
+          default: MAX
+          enum:
+          - DAILY
+          - WEEKLY
+          - MONTHLY
+          - QUARTERLY
+          - HALF_YEARLY
+          - YEARLY
+          - YTD
+          - MAX
+      responses:
+        '200':
+          $ref: '#/components/responses/MarketChartData'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /v2/market/prices/rates/{crypto}:
+    get:
+      operationId: getPrice
+      tags:
+      - market
+      summary: Get price
+      security:
+      - OAuth2:
+        - market
+      description: Gets the current price for a single crypto currency
+      parameters:
+      - name: crypto
+        in: path
+        required: true
+        description: Cryptocurrency code - one of BTC, ETH, LINK, MATIC, or DOT
+        schema:
+          type: string
+      - name: fiat
+        in: query
+        description: Fiat currency
+        schema:
+          type: string
+          default: SEK
+          enum:
+          - SEK
+      responses:
+        '200':
+          description: Pair ticker
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrencyRate'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /v2/market/prices/rates:
+    get:
+      operationId: getPrices
+      tags:
+      - market
+      summary: Get all prices
+      security:
+      - OAuth2:
+        - market
+      description: Gets the current prices for all supported crypto currencies
+      parameters:
+      - name: fiat
+        in: query
+        description: Fiat currency
+        schema:
+          type: string
+          default: SEK
+          enum:
+          - SEK
+      responses:
+        '200':
+          description: List of currency rates for all supported crypto currencies
+          content:
+            application/json:
+              schema:
+                type: array
+                nullable: false
+                minItems: 0
+                default: []
+                items:
+                  $ref: '#/components/schemas/CurrencyRate'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /v2/market/ticker/{pair}:
+    get:
+      operationId: getTradePairTicker
+      tags:
+      - market
+      summary: Get trade pair price
+      security:
+      - OAuth2:
+        - market
+      description: Gets the current price for a trade pair
+      parameters:
+      - name: pair
+        in: path
+        required: true
+        example: BTC_SEK
+        description: Trading pair symbol using underscore as delimiter.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Pair ticker
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticker'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /v2/market/tickers:
+    get:
+      operationId: getTradePairTickers
+      tags:
+      - market
+      summary: Get all trade pair tickers
+      security:
+      - OAuth2:
+        - market
+      description: Gets the current prices for all trade pairs
+      responses:
+        '200':
+          description: All trade pair tickers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ticker'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /v2/market/best-performers:
+    get:
+      operationId: getBestPerformers
+      tags:
+      - market
+      summary: Get the best performers
+      security:
+      - OAuth2:
+        - market
+      description: Get the best performers
+      parameters:
+      - name: interval
+        in: query
+        description: Time interval to get best performers for
+        schema:
+          type: string
+          default: DAILY
+          enum:
+          - DAILY
+          - WEEKLY
+          - MONTHLY
+          - QUARTERLY
+          - HALF_YEARLY
+          - YEARLY
+          - YTD
+          - MAX
+      - name: limit
+        in: query
+        description: How many best performers to return
+        schema:
+          type: integer
+          default: 5
+      responses:
+        '200':
+          $ref: '#/components/responses/PairPerformance'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /v2/market/popular-cryptos:
+    get:
+      operationId: getPopularCryptos
+      tags:
+      - market
+      summary: Get the most popular crypto currencies that are actively traded on the Safello platform
+      security:
+      - OAuth2:
+        - market
+      description: Get the most popular crypto currencies that are actively traded on the Safello platform
+      parameters:
+      - name: interval
+        in: query
+        description: Time interval to get popular coins for
+        schema:
+          type: string
+          default: DAILY
+          enum:
+          - DAILY
+          - WEEKLY
+          - MONTHLY
+          - QUARTERLY
+          - HALF_YEARLY
+          - YEARLY
+          - YTD
+          - MAX
+      - name: limit
+        in: query
+        description: How many popular coins to return
+        schema:
+          type: integer
+          default: 5
+      responses:
+        '200':
+          $ref: '#/components/responses/PairPerformance'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /v2/market/ohlcv:
+    get:
+      operationId: getMarketCandlestickData
+      security:
+      - OAuth2:
+        - market
+      tags:
+      - market
+      summary: Get historical candlestick data
+      description: Get historical candlestick data
+      parameters:
+      - name: resolution
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - 1m
+          - 5m
+          - 15m
+          - 1h
+          - 4h
+          - 1d
+          - 1w
+          - 1mo
+        description: Timeframe resolution for candlestick data.
+      - name: startDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date-time
+        description: ISO-8601 UTC start date for the requested historical data.
+      - name: endDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date-time
+        description: ISO-8601 UTC end date for the requested historical data.
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1000
+          minimum: 1
+          maximum: 100000
+        description: Number of data points to return.
+      - name: pair
+        in: query
+        required: true
+        example: BTC_SEK
+        description: Trading pair symbol using underscore as delimiter.
+        schema:
+          type: string
+      - name: inverted
+        in: query
+        description: Whether to retrieve data for the inverted trading pair. Defaults to `false`.
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Successful response with historical OHLCV data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoricalOhlcvDataResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /v2/market/24h-data/{pair}:
+    get:
+      operationId: get24HDataForPair
+      security:
+      - OAuth2:
+        - market
+      tags:
+      - market
+      summary: Get 24H market data for a pair
+      description: Retrieve market data (24h ticker stats) for a given trading pair.
+      parameters:
+      - name: pair
+        in: path
+        required: true
+        example: BTC_SEK
+        description: Trading pair symbol using underscore as delimiter (e.g., BTC_SEK).
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with ticker data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Market24hTickerData'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /v2/market/order-book/{pair}:
+    get:
+      operationId: getTradePairOrderBook
+      tags:
+      - market
+      summary: Get trade pair order book
+      security:
+      - OAuth2:
+        - market
+      description: Gets the order book for a trade pair
+      parameters:
+      - name: pair
+        in: path
+        required: true
+        example: BTC_SEK
+        description: Trading pair symbol using underscore as delimiter.
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/OrderBook'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+components:
+  schemas:
+    Ticker:
+      type: object
+      properties:
+        pair:
+          type: string
+          description: Trade pair
+          example: BTC_SEK
+        timestamp:
+          type: string
+          format: date-time
+          description: The timestamp at which the ticker was calculated
+        quoteVolume:
+          type: string
+          description: Volume within the last 24 hours in the quote currency
+        baseVolume:
+          type: string
+          description: Volume within the last 24 hours in the base currency
+        lastPrice:
+          type: string
+          description: Price of the last trade
+        bestBid:
+          type: string
+          description: Price of the current best bid
+        bestAsk:
+          type: string
+          description: Price of the current best ask
+        high:
+          type: string
+          description: Highest matched price within the last 24 hours
+        low:
+          type: string
+          description: Lowest matched price within the last 24 hours
+        mid:
+          type: string
+          description: Mid price between ask and bid
+    HistoricalOhlcvDataResponse:
+      type: object
+      properties:
+        ts:
+          type: string
+          format: date-time
+          description: Timestamp when the response was generated.
+        resolution:
+          type: string
+          enum:
+          - 1m
+          - 5m
+          - 15m
+          - 1h
+          - 4h
+          - 1d
+          - 1w
+          - 1mo
+          description: The requested timeframe resolution.
+        pair:
+          type: string
+          description: Asset pair of order
+        inverted:
+          type: boolean
+          description: Indicates whether the received data corresponds to the inverted asset pair.
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OhlcvData'
+    TradingPair:
+      type: object
+      properties:
+        pair:
+          type: string
+          description: Trading pair symbol using underscore as delimiter.
+          example: BTC_USDC
+        baseDecimals:
+          type: integer
+          description: How many decimals base currency uses for trading
+          example: 8
+        counterDecimals:
+          type: integer
+          description: How many decimals counter currency uses for trading
+          example: 5
+        status:
+          type: string
+          description: 'Availability of our services related to this trading pair. It can be:
+
+            - `active`: All services are working and available
+
+            - `inactive`: Some or all services associated with this trading pair are temporarily unavailable.
+
+            - `deprecated`: We don''t support trading with this cryptocurrency anymore.
+
+            '
+          example: active
+        availableActions:
+          type: array
+          example:
+          - buy
+          - sell
+          description: Lists the type of operations you can make using this trading pair.
+          items:
+            type: string
+        minimumOrder:
+          type: object
+          description: Minimum order amount for pair
+          example:
+            currency: BTC
+            amount: '0.0005'
+          $ref: '#/components/schemas/CurrencyAmount'
+    FiatSymbol:
+      type: object
+      properties:
+        currency:
+          type: string
+          description: Currency code ISO 4217
+          example: SEK
+        minorAmountDecimals:
+          type: integer
+          description: Number of decimal places to represent the smallest unit for this currency
+          example: 2
+        displayName:
+          type: string
+          description: Currency name
+          example: Kronor
+        status:
+          type: string
+          description: 'Availability of our services related to this currency. It can be:
+
+
+            - `active`: All services are working and available
+
+            - `inactive`: Some or all services associated with this currency are temporarily unavailable.
+
+            - `deprecated`: We don''t support trading with this currency anymore.
+
+            '
+          example: active
+    CurrencyAmount:
+      type: object
+      required:
+      - currency
+      - amount
+      properties:
+        currency:
+          type: string
+          description: Currency (fiat or crypto) code
+          example: SEK
+        amount:
+          type: string
+          description: Value of the currency with the number of decimals as defined in the Market API.
+          example: '510.00'
+    Market24hTickerData:
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: The trading pair symbol
+        high:
+          type: string
+          description: The highest price in the last 24 hours.
+        low:
+          type: string
+          description: The lowest price in the last 24 hours.
+        bid:
+          type: string
+          description: The current highest bid price.
+        ask:
+          type: string
+          description: The current lowest ask price.
+        volume:
+          type: string
+          description: The 24-hour trading volume for base.
+        quoteVolume:
+          type: string
+          description: The 24-hour trading volume for counter.
+        priceChangePercent:
+          type: string
+          description: The percentage price change over the last 24 hours.
+    CurrencyRate:
+      type: object
+      properties:
+        ask:
+          type: string
+          example: '343110.6053375'
+          description: Ask price
+        baseAsk:
+          type: string
+          example: '328335.5075'
+          description: Base ask price
+        mid:
+          type: string
+          example: '330000.0000'
+          description: Mid price
+        baseBid:
+          type: string
+          example: '330303.5525'
+          description: Base bid price
+        bid:
+          type: string
+          example: '313788.374875'
+          description: Bid price
+        cryptoCurrency:
+          type: string
+          description: Crypto currency code
+          example: BTC
+        currency:
+          type: string
+          description: Fiat currency
+          example: SEK
+    CryptoSymbol:
+      type: object
+      properties:
+        currency:
+          type: string
+          description: Crypto currency code
+          example: BTC
+        minorAmountDecimals:
+          type: integer
+          description: Number of decimal places to represent the smallest unit for this crypto currency
+          example: 8
+        displayName:
+          type: string
+          description: Crypto currency name
+          example: Bitcoin
+        status:
+          type: string
+          description: 'Availability of our services related to this crypto currency. It can be:
+
+
+            - `active`: All services are working and available
+
+            - `inactive`: Some or all services associated with this crypto currency are temporarily unavailable.
+
+            - `deprecated`: We don''t support trading with this cryptocurrency anymore.
+
+            '
+          example: active
+        availableActions:
+          type: array
+          example:
+          - buy
+          - sell
+          description: Lists the type of operations you can make using this cryptocurrency.
+          items:
+            type: string
+        network:
+          type: string
+          description: What network the crypto is using or null if not supported
+          example: Bitcoin
+        dateAdded:
+          type: string
+          format: date
+          description: The date when this cryptocurrency was added to Safello.
+          example: '2023-06-15'
+        color:
+          type: object
+          description: The color scheme associated with this cryptocurrency.
+          properties:
+            light:
+              type: string
+              description: Light mode color code (e.g., for UI display).
+              example: '#FFD700'
+            dark:
+              type: string
+              description: Dark mode color code (e.g., for UI display).
+              example: '#000000'
+    MarketChartRecord:
+      type: object
+      example:
+      - timestamp: 1643038200000
+        price: '317258.03'
+      description: Object with the data point to plot.
+      properties:
+        timestamp:
+          type: integer
+          format: int64
+          example: 1643037000000
+          description: 'Timestamp representing the number of milliseconds since
+
+            [UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time)
+
+            '
+        price:
+          type: string
+          example: '317258.03'
+          description: 'Unitary price for the cryptocurrency in COUNTER
+
+            '
+    OhlcvData:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp for the candlestick.
+        open:
+          type: string
+          description: Opening price.
+        high:
+          type: string
+          description: Highest price during the timeframe.
+        low:
+          type: string
+          description: Lowest price during the timeframe.
+        close:
+          type: string
+          description: Closing price.
+        volume:
+          type: string
+          description: Volume traded during the timeframe.
+        ticks:
+          type: integer
+          description: Number of trades executed in the timeframe.
+  responses:
+    MarketChartData:
+      description: Market chart data points
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/MarketChartRecord'
+    BadRequest:
+      description: The data you have sent is not valid
+      content:
+        application/json:
+          schema:
+            title: BadRequestResponse
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
+                example: You cannot place an order higher than your buy limit of 500 SEK
+              status:
+                type: integer
+                description: Status code number
+                example: 400
+              code:
+                type: string
+                description: Short string identifying the error
+                example: BUY_LIMIT_EXCEEDED
+    OrderBook:
+      description: Order Book
+      content:
+        application/json:
+          schema:
+            title: OrderBook
+            type: object
+            properties:
+              pair:
+                type: string
+                description: Trade pair
+                example: BTC_USDC
+              timestamp:
+                type: string
+                format: date-time
+                description: The timestamp at which the order book was retrieved
+              bids:
+                type: array
+                description: List of bid orders
+                items:
+                  type: object
+                  properties:
+                    price:
+                      type: string
+                      description: Bid price
+                      example: '49905.65'
+                    amount:
+                      type: string
+                      description: Amount available at this bid price
+                      example: '5.31251274'
+              asks:
+                type: array
+                description: List of ask orders
+                items:
+                  type: object
+                  properties:
+                    price:
+                      type: string
+                      description: Ask price
+                      example: '50653.80'
+                    amount:
+                      type: string
+                      description: Amount available at this ask price
+                      example: '0.45186957'
+    PairPerformance:
+      description: Market best performers
+      content:
+        application/json:
+          schema:
+            title: PairPerformance
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  title: PairPerformanceData
+                  type: object
+                  properties:
+                    pair:
+                      type: string
+                      description: Trade pair
+                      example: BTC_SEK
+                    price:
+                      type: string
+                      description: Price on pair in counter
+                      example: '1234.56'
+                    percentageChange:
+                      type: string
+                      description: Change in percentage (in decimal format)
+                      example: '0.1234'
+                    absoluteChange:
+                      type: string
+                      description: Change in counter
+                      example: '1234.56'
+  securitySchemes:
+    AccessToken:
+      type: apiKey
+      in: header
+      name: Access-Token
+    AppId:
+      type: apiKey
+      in: header
+      name: App-Id

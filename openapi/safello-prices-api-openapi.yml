@@ -1,0 +1,200 @@
+openapi: 3.1.0
+info:
+  title: Safello account prices API
+  description: Powering your app with crypto
+  version: 0.1.0
+  license:
+    name: Private
+    url: TBD
+servers:
+- url: https://app.safello.com
+tags:
+- name: prices
+  x-displayName: Prices
+  description: Price endpoints
+paths:
+  /api/prices:
+    get:
+      operationId: getPriceHistory
+      tags:
+      - prices
+      summary: Price history
+      description: 'Gets historical price data for a cryptocurrency in a given interval.
+
+
+        The resulting array can be plotted in a graph and contains a list of tuple arrays with 2 elements:
+
+
+        1. A timestamp representing the number of milliseconds since [UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time).
+
+        2. Unitary price for the cryptocurrency in SEK.
+
+        '
+      parameters:
+      - name: crypto
+        in: query
+        description: Cryptocurrency
+        schema:
+          type: string
+          enum:
+          - BTC
+          - ETH
+          - LINK
+          - MATIC
+          - DOT
+          default: BTC
+      - name: interval
+        in: query
+        description: Time interval for the result
+        schema:
+          type: string
+          default: MAX
+          enum:
+          - DAILY
+          - WEEKLY
+          - MONTHLY
+          - QUARTERLY
+          - HALF_YEARLY
+          - YEARLY
+          - YTD
+          - MAX
+      responses:
+        '200':
+          description: Price historical datapoints
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                - - 1643037000000
+                  - 310438.36
+                - - 1643037600000
+                  - 314322.28
+                - - 1643038200000
+                  - 317258.03
+                - '...'
+                items:
+                  type: array
+                  description: Tuple array with the datapoint to plot.
+                  prefixItems:
+                  - type: integer
+                    example: 1643037000000
+                    description: 'Timestamp representing the number of milliseconds since
+
+                      [UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time).
+
+                      '
+                  - type: number
+                    example: 310438.36
+                    description: Unitary price for the cryptocurrency in SEK.
+        '401':
+          $ref: '#/components/responses/NotAuthenticatedError'
+  /v1/rate:
+    get:
+      operationId: getPrice
+      tags:
+      - prices
+      summary: Get price
+      description: Gets the current price for a single crypto currency
+      parameters:
+      - name: appId
+        in: query
+        required: true
+        description: AppID
+        schema:
+          type: string
+      - name: crypto
+        in: query
+        description: Crypto currency code
+        schema:
+          type: string
+          default: BTC
+          enum:
+          - BTC
+          - ETH
+          - DOT
+          - LINK
+          - MATIC
+      - name: currency
+        in: query
+        description: Fiat currency
+        schema:
+          type: string
+          default: SEK
+          enum:
+          - SEK
+      responses:
+        '200':
+          description: Price retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ask:
+                    type: number
+                    example: 343110.6053375
+                    description: Ask price
+                  baseAsk:
+                    type: number
+                    example: 328335.5075
+                    description: Base ask price
+                  baseBid:
+                    type: number
+                    example: 330303.5525
+                    description: Base bid price
+                  bid:
+                    type: number
+                    example: 313788.374875
+                    description: Bid price
+                  cryptoCurrency:
+                    type: string
+                    description: Crypto currency
+                    example: btc
+                  currency:
+                    type: string
+                    description: Fiat currency
+                    example: sek
+        '498':
+          $ref: '#/components/responses/AppIdRequired'
+components:
+  responses:
+    NotAuthenticatedError:
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
+    AppIdRequired:
+      description: This request requires you to send an App ID
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
+              status:
+                type: integer
+                description: Status code number
+                example: 498
+              code:
+                type: string
+                enum:
+                - MISSING_APP_ID
+                description: Short string identifying the error
+                example: MISSING_APP_ID
+  securitySchemes:
+    AccessToken:
+      type: apiKey
+      in: header
+      name: Access-Token
+    AppId:
+      type: apiKey
+      in: header
+      name: App-Id

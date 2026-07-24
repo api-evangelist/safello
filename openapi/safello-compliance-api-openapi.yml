@@ -1,0 +1,187 @@
+openapi: 3.1.0
+info:
+  title: Safello account compliance API
+  description: Powering your app with crypto
+  version: 0.1.0
+  license:
+    name: Private
+    url: TBD
+servers:
+- url: https://app.safello.com
+tags:
+- name: compliance
+  x-displayName: Compliance
+  description: User's compliance information/status
+paths:
+  /v2/compliance/verify/orders/sell:
+    post:
+      operationId: verifySellOrderCompliance
+      tags:
+      - compliance
+      summary: Verify compliance status for a sell operation
+      security:
+      - OAuth2:
+        - order
+      description: 'Verify the compliance status for a sell operation
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SellOrderInput'
+      responses:
+        '200':
+          description: Compliance status
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ComplianceStatus'
+  /v2/compliance/verify/orders/buy:
+    post:
+      operationId: verifyBuyOrderCompliance
+      tags:
+      - compliance
+      summary: Verify compliance status for a buy operation
+      security:
+      - OAuth2:
+        - order
+      description: 'Verify the compliance status for a buy operation
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuyOrderInput'
+      responses:
+        '200':
+          description: Compliance status
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ComplianceStatus'
+components:
+  schemas:
+    SellOrderInput:
+      type: object
+      required:
+      - fiatCurrency
+      - crypto
+      properties:
+        fiatCurrency:
+          type: string
+          example: SEK
+          description: Currency to convert the crypto to - must be a well formed currency code, currently SEK only
+        crypto:
+          type: object
+          description: Information about the crypto currency and amount involved in the transaction
+          example:
+            currency: BTC
+            amount: '0.00200001'
+          $ref: '#/components/schemas/CurrencyAmount'
+        bankAccountId:
+          type: string
+          format: uuid
+          description: Legacy, bank account to use when creating a sell order. If not used the user default bank account will be used instead
+        payoutMethod:
+          type: string
+          example: SE Bank transfer
+          description: Payout method used - one of 'SE Bank transfer', 'Credit card', 'SEPA', 'SWIFT'
+        payoutDetails:
+          type: object
+          additionalProperties:
+            type: string
+          description: Additional payout details
+        walletId:
+          type: string
+          format: uuid
+          description: Wallet used in sell order. If not used the default wallet will be used instead
+    ComplianceStatus:
+      type: object
+      properties:
+        decision:
+          type: string
+          description: Describes the outcome of the compliance assessment (ACCEPT or REJECT)
+          example: ACCEPT
+        rejections:
+          type: array
+          description: A list of reasons for the rejection (if any)
+          example:
+          - reason: KYC
+            code: BASIC
+          - reason: EMAIL
+            code: NOT_VERIFIED
+          - reason: TERMS
+            code: NOT_UP_TO_DATE
+          - '...'
+          items:
+            title: ComplianceRejection
+            type: object
+            description: A reason for rejecting a compliance verification
+            properties:
+              reason:
+                type: string
+                description: An overall reason category for the failure, such as KYC questionnaire completion
+                example: KYC
+              code:
+                type: string
+                description: A more specific code that indicates the exact cause of the failure, such as not completing their basic KYC questionnaire
+                example: BASIC
+    CurrencyAmount:
+      type: object
+      required:
+      - currency
+      - amount
+      properties:
+        currency:
+          type: string
+          description: Currency (fiat or crypto) code
+          example: SEK
+        amount:
+          type: string
+          description: Value of the currency with the number of decimals as defined in the Market API.
+          example: '510.00'
+    BuyOrderInput:
+      type: object
+      required:
+      - cryptoCurrency
+      - fiat
+      - paymentMethod
+      properties:
+        cryptoCurrency:
+          type: string
+          description: Cryptocurrency code - one of BTC, ETH, LINK, MATIC, or DOT
+          example: BTC
+        fiat:
+          type: object
+          description: Information about the fiat currency and amount involved in the transaction
+          example:
+            currency: SEK
+            amount: '510.00'
+          $ref: '#/components/schemas/CurrencyAmount'
+        walletId:
+          type: string
+          format: uuid
+          description: Wallet used in buy order. If not used the default wallet will be used instead
+        paymentMethod:
+          type: string
+          description: Payment method used - one of swish, klarna_bankgiro, klarna_sepa, credit_card, sepa, bank_transfer_dk, bank_transfer_se
+        paymentDetails:
+          type: object
+          additionalProperties:
+            type: string
+          description: Additional payment details
+  securitySchemes:
+    AccessToken:
+      type: apiKey
+      in: header
+      name: Access-Token
+    AppId:
+      type: apiKey
+      in: header
+      name: App-Id
