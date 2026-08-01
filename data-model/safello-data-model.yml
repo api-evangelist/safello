@@ -1,0 +1,172 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/safello-institutional-openapi.json
+entities:
+- BankAccount
+- BankAccountInput
+- BankIdRequest
+- BuyOrder
+- BuyOrderInput
+- CancelOrderInput
+- ComplianceStatus
+- CryptoSymbol
+- CryptoTransaction
+- CurrencyAmount
+- CurrencyRate
+- EOrderStatus
+- ETradeOrderStatus
+- EditOrder
+- Fees
+- FiatSymbol
+- HistoricalOhlcvDataResponse
+- KycAnswerInput
+- KycQuestion
+- Market24hTickerData
+- MarketChartRecord
+- OAuth2Error
+- OAuth2TokenRequest
+- OhlcvData
+- Order
+- OrderAction
+- OrderCreatedEvent
+- OrderDeletedEvent
+- OrderUpdatedEvent
+- SellOrder
+- SellOrderInput
+- Ticker
+- TradeOrder
+- TradeOrderInput
+- TradingPair
+- User
+- Wallet
+- WalletPerformance
+- WalletPerformanceCrypto
+- WalletPerformanceHistory
+- WalletPerformanceHistoryDataPoint
+relationships:
+- from: TradingPair
+  kind: has_one
+  via: minimumOrder
+  to: CurrencyAmount
+- from: Order
+  kind: has_one
+  via: parentOrder
+  to: Order
+- from: Order
+  kind: has_one
+  via: fee
+  to: CurrencyAmount
+- from: Order
+  kind: has_one
+  via: buy
+  to: BuyOrder
+- from: Order
+  kind: has_one
+  via: sell
+  to: SellOrder
+- from: Order
+  kind: has_one
+  via: trade
+  to: TradeOrder
+- from: Order
+  kind: has_one
+  via: transaction
+  to: CryptoTransaction
+- from: OrderCreatedEvent
+  kind: has_one
+  via: order
+  to: Order
+- from: OrderUpdatedEvent
+  kind: has_one
+  via: order
+  to: Order
+- from: OrderDeletedEvent
+  kind: has_one
+  via: order
+  to: Order
+- from: Wallet
+  kind: has_many
+  via: balances
+  to: CurrencyAmount
+- from: WalletPerformance
+  kind: has_one
+  via: total
+  to: WalletPerformanceCrypto
+- from: WalletPerformanceHistory
+  kind: has_many
+  via: data
+  to: WalletPerformanceHistoryDataPoint
+- from: BuyOrderInput
+  kind: has_one
+  via: fiat
+  to: CurrencyAmount
+- from: SellOrderInput
+  kind: has_one
+  via: crypto
+  to: CurrencyAmount
+- from: TradeOrder
+  kind: has_one
+  via: originalAmount
+  to: CurrencyAmount
+- from: TradeOrder
+  kind: has_one
+  via: from
+  to: CurrencyAmount
+- from: TradeOrder
+  kind: has_one
+  via: to
+  to: CurrencyAmount
+- from: TradeOrder
+  kind: has_one
+  via: fiatAmount
+  to: CurrencyAmount
+- from: TradeOrder
+  kind: has_one
+  via: status
+  to: ETradeOrderStatus
+- from: BuyOrder
+  kind: has_one
+  via: fiat
+  to: CurrencyAmount
+- from: BuyOrder
+  kind: has_one
+  via: crypto
+  to: CurrencyAmount
+- from: BuyOrder
+  kind: has_many
+  via: actions
+  to: OrderAction
+- from: SellOrder
+  kind: has_one
+  via: receivedCrypto
+  to: CurrencyAmount
+- from: SellOrder
+  kind: has_one
+  via: sold
+  to: CurrencyAmount
+- from: SellOrder
+  kind: has_one
+  via: payout
+  to: CurrencyAmount
+- from: SellOrder
+  kind: has_many
+  via: actions
+  to: OrderAction
+- from: CryptoTransaction
+  kind: has_one
+  via: crypto
+  to: CurrencyAmount
+- from: CryptoTransaction
+  kind: has_one
+  via: fiat
+  to: CurrencyAmount
+- from: HistoricalOhlcvDataResponse
+  kind: has_many
+  via: data
+  to: OhlcvData
+events:
+- OrderCreatedEvent
+- OrderUpdatedEvent
+- OrderDeletedEvent
+events_note: Order lifecycle event schemas are defined in the spec (Created/Updated/Deleted) but no webhook/streaming
+  delivery surface is documented publicly, so no AsyncAPI/Webhooks artifact is emitted.

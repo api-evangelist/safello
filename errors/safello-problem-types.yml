@@ -1,0 +1,23 @@
+generated: '2026-07-21'
+method: derived
+format: custom
+source: openapi/safello-institutional-openapi.json
+envelope: Errors are returned with a Safello service-specific code string in a 400 Bad Request body; token
+  errors use the OAuth2 error object (error / error_description / error_uri). Not RFC 9457 problem+json.
+status_codes:
+- 200
+- 400
+- 401
+problems:
+- status: 400
+  source_operation: openapi/safello-institutional-openapi.json#listCryptoSymbols
+  description: null
+- status: 400
+  source_operation: openapi/safello-institutional-openapi.json#startAuth
+  description: Invalid request
+- status: 400
+  source_operation: openapi/safello-institutional-openapi.json#obtainToken
+  description: Error response
+- status: 401
+  source_operation: openapi/safello-institutional-openapi.json#getUser
+  description: null

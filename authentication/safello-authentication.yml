@@ -1,0 +1,60 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/safello-app-openapi.json, openapi/safello-institutional-openapi.json
+docs: https://safello.github.io/safello-api/docs/getting-started/getting-started-auth
+authorization_server:
+  metadata: https://api.safello.com/.well-known/oauth-authorization-server
+  issuer: https://api.safello.com
+  authorization_endpoint: https://api.safello.com/oauth2/authorize
+  token_endpoint: https://api.safello.com/oauth2/token
+  jwks_uri: https://api.safello.com/oauth2/jwks
+  introspection_endpoint: https://api.safello.com/oauth2/introspect
+  revocation_endpoint: https://api.safello.com/oauth2/revoke
+  token_endpoint_auth_methods_supported: [client_secret_basic, client_secret_post, client_secret_jwt, private_key_jwt]
+  grant_types_supported: [authorization_code, client_credentials, refresh_token]
+  code_challenge_methods_supported: [S256]
+  access_token_format: JWT
+  access_token_ttl_seconds: 300
+summary:
+  types:
+  - apiKey
+  - http
+  - oauth2
+  api_key_in:
+  - header
+  oauth2_flows:
+  - authorizationCode
+  - clientCredentials
+  - urn:safello:params:oauth:grant-type:bankid
+schemes:
+- name: AccessToken
+  type: apiKey
+  in: header
+  parameter: Access-Token
+  sources:
+  - openapi/safello-app-openapi.json
+- name: AppId
+  type: apiKey
+  in: header
+  parameter: App-Id
+  sources:
+  - openapi/safello-app-openapi.json
+- name: OAuth2
+  type: oauth2
+  flows:
+  - flow: urn:safello:params:oauth:grant-type:bankid
+    tokenUrl: /oauth2/token
+    scopes: 8
+  - flow: clientCredentials
+    tokenUrl: /oauth2/token
+    scopes: 1
+  - flow: authorizationCode
+    tokenUrl: /oauth2/token
+    scopes: 8
+  sources:
+  - openapi/safello-institutional-openapi.json
+- name: BasicAuth
+  type: http
+  scheme: basic
+  sources:
+  - openapi/safello-institutional-openapi.json

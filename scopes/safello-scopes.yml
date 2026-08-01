@@ -1,0 +1,73 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/safello-institutional-openapi.json
+docs: https://safello.github.io/safello-api/docs/getting-started/tokens
+authorization_server_metadata: https://api.safello.com/.well-known/oauth-authorization-server
+schemes:
+- name: OAuth2
+  source: openapi/safello-institutional-openapi.json
+  flows:
+  - flow: urn:safello:params:oauth:grant-type:bankid
+    tokenUrl: /oauth2/token
+  - flow: clientCredentials
+    tokenUrl: /oauth2/token
+  - flow: authorizationCode
+    tokenUrl: /oauth2/token
+scopes:
+- scope: account.bank-account
+  description: View and modify users bank accounts.
+  flows:
+  - authorizationCode
+  - urn:safello:params:oauth:grant-type:bankid
+  sources:
+  - openapi/safello-institutional-openapi.json
+- scope: account.bank-account:read
+  description: View users bank accounts.
+  flows:
+  - authorizationCode
+  - urn:safello:params:oauth:grant-type:bankid
+  sources:
+  - openapi/safello-institutional-openapi.json
+- scope: account.base
+  description: View and modify base information of accounts.
+  flows:
+  - authorizationCode
+  - urn:safello:params:oauth:grant-type:bankid
+  sources:
+  - openapi/safello-institutional-openapi.json
+- scope: account.base:read
+  description: View base information of accounts.
+  flows:
+  - authorizationCode
+  - urn:safello:params:oauth:grant-type:bankid
+  sources:
+  - openapi/safello-institutional-openapi.json
+- scope: market
+  description: View market data.
+  flows:
+  - authorizationCode
+  - clientCredentials
+  - urn:safello:params:oauth:grant-type:bankid
+  sources:
+  - openapi/safello-institutional-openapi.json
+- scope: order
+  description: View and create orders.
+  flows:
+  - authorizationCode
+  - urn:safello:params:oauth:grant-type:bankid
+  sources:
+  - openapi/safello-institutional-openapi.json
+- scope: order:read
+  description: View orders.
+  flows:
+  - authorizationCode
+  - urn:safello:params:oauth:grant-type:bankid
+  sources:
+  - openapi/safello-institutional-openapi.json
+- scope: wallet
+  description: View and modify wallet.
+  flows:
+  - authorizationCode
+  - urn:safello:params:oauth:grant-type:bankid
+  sources:
+  - openapi/safello-institutional-openapi.json

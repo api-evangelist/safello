@@ -1,0 +1,121 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/safello-institutional-openapi.json
+server:
+  name: safello
+  transport: http
+note: No official hosted Safello MCP server found. Tools derived one-per-operation from the Safello Institutional
+  API OpenAPI (v2.2.30) as a candidate manifest.
+tools:
+- name: listCryptoSymbols
+  description: List Cryptocurrency symbols
+  source_operation: openapi/safello-institutional-openapi.json#listCryptoSymbols
+- name: listFiatSymbols
+  description: List Fiat currency symbols
+  source_operation: openapi/safello-institutional-openapi.json#listFiatSymbols
+- name: listTradingPairs
+  description: List trading pairs
+  source_operation: openapi/safello-institutional-openapi.json#listTradingPairs
+- name: getMarketChart
+  description: Market chart
+  source_operation: openapi/safello-institutional-openapi.json#getMarketChart
+- name: getPrice
+  description: Get price
+  source_operation: openapi/safello-institutional-openapi.json#getPrice
+- name: getPrices
+  description: Get all prices
+  source_operation: openapi/safello-institutional-openapi.json#getPrices
+- name: getTradePairTicker
+  description: Get trade pair price
+  source_operation: openapi/safello-institutional-openapi.json#getTradePairTicker
+- name: getTradePairTickers
+  description: Get all trade pair tickers
+  source_operation: openapi/safello-institutional-openapi.json#getTradePairTickers
+- name: getBestPerformers
+  description: Get the best performers
+  source_operation: openapi/safello-institutional-openapi.json#getBestPerformers
+- name: getPopularCryptos
+  description: Get the most popular crypto currencies that are actively traded on the Safello platform
+  source_operation: openapi/safello-institutional-openapi.json#getPopularCryptos
+- name: getMarketCandlestickData
+  description: Get historical candlestick data
+  source_operation: openapi/safello-institutional-openapi.json#getMarketCandlestickData
+- name: get24HDataForPair
+  description: Get 24H market data for a pair
+  source_operation: openapi/safello-institutional-openapi.json#get24HDataForPair
+- name: getTradePairOrderBook
+  description: Get trade pair order book
+  source_operation: openapi/safello-institutional-openapi.json#getTradePairOrderBook
+- name: startAuth
+  description: BankID Auth Grant
+  source_operation: openapi/safello-institutional-openapi.json#startAuth
+- name: obtainToken
+  description: Request Access Token
+  source_operation: openapi/safello-institutional-openapi.json#obtainToken
+- name: getUser
+  description: Get logged in user
+  source_operation: openapi/safello-institutional-openapi.json#getUser
+- name: acceptTerms
+  description: Accept T&C
+  source_operation: openapi/safello-institutional-openapi.json#acceptTerms
+- name: sendVerificationEmail
+  description: Send verification email
+  source_operation: openapi/safello-institutional-openapi.json#sendVerificationEmail
+- name: verifyEmail
+  description: Verify email
+  source_operation: openapi/safello-institutional-openapi.json#verifyEmail
+- name: requireKyc
+  description: Check if KYC is required
+  source_operation: openapi/safello-institutional-openapi.json#requireKyc
+- name: kycQuestions
+  description: KYC questions
+  source_operation: openapi/safello-institutional-openapi.json#kycQuestions
+- name: answerKyc
+  description: Answer KYC questionnaire
+  source_operation: openapi/safello-institutional-openapi.json#answerKyc
+- name: getBankAccounts
+  description: Get user bank accounts
+  source_operation: openapi/safello-institutional-openapi.json#getBankAccounts
+- name: addBankAccount
+  description: Add or update bank account
+  source_operation: openapi/safello-institutional-openapi.json#addBankAccount
+- name: listOrders
+  description: List orders
+  source_operation: openapi/safello-institutional-openapi.json#listOrders
+- name: createBuyOrder
+  description: Create buy order
+  source_operation: openapi/safello-institutional-openapi.json#createBuyOrder
+- name: createTradeOrder
+  description: Create trade order
+  source_operation: openapi/safello-institutional-openapi.json#createTradeOrder
+- name: cancelTradeOrder
+  description: Cancel a trade order
+  source_operation: openapi/safello-institutional-openapi.json#cancelTradeOrder
+- name: editTradeOrder
+  description: Edits an open trade order
+  source_operation: openapi/safello-institutional-openapi.json#editTradeOrder
+- name: createSellOrder
+  description: Create sell order
+  source_operation: openapi/safello-institutional-openapi.json#createSellOrder
+- name: checkOrderStatus
+  description: Check order status
+  source_operation: openapi/safello-institutional-openapi.json#checkOrderStatus
+- name: getFees
+  description: Get fees
+  source_operation: openapi/safello-institutional-openapi.json#getFees
+- name: getWallet
+  description: Wallet
+  source_operation: openapi/safello-institutional-openapi.json#getWallet
+- name: getWalletPerformance
+  description: Wallet performance
+  source_operation: openapi/safello-institutional-openapi.json#getWalletPerformance
+- name: getWalletPerformanceHistory
+  description: Wallet performance history
+  source_operation: openapi/safello-institutional-openapi.json#getWalletPerformanceHistory
+- name: verifySellOrderCompliance
+  description: Verify compliance status for a sell operation
+  source_operation: openapi/safello-institutional-openapi.json#verifySellOrderCompliance
+- name: verifyBuyOrderCompliance
+  description: Verify compliance status for a buy operation
+  source_operation: openapi/safello-institutional-openapi.json#verifyBuyOrderCompliance

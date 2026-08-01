@@ -1,23 +1,144 @@
 aid: safello
 name: Safello
-description: 'Safello is a company surfaced as a portfolio company of northzone, techstars and added to
-  the API Evangelist network as a stub for enrichment. Sector: fintech. This profile is a lead awaiting
-  the enrichment pipeline.'
+description: Safello is a Swedish cryptocurrency brokerage founded in 2013, registered with the Swedish Financial Supervisory
+  Authority (Finansinspektionen) and listed on Nasdaq First North Growth Market since 2021. It lets people buy, sell, trade,
+  and store digital assets, and exposes a "Cryptocurrency as a Service" (CaaS) Institutional API so third-party organisations
+  can embed crypto buying/selling, BankID customer onboarding, KYC and compliance verification, market data, order management,
+  and wallet balances. The v2 Institutional API (base https://api.safello.com) uses OAuth2 with client-credentials, authorization-code,
+  and a custom Swedish BankID grant, plus a staging environment at api.s4f3.io for testing.
 url: https://raw.githubusercontent.com/api-evangelist/safello/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - northzone
 - techstars
-x-tier: stub
+x-tier: enriched
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
 - Fintech
-apis: []
+- Cryptocurrency
+- Bitcoin
+- Brokerage
+- Payments
+- Sweden
+- Trading
+- KYC
+- BankID
+apis:
+- aid: safello:safello-account-api
+  name: Safello account API
+  description: Account management
+  humanURL: https://safello.github.io/safello-api/api
+  baseURL: https://api.safello.com
+  tags:
+  - account
+  properties:
+  - type: OpenAPI
+    url: openapi/safello-account-api-openapi.yml
+  - type: Documentation
+    url: https://safello.github.io/safello-api/docs/intro
+  - type: APIReference
+    url: https://safello.github.io/safello-api/api
+- aid: safello:safello-auth-api
+  name: Safello auth API
+  description: Authentication flow
+  humanURL: https://safello.github.io/safello-api/api
+  baseURL: https://api.safello.com
+  tags:
+  - auth
+  properties:
+  - type: OpenAPI
+    url: openapi/safello-auth-api-openapi.yml
+  - type: Documentation
+    url: https://safello.github.io/safello-api/docs/intro
+  - type: APIReference
+    url: https://safello.github.io/safello-api/api
+- aid: safello:safello-compliance-api
+  name: Safello compliance API
+  description: User's compliance information/status
+  humanURL: https://safello.github.io/safello-api/api
+  baseURL: https://api.safello.com
+  tags:
+  - compliance
+  properties:
+  - type: OpenAPI
+    url: openapi/safello-compliance-api-openapi.yml
+  - type: Documentation
+    url: https://safello.github.io/safello-api/docs/intro
+  - type: APIReference
+    url: https://safello.github.io/safello-api/api
+- aid: safello:safello-market-api
+  name: Safello market API
+  description: Market endpoints
+  humanURL: https://safello.github.io/safello-api/api
+  baseURL: https://api.safello.com
+  tags:
+  - market
+  properties:
+  - type: OpenAPI
+    url: openapi/safello-market-api-openapi.yml
+  - type: Documentation
+    url: https://safello.github.io/safello-api/docs/intro
+  - type: APIReference
+    url: https://safello.github.io/safello-api/api
+- aid: safello:safello-orders-api
+  name: Safello orders API
+  description: Buy and sell crypto
+  humanURL: https://safello.github.io/safello-api/api
+  baseURL: https://api.safello.com
+  tags:
+  - orders
+  properties:
+  - type: OpenAPI
+    url: openapi/safello-orders-api-openapi.yml
+  - type: Documentation
+    url: https://safello.github.io/safello-api/docs/intro
+  - type: APIReference
+    url: https://safello.github.io/safello-api/api
+- aid: safello:safello-prices-api
+  name: Safello prices API
+  description: Price endpoints
+  humanURL: https://safello.github.io/safello-api/api
+  baseURL: https://api.safello.com
+  tags:
+  - prices
+  properties:
+  - type: OpenAPI
+    url: openapi/safello-prices-api-openapi.yml
+  - type: Documentation
+    url: https://safello.github.io/safello-api/docs/intro
+  - type: APIReference
+    url: https://safello.github.io/safello-api/api
+- aid: safello:safello-wallet-api
+  name: Safello wallet API
+  description: User's wallet
+  humanURL: https://safello.github.io/safello-api/api
+  baseURL: https://api.safello.com
+  tags:
+  - wallet
+  properties:
+  - type: OpenAPI
+    url: openapi/safello-wallet-api-openapi.yml
+  - type: Documentation
+    url: https://safello.github.io/safello-api/docs/intro
+  - type: APIReference
+    url: https://safello.github.io/safello-api/api
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -26,3 +147,69 @@ maintainers:
 common:
 - type: Website
   url: https://safello.com
+- type: DeveloperPortal
+  url: https://safello.github.io/safello-api/docs/intro
+- type: Documentation
+  url: https://safello.github.io/safello-api/docs/intro
+- type: APIReference
+  url: https://safello.github.io/safello-api/api
+- type: GettingStarted
+  url: https://safello.github.io/safello-api/docs/getting-started/getting-started-intro
+- type: Support
+  url: https://help.safello.com/en/
+- type: GitHubOrganization
+  url: https://github.com/safello
+- type: Pricing
+  url: https://help.safello.com/en/articles/166728-what-are-safello-s-fees
+- type: SignUp
+  url: https://app.safello.com
+- type: TermsOfService
+  url: https://safello.com/legal/terms
+- type: PrivacyPolicy
+  url: https://safello.com/legal/privacy
+- type: Authentication
+  url: authentication/safello-authentication.yml
+- type: OAuthScopes
+  url: scopes/safello-scopes.yml
+- type: Conventions
+  url: conventions/safello-conventions.yml
+- type: ErrorCatalog
+  url: errors/safello-error-codes.yml
+- type: ErrorCatalog
+  url: errors/safello-problem-types.yml
+- type: DataModel
+  url: data-model/safello-data-model.yml
+- type: Lifecycle
+  url: lifecycle/safello-lifecycle.yml
+- type: Sandbox
+  url: sandbox/safello-sandbox.yml
+- type: Conformance
+  url: conformance/safello-conformance.yml
+- type: WellKnown
+  url: well-known/safello-well-known.yml
+- type: MCPServer
+  url: mcp/safello-mcp.yml
+- type: LLMsTxt
+  url: llms/safello-llms.txt
+- type: AgenticAccess
+  url: agentic-access/safello-agentic-access.yml
+- type: DomainSecurity
+  url: security/safello-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/safello-vulnerability-disclosure.yml
+- type: Security
+  url: https://safello.com/security-bug-bounty
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Arazzo
+  name: Onboard a customer with BankID
+  url: arazzo/safello-onboard-customer.yml
+- type: Arazzo
+  name: Buy cryptocurrency
+  url: arazzo/safello-buy-crypto.yml
+image: https://framerusercontent.com/images/vWXBsKx9A6eh2AJFSk6wXzmHYNo.png
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 22
+  pass: local-v1

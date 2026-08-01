@@ -1,0 +1,27 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Safello Institutional API
+  version: 1.0.0
+extends: openapi/safello-institutional-openapi.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-07-21'
+      x-apievangelist-provider: safello
+      x-apievangelist-category: crypto-brokerage
+      x-authorization-server-metadata: https://api.safello.com/.well-known/oauth-authorization-server
+      x-sandbox-host: https://api.s4f3.io
+      x-status-page: null
+  - target: $.servers
+    update:
+      - url: https://api.safello.com
+        description: Production
+      - url: https://api.s4f3.io
+        description: "Staging / test (supports 'Test: true' header to bypass BankID)"
+  - target: $.info
+    update:
+      x-conventions:
+        pagination: offset+size
+        idempotency: not-supported
+        access_token_ttl_seconds: 300
+        required_headers: [source-ip-address, source-user-agent]

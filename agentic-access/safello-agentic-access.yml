@@ -1,0 +1,762 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/safello-app-openapi.json, openapi/safello-institutional-openapi.json
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 52
+  by_action_class:
+    connected: 31
+    acting: 21
+  by_consequence:
+    read: 31
+    write: 10
+    physical: 11
+  human_in_the_loop_required: 0
+operations:
+- path: /api/prices
+  method: get
+  operationId: getPriceHistory
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/rate
+  method: get
+  operationId: getPrice
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/auth
+  method: post
+  operationId: startAuth
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/auth
+  method: get
+  operationId: checkAuthStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/auth/user
+  method: get
+  operationId: getUser
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/system/acceptTerms
+  method: post
+  operationId: acceptTerms
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/email
+  method: post
+  operationId: sendVerificationEmail
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/email/verify
+  method: put
+  operationId: verifyEmail
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/kyc/require
+  method: get
+  operationId: requireKyc
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/kyc
+  method: get
+  operationId: kycQuestions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/kyc
+  method: post
+  operationId: answerKYC
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/order
+  method: post
+  operationId: createBuyOrder
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/order
+  method: get
+  operationId: checkOrderStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/order/sell
+  method: post
+  operationId: createSellOrder
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/wallet
+  method: get
+  operationId: getWallet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/market/symbols/crypto
+  method: get
+  operationId: listCryptoSymbols
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - market
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/market/symbols/fiat
+  method: get
+  operationId: listFiatSymbols
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - market
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/market/symbols/pairs
+  method: get
+  operationId: listTradingPairs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - market
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/market/chart/{pair}
+  method: get
+  operationId: getMarketChart
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - market
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/market/prices/rates/{crypto}
+  method: get
+  operationId: getPrice
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - market
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/market/prices/rates
+  method: get
+  operationId: getPrices
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - market
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/market/ticker/{pair}
+  method: get
+  operationId: getTradePairTicker
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - market
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/market/tickers
+  method: get
+  operationId: getTradePairTickers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - market
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/market/best-performers
+  method: get
+  operationId: getBestPerformers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - market
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/market/popular-cryptos
+  method: get
+  operationId: getPopularCryptos
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - market
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/market/ohlcv
+  method: get
+  operationId: getMarketCandlestickData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - market
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/market/24h-data/{pair}
+  method: get
+  operationId: get24HDataForPair
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - market
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/market/order-book/{pair}
+  method: get
+  operationId: getTradePairOrderBook
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - market
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /oauth2/bankid
+  method: post
+  operationId: startAuth
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /oauth2/token
+  method: post
+  operationId: obtainToken
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/account/user
+  method: get
+  operationId: getUser
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - account.base
+    - account.base:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/account/terms
+  method: put
+  operationId: acceptTerms
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - account.base
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/account/email
+  method: post
+  operationId: sendVerificationEmail
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - account.base
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/account/email
+  method: put
+  operationId: verifyEmail
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - account.base
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/account/kyc
+  method: get
+  operationId: requireKyc
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - account.base
+    - account.base:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/account/kyc-questions
+  method: get
+  operationId: kycQuestions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - account.base
+    - account.base:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/account/kyc-questions
+  method: post
+  operationId: answerKyc
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - account.base
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/account/bank-account
+  method: get
+  operationId: getBankAccounts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - account.bank-account
+    - account.bank-account:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/account/bank-account
+  method: put
+  operationId: addBankAccount
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - account.bank-account
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/orders
+  method: get
+  operationId: listOrders
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - order
+    - order:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/orders/buy
+  method: post
+  operationId: createBuyOrder
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - order
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/orders/trade
+  method: post
+  operationId: createTradeOrder
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - order
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/orders/cancel
+  method: post
+  operationId: cancelTradeOrder
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - order
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/orders/{orderId}/edit
+  method: post
+  operationId: editTradeOrder
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - order
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/orders/sell
+  method: post
+  operationId: createSellOrder
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - order
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/orders/{orderId}
+  method: get
+  operationId: checkOrderStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - order
+    - order:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/orders/fees
+  method: get
+  operationId: getFees
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - order
+    - order:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/wallet
+  method: get
+  operationId: getWallet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - wallet
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/wallet/performance
+  method: get
+  operationId: getWalletPerformance
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - wallet
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/wallet/performance-history
+  method: get
+  operationId: getWalletPerformanceHistory
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - wallet
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/compliance/verify/orders/sell
+  method: post
+  operationId: verifySellOrderCompliance
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - order
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/compliance/verify/orders/buy
+  method: post
+  operationId: verifyBuyOrderCompliance
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - order
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required

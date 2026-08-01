@@ -1,0 +1,43 @@
+arazzo: 1.0.1
+info:
+  title: Safello — onboard a customer with BankID
+  version: 1.0.0
+  summary: BankID auth, email verification, terms acceptance, and KYC to reach a trade-ready customer.
+sourceDescriptions:
+  - name: safello
+    url: ../openapi/safello-institutional-openapi.json
+    type: openapi
+workflows:
+  - workflowId: onboardCustomerBankId
+    summary: Take a new end customer from BankID auth to KYC-complete.
+    inputs:
+      type: object
+      properties:
+        personalNumber: { type: string }
+        email: { type: string }
+    steps:
+      - stepId: startBankId
+        operationId: startAuth
+        requestBody:
+          payload:
+            personalNumber: $inputs.personalNumber
+        outputs:
+          requestId: $response.body#/request_id
+      - stepId: obtainToken
+        operationId: obtainToken
+        requestBody:
+          payload:
+            grant_type: "urn:safello:params:oauth:grant-type:bankid"
+            request_id: $steps.startBankId.outputs.requestId
+        outputs:
+          accessToken: $response.body#/access_token
+      - stepId: getUser
+        operationId: getUser
+      - stepId: acceptTerms
+        operationId: acceptTerms
+      - stepId: checkKyc
+        operationId: requireKyc
+      - stepId: getKycQuestions
+        operationId: kycQuestions
+      - stepId: answerKyc
+        operationId: answerKyc

@@ -1,0 +1,62 @@
+generated: '2026-07-21'
+method: searched
+source: https://safello.github.io/safello-api/docs/other-resources/error-codes
+envelope: Service-specific code string returned in the BadRequest (400) response body.
+error_codes:
+- code: ACCOUNT_KYC_INVALID_ANSWERS
+  meaning: One or more answers are invalid
+  area: account
+- code: ACCOUNT_EMAIL_VERIFICATION_CODE_EXPIRED
+  meaning: Email verification code is expired
+  area: account
+- code: ACCOUNT_EMAIL_VERIFICATION_CODE_TOO_MANY_TRIES
+  meaning: Email verification code has too many tries
+  area: account
+- code: ACCOUNT_EMAIL_VERIFICATION_CODE_TIMEOUT
+  meaning: Email verification code creation timeout
+  area: account
+- code: ACCOUNT_EMAIL_USED
+  meaning: Email used
+  area: account
+- code: ACCOUNT_CUSTOMER_NOT_FOUND
+  meaning: Customer not found
+  area: account
+- code: ACCOUNT_EMAIL_INVALID_CODE
+  meaning: Invalid code
+  area: account
+- code: ORDER_CUSTOMER_FROZEN
+  meaning: Customer account is frozen
+  area: order
+- code: ORDER_GENERIC
+  meaning: Generic order error
+  area: order
+- code: ORDER_SAFE_ENVIRONMENT
+  meaning: Customer safe environment is enabled
+  area: order
+- code: ORDER_PAYMENT_ERROR
+  meaning: Payment error
+  area: order
+- code: WALLET_CREATE
+  meaning: Failed to create wallet
+  area: wallet
+- code: GENERIC
+  meaning: Generic
+  area: generic
+- code: UNAUTHORIZED
+  meaning: Unauthorized
+  area: generic
+- code: ILLEGAL_ARGUMENT
+  meaning: One or more values are wrong
+  area: generic
+- code: NOT_FOUND
+  meaning: A resource was not found
+  area: generic
+- code: FORBIDDEN
+  meaning: Forbidden
+  area: generic
+- code: INTERNAL_SERVER_ERROR
+  meaning: Internal Server Error
+  area: generic
+- code: MISSING_REQUIRED_HEADER
+  meaning: Missing required header
+  area: generic

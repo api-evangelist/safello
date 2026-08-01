@@ -1,0 +1,20 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/safello-institutional-openapi.json
+skills:
+  - file: safello-onboard-customer-bankid.md
+    name: Onboard a Safello customer with BankID
+    api: openapi/safello-institutional-openapi.json
+    operations: [startAuth, obtainToken, getUser, sendVerificationEmail, verifyEmail, acceptTerms, requireKyc, kycQuestions, answerKyc]
+  - file: safello-buy-crypto.md
+    name: Place a Safello buy order
+    api: openapi/safello-institutional-openapi.json
+    operations: [verifyBuyOrderCompliance, getFees, createBuyOrder, checkOrderStatus]
+  - file: safello-sell-crypto.md
+    name: Place a Safello sell order
+    api: openapi/safello-institutional-openapi.json
+    operations: [verifySellOrderCompliance, getBankAccounts, getFees, createSellOrder, checkOrderStatus]
+  - file: safello-market-data.md
+    name: Read Safello market data
+    api: openapi/safello-institutional-openapi.json
+    operations: [listCryptoSymbols, listFiatSymbols, listTradingPairs, getPrices, getTradePairTicker, getMarketCandlestickData]

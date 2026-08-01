@@ -1,0 +1,4086 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Safello API",
+    "description": "Powering your app with crypto",
+    "version": "2.2.30",
+    "license": {
+      "name": "Private",
+      "url": "https://api.safello.com/license/1.0.0"
+    }
+  },
+  "tags": [
+    {
+      "name": "auth",
+      "x-displayName": "Authentication",
+      "description": "Authentication flow"
+    },
+    {
+      "name": "market",
+      "x-displayName": "Market",
+      "description": "Market endpoints"
+    },
+    {
+      "name": "account",
+      "x-displayName": "Account",
+      "description": "Account management"
+    },
+    {
+      "name": "orders",
+      "x-displayName": "Orders",
+      "description": "Buy and sell crypto"
+    },
+    {
+      "name": "wallet",
+      "x-displayName": "Wallet",
+      "description": "User's wallet"
+    },
+    {
+      "name": "compliance",
+      "x-displayName": "Compliance",
+      "description": "User's compliance information/status"
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://api.safello.com"
+    }
+  ],
+  "paths": {
+    "/v2/market/symbols/crypto": {
+      "get": {
+        "operationId": "listCryptoSymbols",
+        "tags": [
+          "market"
+        ],
+        "summary": "List Cryptocurrency symbols",
+        "security": [
+          {
+            "OAuth2": [
+              "market"
+            ]
+          }
+        ],
+        "description": "Lists the crypto currency symbols supported by Safello\n",
+        "responses": {
+          "200": {
+            "description": "Cryptocurrency Symbols retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CryptoSymbol"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/v2/market/symbols/fiat": {
+      "get": {
+        "operationId": "listFiatSymbols",
+        "tags": [
+          "market"
+        ],
+        "summary": "List Fiat currency symbols",
+        "security": [
+          {
+            "OAuth2": [
+              "market"
+            ]
+          }
+        ],
+        "description": "Lists the fiat currency symbols supported by Safello\n",
+        "responses": {
+          "200": {
+            "description": "Fiat Symbols retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FiatSymbol"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/v2/market/symbols/pairs": {
+      "get": {
+        "operationId": "listTradingPairs",
+        "tags": [
+          "market"
+        ],
+        "summary": "List trading pairs",
+        "security": [
+          {
+            "OAuth2": [
+              "market"
+            ]
+          }
+        ],
+        "description": "Lists the trading pairs supported by Safello\n",
+        "responses": {
+          "200": {
+            "description": "Trading pairs retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TradingPair"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/v2/market/chart/{pair}": {
+      "get": {
+        "operationId": "getMarketChart",
+        "tags": [
+          "market"
+        ],
+        "summary": "Market chart",
+        "security": [
+          {
+            "OAuth2": [
+              "market"
+            ]
+          }
+        ],
+        "description": "Get the chart for the selected market\n",
+        "parameters": [
+          {
+            "name": "pair",
+            "in": "path",
+            "required": true,
+            "example": "BTC_SEK",
+            "description": "Trading pair symbol using underscore as delimiter.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "interval",
+            "in": "query",
+            "description": "Time interval for the result",
+            "schema": {
+              "type": "string",
+              "default": "MAX",
+              "enum": [
+                "DAILY",
+                "WEEKLY",
+                "MONTHLY",
+                "QUARTERLY",
+                "HALF_YEARLY",
+                "YEARLY",
+                "YTD",
+                "MAX"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/MarketChartData"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/v2/market/prices/rates/{crypto}": {
+      "get": {
+        "operationId": "getPrice",
+        "tags": [
+          "market"
+        ],
+        "summary": "Get price",
+        "security": [
+          {
+            "OAuth2": [
+              "market"
+            ]
+          }
+        ],
+        "description": "Gets the current price for a single crypto currency",
+        "parameters": [
+          {
+            "name": "crypto",
+            "in": "path",
+            "required": true,
+            "description": "Cryptocurrency code - one of BTC, ETH, LINK, MATIC, or DOT",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fiat",
+            "in": "query",
+            "description": "Fiat currency",
+            "schema": {
+              "type": "string",
+              "default": "SEK",
+              "enum": [
+                "SEK"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pair ticker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyRate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/v2/market/prices/rates": {
+      "get": {
+        "operationId": "getPrices",
+        "tags": [
+          "market"
+        ],
+        "summary": "Get all prices",
+        "security": [
+          {
+            "OAuth2": [
+              "market"
+            ]
+          }
+        ],
+        "description": "Gets the current prices for all supported crypto currencies",
+        "parameters": [
+          {
+            "name": "fiat",
+            "in": "query",
+            "description": "Fiat currency",
+            "schema": {
+              "type": "string",
+              "default": "SEK",
+              "enum": [
+                "SEK"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of currency rates for all supported crypto currencies",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "nullable": false,
+                  "minItems": 0,
+                  "default": [],
+                  "items": {
+                    "$ref": "#/components/schemas/CurrencyRate"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/v2/market/ticker/{pair}": {
+      "get": {
+        "operationId": "getTradePairTicker",
+        "tags": [
+          "market"
+        ],
+        "summary": "Get trade pair price",
+        "security": [
+          {
+            "OAuth2": [
+              "market"
+            ]
+          }
+        ],
+        "description": "Gets the current price for a trade pair",
+        "parameters": [
+          {
+            "name": "pair",
+            "in": "path",
+            "required": true,
+            "example": "BTC_SEK",
+            "description": "Trading pair symbol using underscore as delimiter.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pair ticker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticker"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/v2/market/tickers": {
+      "get": {
+        "operationId": "getTradePairTickers",
+        "tags": [
+          "market"
+        ],
+        "summary": "Get all trade pair tickers",
+        "security": [
+          {
+            "OAuth2": [
+              "market"
+            ]
+          }
+        ],
+        "description": "Gets the current prices for all trade pairs",
+        "responses": {
+          "200": {
+            "description": "All trade pair tickers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ticker"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/v2/market/best-performers": {
+      "get": {
+        "operationId": "getBestPerformers",
+        "tags": [
+          "market"
+        ],
+        "summary": "Get the best performers",
+        "security": [
+          {
+            "OAuth2": [
+              "market"
+            ]
+          }
+        ],
+        "description": "Get the best performers",
+        "parameters": [
+          {
+            "name": "interval",
+            "in": "query",
+            "description": "Time interval to get best performers for",
+            "schema": {
+              "type": "string",
+              "default": "DAILY",
+              "enum": [
+                "DAILY",
+                "WEEKLY",
+                "MONTHLY",
+                "QUARTERLY",
+                "HALF_YEARLY",
+                "YEARLY",
+                "YTD",
+                "MAX"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "How many best performers to return",
+            "schema": {
+              "type": "integer",
+              "default": 5
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/PairPerformance"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/v2/market/popular-cryptos": {
+      "get": {
+        "operationId": "getPopularCryptos",
+        "tags": [
+          "market"
+        ],
+        "summary": "Get the most popular crypto currencies that are actively traded on the Safello platform",
+        "security": [
+          {
+            "OAuth2": [
+              "market"
+            ]
+          }
+        ],
+        "description": "Get the most popular crypto currencies that are actively traded on the Safello platform",
+        "parameters": [
+          {
+            "name": "interval",
+            "in": "query",
+            "description": "Time interval to get popular coins for",
+            "schema": {
+              "type": "string",
+              "default": "DAILY",
+              "enum": [
+                "DAILY",
+                "WEEKLY",
+                "MONTHLY",
+                "QUARTERLY",
+                "HALF_YEARLY",
+                "YEARLY",
+                "YTD",
+                "MAX"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "How many popular coins to return",
+            "schema": {
+              "type": "integer",
+              "default": 5
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/PairPerformance"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/v2/market/ohlcv": {
+      "get": {
+        "operationId": "getMarketCandlestickData",
+        "security": [
+          {
+            "OAuth2": [
+              "market"
+            ]
+          }
+        ],
+        "tags": [
+          "market"
+        ],
+        "summary": "Get historical candlestick data",
+        "description": "Get historical candlestick data",
+        "parameters": [
+          {
+            "name": "resolution",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1m",
+                "5m",
+                "15m",
+                "1h",
+                "4h",
+                "1d",
+                "1w",
+                "1mo"
+              ]
+            },
+            "description": "Timeframe resolution for candlestick data."
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "ISO-8601 UTC start date for the requested historical data."
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "ISO-8601 UTC end date for the requested historical data."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1000,
+              "minimum": 1,
+              "maximum": 100000
+            },
+            "description": "Number of data points to return."
+          },
+          {
+            "name": "pair",
+            "in": "query",
+            "required": true,
+            "example": "BTC_SEK",
+            "description": "Trading pair symbol using underscore as delimiter.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "inverted",
+            "in": "query",
+            "description": "Whether to retrieve data for the inverted trading pair. Defaults to `false`.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with historical OHLCV data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistoricalOhlcvDataResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/v2/market/24h-data/{pair}": {
+      "get": {
+        "operationId": "get24HDataForPair",
+        "security": [
+          {
+            "OAuth2": [
+              "market"
+            ]
+          }
+        ],
+        "tags": [
+          "market"
+        ],
+        "summary": "Get 24H market data for a pair",
+        "description": "Retrieve market data (24h ticker stats) for a given trading pair.",
+        "parameters": [
+          {
+            "name": "pair",
+            "in": "path",
+            "required": true,
+            "example": "BTC_SEK",
+            "description": "Trading pair symbol using underscore as delimiter (e.g., BTC_SEK).",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with ticker data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Market24hTickerData"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/v2/market/order-book/{pair}": {
+      "get": {
+        "operationId": "getTradePairOrderBook",
+        "tags": [
+          "market"
+        ],
+        "summary": "Get trade pair order book",
+        "security": [
+          {
+            "OAuth2": [
+              "market"
+            ]
+          }
+        ],
+        "description": "Gets the order book for a trade pair",
+        "parameters": [
+          {
+            "name": "pair",
+            "in": "path",
+            "required": true,
+            "example": "BTC_SEK",
+            "description": "Trading pair symbol using underscore as delimiter.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrderBook"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/oauth2/bankid": {
+      "post": {
+        "operationId": "startAuth",
+        "tags": [
+          "auth"
+        ],
+        "summary": "BankID Auth Grant",
+        "description": "Starts an authorization request",
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/sourceIpParam"
+          },
+          {
+            "$ref": "#/components/parameters/userAgentParam"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/BankIdRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Authorization request started successfully",
+            "headers": {
+              "Cache-Control": {
+                "$ref": "#/components/headers/Cache-Control"
+              },
+              "Pragma": {
+                "$ref": "#/components/headers/Pragma"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "StartAuthentication",
+                  "type": "object",
+                  "description": "Object with information to complete the authentication process",
+                  "properties": {
+                    "request_id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "Request ID to provide when requesting access token"
+                    },
+                    "auto_start_token": {
+                      "type": "string",
+                      "description": "Token to start bank id app"
+                    },
+                    "auto_start_qr_code": {
+                      "type": "string",
+                      "description": "QR code data used to generate the QR code for bank id"
+                    },
+                    "interval": {
+                      "type": "integer",
+                      "description": "time to wait between polling requests"
+                    },
+                    "expires_in": {
+                      "type": "integer",
+                      "description": "how long the request will last before timing out"
+                    }
+                  },
+                  "example": {
+                    "request_id": "123e4567-e89b-12d3-a456-426614174000",
+                    "auto_start_token": "sagtuvAgOax1",
+                    "interval": 2,
+                    "expires_in": 120
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OAuth2Error"
+                },
+                "examples": {
+                  "InvalidRequest": {
+                    "$ref": "#/components/examples/OAuth2InvalidRequest"
+                  },
+                  "InvalidClient": {
+                    "$ref": "#/components/examples/OAuth2InvalidClient"
+                  },
+                  "InvalidGrant": {
+                    "$ref": "#/components/examples/OAuth2InvalidGrant"
+                  },
+                  "UnauthorizedClient": {
+                    "$ref": "#/components/examples/OAuth2UnauthorizedClient"
+                  },
+                  "UnsupportedGrantType": {
+                    "$ref": "#/components/examples/OAuth2UnsupportedGrantType"
+                  },
+                  "InvalidScope": {
+                    "$ref": "#/components/examples/OAuth2InvalidScope"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth2/token": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Request Access Token",
+        "operationId": "obtainToken",
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/OAuth2TokenRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Issuance of access token",
+            "headers": {
+              "Cache-Control": {
+                "$ref": "#/components/headers/Cache-Control"
+              },
+              "Pragma": {
+                "$ref": "#/components/headers/Pragma"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "OAuth2TokenResponse",
+                  "description": "Access Token",
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "description": "The access token issued by the authorization server.",
+                      "type": "string"
+                    },
+                    "token_type": {
+                      "description": "The type of the token issued.",
+                      "type": "string"
+                    },
+                    "expires_in": {
+                      "description": "The lifetime in seconds of the access token.",
+                      "type": "integer"
+                    },
+                    "refresh_token": {
+                      "description": "The refresh token, which can be used to obtain new access tokens.",
+                      "type": "string"
+                    },
+                    "scope": {
+                      "description": "The scope of the access token.",
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+                  "token_type": "Bearer",
+                  "expires_in": 3600,
+                  "refresh_token": "tGzv3JOkF0XG5Qx2TlKWIA",
+                  "scope": "read write"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error response",
+            "headers": {
+              "Cache-Control": {
+                "$ref": "#/components/headers/Cache-Control"
+              },
+              "Pragma": {
+                "$ref": "#/components/headers/Pragma"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OAuth2Error"
+                },
+                "examples": {
+                  "BankIDExpired": {
+                    "summary": "BankID request has expired",
+                    "description": "The \"auto_start_token\" has expired, and the session has concluded.",
+                    "value": {
+                      "error": "expired_token",
+                      "error_description": "Client authentication failed",
+                      "error_uri": "http://example.test/token_expired.html"
+                    }
+                  },
+                  "BankIDSlowDown": {
+                    "summary": "Slow down",
+                    "description": "If the client is polling too frequently, the authorization server will return the slow_down error.",
+                    "value": {
+                      "error": "slow_down"
+                    }
+                  },
+                  "BankIDDenied": {
+                    "summary": "User denied",
+                    "description": "If the user denies the request, the authorization server will return the access_denied error.",
+                    "value": {
+                      "error": "access_denied"
+                    }
+                  },
+                  "BankIDPending": {
+                    "summary": "Pending authorization",
+                    "description": "If the user has not either allowed or denied the request yet, the authorization server will return the authorization_pending error.",
+                    "value": {
+                      "error": "authorization_pending"
+                    }
+                  },
+                  "InvalidRequest": {
+                    "$ref": "#/components/examples/OAuth2InvalidRequest"
+                  },
+                  "InvalidClient": {
+                    "$ref": "#/components/examples/OAuth2InvalidClient"
+                  },
+                  "InvalidGrant": {
+                    "$ref": "#/components/examples/OAuth2InvalidGrant"
+                  },
+                  "UnauthorizedClient": {
+                    "$ref": "#/components/examples/OAuth2UnauthorizedClient"
+                  },
+                  "UnsupportedGrantType": {
+                    "$ref": "#/components/examples/OAuth2UnsupportedGrantType"
+                  },
+                  "InvalidScope": {
+                    "$ref": "#/components/examples/OAuth2InvalidScope"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/account/user": {
+      "get": {
+        "operationId": "getUser",
+        "security": [
+          {
+            "OAuth2": [
+              "account.base",
+              "account.base:read"
+            ]
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "Get logged in user",
+        "description": "Returns information about the logged in user",
+        "responses": {
+          "200": {
+            "description": "An object with user information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v2/account/terms": {
+      "put": {
+        "operationId": "acceptTerms",
+        "security": [
+          {
+            "OAuth2": [
+              "account.base"
+            ]
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "Accept T&C",
+        "description": "Accept Terms and Conditions",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "AcceptTermsRequest",
+                "type": "object",
+                "properties": {
+                  "marketingEmails": {
+                    "type": "boolean",
+                    "description": "Opt in to receiving marketing emails from Safello",
+                    "default": false,
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully accepted terms"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v2/account/email": {
+      "post": {
+        "operationId": "sendVerificationEmail",
+        "security": [
+          {
+            "OAuth2": [
+              "account.base"
+            ]
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "Send verification email",
+        "description": "Send email to verify the user has access to that account",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "SendVerificationEmailRequest",
+                "type": "object",
+                "required": [
+                  "email"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Email to send the verification code to",
+                    "example": "mail@test.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email verification sent"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      },
+      "put": {
+        "operationId": "verifyEmail",
+        "security": [
+          {
+            "OAuth2": [
+              "account.base"
+            ]
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "Verify email",
+        "description": "Verify user's email address",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "VerifyEmailRequest",
+                "type": "object",
+                "required": [
+                  "code"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "Verification code sent to the user's email",
+                    "example": 123456
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email verified successfully"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v2/account/kyc": {
+      "get": {
+        "operationId": "requireKyc",
+        "security": [
+          {
+            "OAuth2": [
+              "account.base",
+              "account.base:read"
+            ]
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "Check if KYC is required",
+        "description": "Use this endpoint to check is the user is required to complete the KYC questionnaire to\ncontinue trading\n",
+        "responses": {
+          "200": {
+            "description": "Check result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "RequireKycCheck",
+                  "type": "object",
+                  "properties": {
+                    "requireKyc": {
+                      "type": "boolean",
+                      "description": "Indicates if the user is required to complete the KYC questionnaire"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v2/account/kyc-questions": {
+      "get": {
+        "operationId": "kycQuestions",
+        "security": [
+          {
+            "OAuth2": [
+              "account.base",
+              "account.base:read"
+            ]
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "KYC questions",
+        "description": "Gets a list of questions to ask the user in order to complete the \"Know Your Customer\" (KYC)\nquestionnaire.\n",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "description": "Two-letter language code, [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)\n",
+              "example": "sv"
+            }
+          },
+          {
+            "name": "questionnaire",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "description": "Which questionnaire questions to get",
+              "example": "BASIC"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of KYC questions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/KycQuestion"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      },
+      "post": {
+        "operationId": "answerKyc",
+        "security": [
+          {
+            "OAuth2": [
+              "account.base"
+            ]
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "Answer KYC questionnaire",
+        "description": "Submits the user's answers to the KYC questionnaire\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KycAnswerInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "KYC questionnaire submitted"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v2/account/bank-account": {
+      "get": {
+        "operationId": "getBankAccounts",
+        "security": [
+          {
+            "OAuth2": [
+              "account.bank-account",
+              "account.bank-account:read"
+            ]
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "Get user bank accounts",
+        "description": "Get a list of all bank account the user has connected",
+        "responses": {
+          "200": {
+            "description": "List of bank accounts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BankAccount"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      },
+      "put": {
+        "operationId": "addBankAccount",
+        "security": [
+          {
+            "OAuth2": [
+              "account.bank-account"
+            ]
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "Add or update bank account",
+        "description": "A unique bank account (clearing number + bank account number) can only be added once to a user. Adding the same bank account a second time will update the existing and return the same Bank Account ID.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BankAccountInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The bank account added",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BankAccount"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v2/orders": {
+      "get": {
+        "operationId": "listOrders",
+        "security": [
+          {
+            "OAuth2": [
+              "order",
+              "order:read"
+            ]
+          }
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "List orders",
+        "description": "Gets a paginated list containing the user's orders history\n",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Desired offset for pagination purposes",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Desired size for pagination purposes",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 10
+          },
+          {
+            "name": "crypto",
+            "in": "query",
+            "description": "Crypto currency to filter by",
+            "schema": {
+              "type": "string"
+            },
+            "example": "BTC"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Type to filter by",
+            "schema": {
+              "type": "string"
+            },
+            "example": "trade"
+          },
+          {
+            "name": "orderType",
+            "in": "query",
+            "description": "Trade order type to filter by, only works if type is trade. One of: quick, orderBook",
+            "schema": {
+              "type": "string"
+            },
+            "example": "orderBook"
+          },
+          {
+            "name": "pair",
+            "in": "query",
+            "description": "Pair of currencies to filter by",
+            "schema": {
+              "type": "string"
+            },
+            "example": "BTC_USDC"
+          },
+          {
+            "name": "orderStatusFilter",
+            "in": "query",
+            "description": "Filter results by one or more order statuses. Accepts values of type 'EOrderStatus'.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "explode": false
+          },
+          {
+            "name": "tradeStatusFilter",
+            "in": "query",
+            "description": "Filter results by one or more trade order statuses. Accepts values of type 'ETradeOrderStatus'. Applies only to trade orders.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "explode": false
+          },
+          {
+            "name": "orderStatusForTradeOrderFilter",
+            "in": "query",
+            "description": "Applies an additional 'EOrderStatus' filter specifically to trade orders, in combination with orderStatusFilter.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "explode": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrdersListResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v2/orders/buy": {
+      "post": {
+        "operationId": "createBuyOrder",
+        "security": [
+          {
+            "OAuth2": [
+              "order"
+            ]
+          }
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Create buy order",
+        "description": "Creates a new order to buy crypto currency using fiat money.\n\nUpon creation, you can monitor the status of the order by calling\n[Check order status](#operation/checkOrderStatus).\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/sourceIpParam"
+          },
+          {
+            "$ref": "#/components/parameters/userAgentParam"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyOrderInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/BuyOrderCreated"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v2/orders/trade": {
+      "post": {
+        "operationId": "createTradeOrder",
+        "security": [
+          {
+            "OAuth2": [
+              "order"
+            ]
+          }
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Create trade order",
+        "description": "Creates a new trade order to exchange crypto.\n\nUpon creation, you can monitor the status of the order by calling\n[Check order status](#operation/checkOrderStatus).\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/sourceIpParam"
+          },
+          {
+            "$ref": "#/components/parameters/userAgentParam"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TradeOrderInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/TradeOrderCreated"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v2/orders/cancel": {
+      "post": {
+        "operationId": "cancelTradeOrder",
+        "security": [
+          {
+            "OAuth2": [
+              "order"
+            ]
+          }
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Cancel a trade order",
+        "description": "Cancels a limit trade order.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/sourceIpParam"
+          },
+          {
+            "$ref": "#/components/parameters/userAgentParam"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelOrderInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully canceled order."
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v2/orders/{orderId}/edit": {
+      "post": {
+        "operationId": "editTradeOrder",
+        "security": [
+          {
+            "OAuth2": [
+              "order"
+            ]
+          }
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Edits an open trade order",
+        "description": "Edits an open trade order.",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "description": "Order identifier",
+            "schema": {
+              "type": "string",
+              "example": "TZ12HH34"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditOrder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully edited order."
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v2/orders/sell": {
+      "post": {
+        "operationId": "createSellOrder",
+        "security": [
+          {
+            "OAuth2": [
+              "order"
+            ]
+          }
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Create sell order",
+        "description": "Creates an order to sell crypto currency and receive fiat money.\n\nUpon creation, you can monitor the status of the order by calling\n[Check order status](#operation/checkOrderStatus).\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/sourceIpParam"
+          },
+          {
+            "$ref": "#/components/parameters/userAgentParam"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SellOrderInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SellOrderCreated"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v2/orders/{orderId}": {
+      "get": {
+        "operationId": "checkOrderStatus",
+        "security": [
+          {
+            "OAuth2": [
+              "order",
+              "order:read"
+            ]
+          }
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Check order status",
+        "description": "Checks the status of an order. Used to monitor if a buy or sell order has been completed.\n",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "description": "Order identifier",
+            "schema": {
+              "type": "string",
+              "description": "The identifier for an order for which the status will be checked"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v2/orders/fees": {
+      "get": {
+        "operationId": "getFees",
+        "security": [
+          {
+            "OAuth2": [
+              "order",
+              "order:read"
+            ]
+          }
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Get fees",
+        "description": "Get fees for different order types",
+        "responses": {
+          "200": {
+            "description": "Fees",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fees"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v2/wallet": {
+      "get": {
+        "operationId": "getWallet",
+        "security": [
+          {
+            "OAuth2": [
+              "wallet"
+            ]
+          }
+        ],
+        "tags": [
+          "wallet"
+        ],
+        "summary": "Wallet",
+        "description": "Retrieves the user's wallet\n",
+        "responses": {
+          "200": {
+            "description": "Wallet retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Wallet"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v2/wallet/performance": {
+      "get": {
+        "operationId": "getWalletPerformance",
+        "security": [
+          {
+            "OAuth2": [
+              "wallet"
+            ]
+          }
+        ],
+        "tags": [
+          "wallet"
+        ],
+        "summary": "Wallet performance",
+        "description": "Retrieves the user's current wallet performance right now\n",
+        "responses": {
+          "200": {
+            "description": "Wallet performance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WalletPerformance"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v2/wallet/performance-history": {
+      "get": {
+        "operationId": "getWalletPerformanceHistory",
+        "security": [
+          {
+            "OAuth2": [
+              "wallet"
+            ]
+          }
+        ],
+        "tags": [
+          "wallet"
+        ],
+        "summary": "Wallet performance history",
+        "description": "Retrieves the user's wallet performance history. Each data point is one day at midnight UTC. \n\nFor example a data point at 2022-01-01 would mean what the performance was at 2022-01-01 00:00 UTC\n",
+        "parameters": [
+          {
+            "name": "crypto",
+            "in": "query",
+            "explode": false,
+            "required": true,
+            "description": "Cryptocurrency code",
+            "schema": {
+              "type": "array",
+              "example": [
+                "BTC",
+                "ETH"
+              ],
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "fiat",
+            "in": "query",
+            "description": "Fiat currency",
+            "schema": {
+              "type": "string",
+              "default": "SEK"
+            }
+          },
+          {
+            "name": "timePeriod",
+            "in": "query",
+            "required": true,
+            "description": "Time period to get performance history.",
+            "schema": {
+              "type": "string",
+              "default": "ALL_TIME",
+              "enum": [
+                "ALL_TIME",
+                "THIS_YEAR",
+                "THREE_YEARS",
+                "ONE_YEAR",
+                "THREE_MONTHS",
+                "ONE_MONTH",
+                "ONE_WEEK",
+                "CUSTOM"
+              ]
+            }
+          },
+          {
+            "name": "start",
+            "description": "Start date if timePeriod is CUSTOM",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "end",
+            "description": "End date if timePeriod is CUSTOM",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "performanceSince",
+            "description": "Date where to calculate the performance from. Default to wallet creation date when timePeriod is CUSTOM or the first date on all other time periods",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Wallet performance history",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WalletPerformanceHistory"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v2/compliance/verify/orders/sell": {
+      "post": {
+        "operationId": "verifySellOrderCompliance",
+        "tags": [
+          "compliance"
+        ],
+        "summary": "Verify compliance status for a sell operation",
+        "security": [
+          {
+            "OAuth2": [
+              "order"
+            ]
+          }
+        ],
+        "description": "Verify the compliance status for a sell operation\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SellOrderInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Compliance status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComplianceStatus"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/compliance/verify/orders/buy": {
+      "post": {
+        "operationId": "verifyBuyOrderCompliance",
+        "tags": [
+          "compliance"
+        ],
+        "summary": "Verify compliance status for a buy operation",
+        "security": [
+          {
+            "OAuth2": [
+              "order"
+            ]
+          }
+        ],
+        "description": "Verify the compliance status for a buy operation\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyOrderInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Compliance status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComplianceStatus"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "flows": {
+          "urn:safello:params:oauth:grant-type:bankid": {
+            "tokenUrl": "/oauth2/token",
+            "scopes": {
+              "market": "View market data.",
+              "account.base": "View and modify base information of accounts.",
+              "account.base:read": "View base information of accounts.",
+              "account.bank-account": "View and modify users bank accounts.",
+              "account.bank-account:read": "View users bank accounts.",
+              "order": "View and create orders.",
+              "order:read": "View orders.",
+              "wallet": "View and modify wallet."
+            }
+          },
+          "clientCredentials": {
+            "tokenUrl": "/oauth2/token",
+            "scopes": {
+              "market": "View market data."
+            }
+          },
+          "authorizationCode": {
+            "tokenUrl": "/oauth2/token",
+            "scopes": {
+              "market": "View market data.",
+              "account.base": "View and modify base information of accounts.",
+              "account.base:read": "View base information of accounts.",
+              "account.bank-account": "View and modify users bank accounts.",
+              "account.bank-account:read": "View users bank accounts.",
+              "order": "View and create orders.",
+              "order:read": "View orders.",
+              "wallet": "View and modify wallet."
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    },
+    "parameters": {
+      "sourceIpParam": {
+        "in": "header",
+        "name": "Source-IP-Address",
+        "description": "IP Address of the originator of the request",
+        "schema": {
+          "type": "string"
+        },
+        "required": true,
+        "example": "192.168.0.1"
+      },
+      "userAgentParam": {
+        "in": "header",
+        "name": "Source-User-Agent",
+        "description": "User-Agent of the originator of the request",
+        "schema": {
+          "type": "string"
+        },
+        "required": true,
+        "example": "curl/7.37.0"
+      }
+    },
+    "responses": {
+      "MarketChartData": {
+        "description": "Market chart data points",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/MarketChartRecord"
+              }
+            }
+          }
+        }
+      },
+      "PairPerformance": {
+        "description": "Market best performers",
+        "content": {
+          "application/json": {
+            "schema": {
+              "title": "PairPerformance",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "title": "PairPerformanceData",
+                    "type": "object",
+                    "properties": {
+                      "pair": {
+                        "type": "string",
+                        "description": "Trade pair",
+                        "example": "BTC_SEK"
+                      },
+                      "price": {
+                        "type": "string",
+                        "description": "Price on pair in counter",
+                        "example": "1234.56"
+                      },
+                      "percentageChange": {
+                        "type": "string",
+                        "description": "Change in percentage (in decimal format)",
+                        "example": "0.1234"
+                      },
+                      "absoluteChange": {
+                        "type": "string",
+                        "description": "Change in counter",
+                        "example": "1234.56"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotAuthenticatedError": {
+        "description": "Not authenticated",
+        "content": {
+          "application/json": {
+            "schema": {
+              "title": "NotAuthenticatedErrorResponse",
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Description of the error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadRequest": {
+        "description": "The data you have sent is not valid",
+        "content": {
+          "application/json": {
+            "schema": {
+              "title": "BadRequestResponse",
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Description of the error",
+                  "example": "You cannot place an order higher than your buy limit of 500 SEK"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "Status code number",
+                  "example": 400
+                },
+                "code": {
+                  "type": "string",
+                  "description": "Short string identifying the error",
+                  "example": "BUY_LIMIT_EXCEEDED"
+                }
+              }
+            }
+          }
+        }
+      },
+      "OrdersListResponse": {
+        "description": "Order history list",
+        "content": {
+          "application/json": {
+            "schema": {
+              "title": "Orders",
+              "type": "object",
+              "properties": {
+                "offset": {
+                  "type": "integer",
+                  "description": "Offset value for pagination purposes"
+                },
+                "size": {
+                  "type": "integer",
+                  "description": "Number of results returned"
+                },
+                "total": {
+                  "type": "integer",
+                  "description": "Total number of orders for this user"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "BuyOrderCreated": {
+        "description": "Buy order created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "title": "BuyOrderCreated",
+              "type": "object",
+              "required": [
+                "orderId",
+                "pollingUrl"
+              ],
+              "properties": {
+                "orderId": {
+                  "type": "string",
+                  "example": "AS0ZZHU",
+                  "description": "Identifier for the newly created order. Use it to check its status"
+                },
+                "pollingUrl": {
+                  "type": "string",
+                  "format": "URL",
+                  "example": "https://app.safello.com/v2/order?orderId=AS0ZZHU",
+                  "description": "URL to call to check the order status"
+                }
+              }
+            }
+          }
+        }
+      },
+      "TradeOrderCreated": {
+        "description": "Trade order created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "title": "TradeOrderCreated",
+              "type": "object",
+              "required": [
+                "orderId",
+                "pollingUrl"
+              ],
+              "properties": {
+                "orderId": {
+                  "type": "string",
+                  "example": "AS0ZZHU",
+                  "description": "Identifier for the newly created order. Use it to check its status"
+                },
+                "pollingUrl": {
+                  "type": "string",
+                  "format": "URL",
+                  "example": "https://app.safello.com/v2/order?orderId=AS0ZZHU",
+                  "description": "URL to call to check the order status"
+                }
+              }
+            }
+          }
+        }
+      },
+      "SellOrderCreated": {
+        "description": "Sell order created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "title": "SellOrderCreated",
+              "type": "object",
+              "required": [
+                "orderId",
+                "pollingUrl"
+              ],
+              "properties": {
+                "orderId": {
+                  "type": "string",
+                  "example": "AS0ZZHU",
+                  "description": "Identifier for the newly created order. Use it to check its status"
+                },
+                "pollingUrl": {
+                  "type": "string",
+                  "format": "URL",
+                  "example": "https://app.safello.com/v2/order?orderId=AS0ZZHU",
+                  "description": "URL to call to check the order status"
+                }
+              }
+            }
+          }
+        }
+      },
+      "OrderBook": {
+        "description": "Order Book",
+        "content": {
+          "application/json": {
+            "schema": {
+              "title": "OrderBook",
+              "type": "object",
+              "properties": {
+                "pair": {
+                  "type": "string",
+                  "description": "Trade pair",
+                  "example": "BTC_USDC"
+                },
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "The timestamp at which the order book was retrieved"
+                },
+                "bids": {
+                  "type": "array",
+                  "description": "List of bid orders",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "price": {
+                        "type": "string",
+                        "description": "Bid price",
+                        "example": "49905.65"
+                      },
+                      "amount": {
+                        "type": "string",
+                        "description": "Amount available at this bid price",
+                        "example": "5.31251274"
+                      }
+                    }
+                  }
+                },
+                "asks": {
+                  "type": "array",
+                  "description": "List of ask orders",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "price": {
+                        "type": "string",
+                        "description": "Ask price",
+                        "example": "50653.80"
+                      },
+                      "amount": {
+                        "type": "string",
+                        "description": "Amount available at this ask price",
+                        "example": "0.45186957"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "CurrencyRate": {
+        "description": "Currency bid/ask prices (including base) for trades",
+        "content": {
+          "application/json": {
+            "schema": {
+              "title": "CurrencyRate",
+              "type": "object",
+              "properties": {
+                "ask": {
+                  "type": "string",
+                  "example": "343110.6053375",
+                  "description": "Ask price"
+                },
+                "baseAsk": {
+                  "type": "string",
+                  "example": "328335.5075",
+                  "description": "Base ask price"
+                },
+                "mid": {
+                  "type": "string",
+                  "example": "330000.0000",
+                  "description": "Mid price"
+                },
+                "baseBid": {
+                  "type": "string",
+                  "example": "330303.5525",
+                  "description": "Base bid price"
+                },
+                "bid": {
+                  "type": "string",
+                  "example": "313788.374875",
+                  "description": "Bid price"
+                },
+                "cryptoCurrency": {
+                  "type": "string",
+                  "description": "Crypto currency code",
+                  "example": "BTC"
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "Fiat currency",
+                  "example": "SEK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "headers": {
+      "Cache-Control": {
+        "schema": {
+          "type": "string"
+        },
+        "example": "no-store"
+      },
+      "Pragma": {
+        "schema": {
+          "type": "string"
+        },
+        "example": "no-cache"
+      }
+    },
+    "examples": {
+      "OAuth2InvalidRequest": {
+        "summary": "Invalid request",
+        "description": "The request is missing a required parameter, includes an \nunsupported parameter value (other than grant type), \nrepeats a parameter, includes multiple credentials, \nutilizes more than one mechanism for authenticating the \nclient, or is otherwise malformed.\n",
+        "value": {
+          "error": "invalid_request",
+          "error_description": "Missing a required parameter",
+          "error_uri": "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2"
+        }
+      },
+      "OAuth2InvalidClient": {
+        "summary": "Invalid client",
+        "description": "Client authentication failed.",
+        "value": {
+          "error": "invalid_client",
+          "error_description": "Authentication failed.",
+          "error_uri": "https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1"
+        }
+      },
+      "OAuth2InvalidGrant": {
+        "summary": "Authorization grant invalid",
+        "description": "The provided authorization grant or refresh token is\ninvalid, expired, revoked or was issued to another client.\n",
+        "value": {
+          "error": "invalid_grant",
+          "error_description": "Authorization grant invalid",
+          "error_uri": "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2"
+        }
+      },
+      "OAuth2UnauthorizedClient": {
+        "summary": "Client Unauthorized",
+        "description": "The authenticated client is not authorized to use this\nauthorization grant type.\n",
+        "value": {
+          "error": "unauthorized_client"
+        }
+      },
+      "OAuth2UnsupportedGrantType": {
+        "summary": "Unsupported grant type",
+        "description": "The authorization grant type is not supported by the authorization server.",
+        "value": {
+          "error": "unsupported_grant_type",
+          "error_description": "Grant type not supported by server",
+          "error_uri": "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2"
+        }
+      },
+      "OAuth2InvalidScope": {
+        "summary": "Scope invalid",
+        "description": "The requested scope is invalid, unknown, malformed, or exceeds the scope granted by the resource owner.",
+        "value": {
+          "error": "invalid_scope",
+          "error_description": "Invalid scope",
+          "error_uri": "https://datatracker.ietf.org/doc/html/rfc6749#section-3.3"
+        }
+      }
+    },
+    "schemas": {
+      "ComplianceStatus": {
+        "type": "object",
+        "properties": {
+          "decision": {
+            "type": "string",
+            "description": "Describes the outcome of the compliance assessment (ACCEPT or REJECT)",
+            "example": "ACCEPT"
+          },
+          "rejections": {
+            "type": "array",
+            "description": "A list of reasons for the rejection (if any)",
+            "example": [
+              {
+                "reason": "KYC",
+                "code": "BASIC"
+              },
+              {
+                "reason": "EMAIL",
+                "code": "NOT_VERIFIED"
+              },
+              {
+                "reason": "TERMS",
+                "code": "NOT_UP_TO_DATE"
+              },
+              "..."
+            ],
+            "items": {
+              "title": "ComplianceRejection",
+              "type": "object",
+              "description": "A reason for rejecting a compliance verification",
+              "properties": {
+                "reason": {
+                  "type": "string",
+                  "description": "An overall reason category for the failure, such as KYC questionnaire completion",
+                  "example": "KYC"
+                },
+                "code": {
+                  "type": "string",
+                  "description": "A more specific code that indicates the exact cause of the failure, such as not completing their basic KYC questionnaire",
+                  "example": "BASIC"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CryptoSymbol": {
+        "type": "object",
+        "properties": {
+          "currency": {
+            "type": "string",
+            "description": "Crypto currency code",
+            "example": "BTC"
+          },
+          "minorAmountDecimals": {
+            "type": "integer",
+            "description": "Number of decimal places to represent the smallest unit for this crypto currency",
+            "example": 8
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Crypto currency name",
+            "example": "Bitcoin"
+          },
+          "status": {
+            "type": "string",
+            "description": "Availability of our services related to this crypto currency. It can be:\n\n- `active`: All services are working and available\n- `inactive`: Some or all services associated with this crypto currency are temporarily unavailable.\n- `deprecated`: We don't support trading with this cryptocurrency anymore.\n",
+            "example": "active"
+          },
+          "availableActions": {
+            "type": "array",
+            "example": [
+              "buy",
+              "sell"
+            ],
+            "description": "Lists the type of operations you can make using this cryptocurrency.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "network": {
+            "type": "string",
+            "description": "What network the crypto is using or null if not supported",
+            "example": "Bitcoin"
+          },
+          "dateAdded": {
+            "type": "string",
+            "format": "date",
+            "description": "The date when this cryptocurrency was added to Safello.",
+            "example": "2023-06-15"
+          },
+          "color": {
+            "type": "object",
+            "description": "The color scheme associated with this cryptocurrency.",
+            "properties": {
+              "light": {
+                "type": "string",
+                "description": "Light mode color code (e.g., for UI display).",
+                "example": "#FFD700"
+              },
+              "dark": {
+                "type": "string",
+                "description": "Dark mode color code (e.g., for UI display).",
+                "example": "#000000"
+              }
+            }
+          }
+        }
+      },
+      "TradingPair": {
+        "type": "object",
+        "properties": {
+          "pair": {
+            "type": "string",
+            "description": "Trading pair symbol using underscore as delimiter.",
+            "example": "BTC_USDC"
+          },
+          "baseDecimals": {
+            "type": "integer",
+            "description": "How many decimals base currency uses for trading",
+            "example": 8
+          },
+          "counterDecimals": {
+            "type": "integer",
+            "description": "How many decimals counter currency uses for trading",
+            "example": 5
+          },
+          "status": {
+            "type": "string",
+            "description": "Availability of our services related to this trading pair. It can be:\n- `active`: All services are working and available\n- `inactive`: Some or all services associated with this trading pair are temporarily unavailable.\n- `deprecated`: We don't support trading with this cryptocurrency anymore.\n",
+            "example": "active"
+          },
+          "availableActions": {
+            "type": "array",
+            "example": [
+              "buy",
+              "sell"
+            ],
+            "description": "Lists the type of operations you can make using this trading pair.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "minimumOrder": {
+            "type": "object",
+            "description": "Minimum order amount for pair",
+            "example": {
+              "currency": "BTC",
+              "amount": "0.0005"
+            },
+            "$ref": "#/components/schemas/CurrencyAmount"
+          }
+        }
+      },
+      "FiatSymbol": {
+        "type": "object",
+        "properties": {
+          "currency": {
+            "type": "string",
+            "description": "Currency code ISO 4217",
+            "example": "SEK"
+          },
+          "minorAmountDecimals": {
+            "type": "integer",
+            "description": "Number of decimal places to represent the smallest unit for this currency",
+            "example": 2
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Currency name",
+            "example": "Kronor"
+          },
+          "status": {
+            "type": "string",
+            "description": "Availability of our services related to this currency. It can be:\n\n- `active`: All services are working and available\n- `inactive`: Some or all services associated with this currency are temporarily unavailable.\n- `deprecated`: We don't support trading with this currency anymore.\n",
+            "example": "active"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "country": {
+            "type": "string",
+            "description": "Two-letter country code. [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)",
+            "example": "SE"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email",
+            "example": "user@example.com"
+          },
+          "emailActive": {
+            "type": "boolean",
+            "example": true,
+            "description": "Indicates if a user has completed the process of email verification"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "John",
+            "description": "User's first name"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe",
+            "description": "User's last name"
+          },
+          "hasAcceptedLatestTerms": {
+            "type": "boolean",
+            "example": true,
+            "description": "Indicates whether or not the user has accepted the latest Terms and Conditions for using Safello."
+          },
+          "language": {
+            "type": "string",
+            "example": "sv",
+            "description": "Two-letter language code, [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)"
+          },
+          "level": {
+            "type": "integer",
+            "example": 1,
+            "description": "Defines what percentage fee the user gets"
+          },
+          "safeEnvironment": {
+            "type": "boolean",
+            "example": false,
+            "description": "Indicates if the user was put under safe mode"
+          },
+          "telephoneNumber": {
+            "type": "string",
+            "format": "phoneNumber",
+            "example": 46555555555,
+            "description": "User's contact number"
+          },
+          "tier": {
+            "type": "integer",
+            "example": 3,
+            "description": "Relates to the maximum amount of money this user is allowed to buy"
+          }
+        }
+      },
+      "Order": {
+        "title": "OrderRecord",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "AS0ZZHU",
+            "description": "Identifier for the order"
+          },
+          "parentOrder": {
+            "$ref": "#/components/schemas/Order",
+            "description": "The parent order for stop loss / take profit order"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-01-27T11:29:20+0100",
+            "description": "Order creation date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format."
+          },
+          "approved": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-01-27T11:29:20+0100",
+            "description": "Order approval date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format."
+          },
+          "feeRate": {
+            "type": "string",
+            "example": "0.05",
+            "description": "Fee rate in percentage for the transaction"
+          },
+          "fee": {
+            "type": "object",
+            "description": "Fee amount",
+            "example": {
+              "currency": "SEK",
+              "amount": "35.00"
+            },
+            "$ref": "#/components/schemas/CurrencyAmount"
+          },
+          "discountFeeId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Discount fee UUID"
+          },
+          "walletId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Wallet UUID"
+          },
+          "buy": {
+            "type": "object",
+            "description": "Information about the order when the order type is `buy`",
+            "$ref": "#/components/schemas/BuyOrder"
+          },
+          "sell": {
+            "type": "object",
+            "description": "Information about the order when the order type is `sell`",
+            "$ref": "#/components/schemas/SellOrder"
+          },
+          "trade": {
+            "type": "object",
+            "description": "Information about the trade in the transaction when the order type is `trade`",
+            "$ref": "#/components/schemas/TradeOrder"
+          },
+          "transaction": {
+            "type": "object",
+            "description": "Information about the blockchain transaction when the order type is `tx`",
+            "$ref": "#/components/schemas/CryptoTransaction"
+          },
+          "status": {
+            "type": "string",
+            "example": "completed",
+            "description": "Order status. It can be one of the following:\n- `completed`\n- `done`\n- `paid`\n- `traded`\n- `mempool`\n- `exchange`\n- `waiting`\n- `processing`\n- `pending`\n- `error`\n- `stopped`\n- `refunded`\n- `declined`\n- `halted`\n- `rejected`\n"
+          },
+          "type": {
+            "enum": [
+              "buy",
+              "sell",
+              "trade",
+              "tx"
+            ],
+            "example": "sell",
+            "description": "Order type"
+          },
+          "statusErrorCode": {
+            "enum": [
+              "INSUFFICIENT_EXCHANGE_BALANCE"
+            ],
+            "example": "INSUFFICIENT_EXCHANGE_BALANCE",
+            "description": "Specific error affecting order"
+          }
+        }
+      },
+      "OrderCreatedEvent": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "$ref": "#/components/schemas/Order"
+          }
+        }
+      },
+      "OrderUpdatedEvent": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "$ref": "#/components/schemas/Order"
+          }
+        }
+      },
+      "OrderDeletedEvent": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "$ref": "#/components/schemas/Order"
+          }
+        }
+      },
+      "OrderAction": {
+        "type": "object",
+        "required": [
+          "type",
+          "email",
+          "timestamp"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "approved",
+            "description": "Order action type"
+          },
+          "email": {
+            "type": "string",
+            "example": "vitalik@ethereum.org",
+            "description": "Email of customer who triggered this action"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-02-03T09:44:13.000Z",
+            "description": "Creation time in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.\n"
+          }
+        }
+      },
+      "Wallet": {
+        "type": "object",
+        "properties": {
+          "balances": {
+            "type": "array",
+            "description": "Current crypto holdings",
+            "items": {
+              "$ref": "#/components/schemas/CurrencyAmount"
+            }
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-02-03T09:44:13.000Z",
+            "description": "Creation time in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.\n"
+          }
+        }
+      },
+      "WalletPerformance": {
+        "type": "object",
+        "title": "WalletPerformance",
+        "properties": {
+          "fiat": {
+            "type": "string",
+            "description": "Fiat currency"
+          },
+          "cryptos": {
+            "description": "Individual performance for each crypto",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/WalletPerformanceCrypto"
+            },
+            "example": {
+              "BTC": {
+                "amount": "1.0000000",
+                "fiatValue": "11000.0",
+                "performance": {
+                  "absoluteChange": "1000.0",
+                  "percentageChange": "0.1"
+                }
+              }
+            }
+          },
+          "total": {
+            "$ref": "#/components/schemas/WalletPerformanceCrypto"
+          }
+        }
+      },
+      "WalletPerformanceCrypto": {
+        "type": "object",
+        "title": "WalletPerformanceCrypto",
+        "properties": {
+          "amount": {
+            "type": "string",
+            "description": "Current holdings in crypto"
+          },
+          "fiatValue": {
+            "type": "string",
+            "description": "Current fiat value"
+          },
+          "performance": {
+            "type": "object",
+            "title": "Performance",
+            "properties": {
+              "absoluteChange": {
+                "type": "string",
+                "description": "How the performance of the crypto holdings is now in fiat"
+              },
+              "percentageChange": {
+                "type": "string",
+                "description": "How the performance of the crypto holdings in now in percentage (decimal 0.1 = 10%)"
+              }
+            }
+          }
+        }
+      },
+      "WalletPerformanceHistory": {
+        "type": "object",
+        "title": "WalletPerformanceHistory",
+        "properties": {
+          "start": {
+            "type": "string",
+            "format": "date"
+          },
+          "end": {
+            "type": "string",
+            "format": "date"
+          },
+          "performanceSince": {
+            "type": "string",
+            "format": "date"
+          },
+          "fiat": {
+            "type": "string",
+            "description": "Fiat currency"
+          },
+          "timePeriod": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "description": "Data points",
+            "items": {
+              "$ref": "#/components/schemas/WalletPerformanceHistoryDataPoint"
+            }
+          }
+        }
+      },
+      "WalletPerformanceHistoryDataPoint": {
+        "type": "object",
+        "title": "WalletPerformanceHistoryDataPoint",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "The date of the data point"
+          },
+          "assetValues": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "title": "AssetValue",
+              "properties": {
+                "crypto": {
+                  "type": "string",
+                  "description": "Crypto currency"
+                },
+                "amount": {
+                  "type": "string",
+                  "description": "How much of crypto the wallet was holding at the time"
+                },
+                "fiatValue": {
+                  "type": "string",
+                  "description": "How much the crypto was worth in fiat at the time"
+                },
+                "percentageChange": {
+                  "type": "string",
+                  "description": "How the performance of the crypto holdings was at the time in percentage (decimal 0.1 = 10%)"
+                },
+                "absoluteChange": {
+                  "type": "string",
+                  "description": "How the performance of the crypto holdings was at the time in fiat"
+                }
+              }
+            }
+          },
+          "combined": {
+            "type": "object",
+            "title": "Combined",
+            "properties": {
+              "fiatValue": {
+                "type": "string",
+                "description": "How much the combined wallet value was worth in fiat at the time"
+              },
+              "percentageChange": {
+                "type": "string",
+                "description": "How the combined performance of the wallet was at the time in percentage (decimal 0.1 = 10%)"
+              },
+              "absoluteChange": {
+                "type": "string",
+                "description": "How the combined performance of the wallet was at the time in fiat"
+              }
+            }
+          }
+        }
+      },
+      "CurrencyAmount": {
+        "type": "object",
+        "required": [
+          "currency",
+          "amount"
+        ],
+        "properties": {
+          "currency": {
+            "type": "string",
+            "description": "Currency (fiat or crypto) code",
+            "example": "SEK"
+          },
+          "amount": {
+            "type": "string",
+            "description": "Value of the currency with the number of decimals as defined in the Market API.",
+            "example": "510.00"
+          }
+        }
+      },
+      "KycQuestion": {
+        "type": "object",
+        "title": "KycQuestion",
+        "description": "Question object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Question ID",
+            "example": 11
+          },
+          "questionnaire": {
+            "type": "string",
+            "description": "Which questionnaire the question belongs to",
+            "example": "BASIC"
+          },
+          "question": {
+            "type": "string",
+            "description": "Stated question to present to the user",
+            "example": "Är du bosatt i ett annat land än Sverige?"
+          },
+          "alternatives": {
+            "type": "array",
+            "description": "Choice options to present to the user",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "Answer ID",
+                  "example": 1
+                },
+                "answer": {
+                  "type": "string",
+                  "description": "Answer text",
+                  "example": "Nej"
+                },
+                "textAnswerOption": {
+                  "type": "boolean",
+                  "description": "If the alternative is a free text answer",
+                  "example": false
+                }
+              }
+            }
+          },
+          "questionVersion": {
+            "type": "integer",
+            "description": "Question version",
+            "example": 1
+          },
+          "status": {
+            "type": "string",
+            "description": "Status for this question",
+            "example": "waiting"
+          }
+        }
+      },
+      "KycAnswerInput": {
+        "title": "KycAnswerRequest",
+        "type": "object",
+        "description": "Answer object (i.e. the user's response to a KycQuestion)",
+        "required": [
+          "questionnaire",
+          "answers"
+        ],
+        "properties": {
+          "questionnaire": {
+            "type": "string",
+            "description": "Which questionnaire to answer",
+            "example": "BASIC"
+          },
+          "answers": {
+            "type": "array",
+            "description": "Array of answers",
+            "items": {
+              "type": "object",
+              "required": [
+                "questionId"
+              ],
+              "properties": {
+                "questionId": {
+                  "type": "integer",
+                  "description": "Question ID"
+                },
+                "alternativeId": {
+                  "type": "integer",
+                  "description": "Multiple-choice answer ID",
+                  "example": 1
+                },
+                "textAnswer": {
+                  "type": "string",
+                  "description": "Text answer if the alternativ was free text",
+                  "example": "Free text"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BankAccount": {
+        "type": "object",
+        "title": "BankAccount",
+        "description": "Bank account object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Bank account ID",
+            "example": "e6eb08e1-b966-4ee9-b43f-db83dd958479",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the account",
+            "example": "Savings"
+          },
+          "accountNumber": {
+            "type": "string",
+            "description": "Bank account number",
+            "example": "123456789"
+          },
+          "clearingNumber": {
+            "type": "string",
+            "description": "Clearing number",
+            "example": "1234"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency of the bank account",
+            "example": "SEK"
+          },
+          "bank": {
+            "type": "string",
+            "description": "Name of bank",
+            "example": "SHB"
+          },
+          "default": {
+            "type": "boolean",
+            "description": "If bank account is the default selected",
+            "example": true
+          }
+        }
+      },
+      "BankAccountInput": {
+        "type": "object",
+        "title": "BankAccountInput",
+        "description": "Bank account input object",
+        "required": [
+          "accountNumber",
+          "clearingNumber",
+          "currency"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the account",
+            "example": "Savings"
+          },
+          "accountNumber": {
+            "type": "string",
+            "description": "Bank account number",
+            "example": "123456789",
+            "pattern": "^(\\d{7}|\\d{11})$"
+          },
+          "clearingNumber": {
+            "type": "string",
+            "description": "Clearing number",
+            "example": "1234",
+            "pattern": "^\\d{4,5}$"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency of the bank account",
+            "example": "SEK"
+          }
+        }
+      },
+      "BuyOrderInput": {
+        "type": "object",
+        "required": [
+          "cryptoCurrency",
+          "fiat",
+          "paymentMethod"
+        ],
+        "properties": {
+          "cryptoCurrency": {
+            "type": "string",
+            "description": "Cryptocurrency code - one of BTC, ETH, LINK, MATIC, or DOT",
+            "example": "BTC"
+          },
+          "fiat": {
+            "type": "object",
+            "description": "Information about the fiat currency and amount involved in the transaction",
+            "example": {
+              "currency": "SEK",
+              "amount": "510.00"
+            },
+            "$ref": "#/components/schemas/CurrencyAmount"
+          },
+          "walletId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Wallet used in buy order. If not used the default wallet will be used instead"
+          },
+          "paymentMethod": {
+            "type": "string",
+            "description": "Payment method used - one of swish, klarna_bankgiro, klarna_sepa, credit_card, sepa, bank_transfer_dk, bank_transfer_se"
+          },
+          "paymentDetails": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Additional payment details"
+          }
+        }
+      },
+      "SellOrderInput": {
+        "type": "object",
+        "required": [
+          "fiatCurrency",
+          "crypto"
+        ],
+        "properties": {
+          "fiatCurrency": {
+            "type": "string",
+            "example": "SEK",
+            "description": "Currency to convert the crypto to - must be a well formed currency code, currently SEK only"
+          },
+          "crypto": {
+            "type": "object",
+            "description": "Information about the crypto currency and amount involved in the transaction",
+            "example": {
+              "currency": "BTC",
+              "amount": "0.00200001"
+            },
+            "$ref": "#/components/schemas/CurrencyAmount"
+          },
+          "bankAccountId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Legacy, bank account to use when creating a sell order. If not used the user default bank account will be used instead"
+          },
+          "payoutMethod": {
+            "type": "string",
+            "example": "SE Bank transfer",
+            "description": "Payout method used - one of 'SE Bank transfer', 'Credit card', 'SEPA', 'SWIFT'"
+          },
+          "payoutDetails": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Additional payout details"
+          },
+          "walletId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Wallet used in sell order. If not used the default wallet will be used instead"
+          }
+        }
+      },
+      "TradeOrderInput": {
+        "type": "object",
+        "required": [
+          "pair",
+          "amount",
+          "side",
+          "type",
+          "clientId"
+        ],
+        "properties": {
+          "pair": {
+            "type": "string",
+            "description": "A trading pair symbol",
+            "example": "BTC_USDC"
+          },
+          "amount": {
+            "type": "string",
+            "description": "For sell orders, the amount is in the base currency. For buy orders, the amount is in the counter currency. Use 'amountInCounter' to specify the amount in the base currency.",
+            "example": {
+              "amount": "10"
+            }
+          },
+          "amountInCounter": {
+            "type": "boolean",
+            "default": true,
+            "description": "For buy orders, the amount can be in the counter currency. Currently only true is supported."
+          },
+          "side": {
+            "type": "string",
+            "description": "Order side",
+            "enum": [
+              "buy",
+              "sell"
+            ]
+          },
+          "type": {
+            "type": "string",
+            "description": "Order type",
+            "enum": [
+              "market",
+              "limit",
+              "stop_loss",
+              "stop_loss_limit",
+              "take_profit_limit"
+            ]
+          },
+          "orderType": {
+            "type": "string",
+            "description": "What kind of order it is. Quick for non-advance order and orderBook for advance",
+            "enum": [
+              "quick",
+              "orderBook"
+            ],
+            "default": "quick"
+          },
+          "price": {
+            "type": "string",
+            "description": "Limit price for limit orders"
+          },
+          "stopLossPrice": {
+            "type": "string",
+            "description": "Optional. If set, triggers a market order to close the position when the price moves against the user to this level."
+          },
+          "takeProfitPrice": {
+            "type": "string",
+            "description": "Optional. If set, triggers a market order to close the position when the price moves in favor of the user to this level."
+          },
+          "clientId": {
+            "type": "string",
+            "description": "Unique ID for this trade."
+          },
+          "walletId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Wallet used in trade order. If not used the default wallet will be used instead"
+          }
+        }
+      },
+      "TradeOrder": {
+        "type": "object",
+        "required": [
+          "pair",
+          "amount",
+          "counterAmount",
+          "side",
+          "type",
+          "clientId"
+        ],
+        "properties": {
+          "pair": {
+            "type": "string",
+            "description": "A trading pair symbol",
+            "example": "BTC_USDC"
+          },
+          "originalAmount": {
+            "type": "object",
+            "description": "The original amount that sent in",
+            "example": {
+              "currency": "USDC",
+              "amount": "10"
+            },
+            "$ref": "#/components/schemas/CurrencyAmount"
+          },
+          "amount": {
+            "type": "string",
+            "description": "Amount. Deprecated.",
+            "example": {
+              "amount": "0.10"
+            },
+            "deprecated": true
+          },
+          "counterAmount": {
+            "type": "string",
+            "description": "Counter amount. Deprecated.",
+            "example": {
+              "counterAmount": "100"
+            },
+            "deprecated": true
+          },
+          "side": {
+            "type": "string",
+            "description": "Order side",
+            "enum": [
+              "buy",
+              "sell"
+            ]
+          },
+          "from": {
+            "type": "object",
+            "description": "The amount and currency traded from.",
+            "example": {
+              "currency": "USDC",
+              "amount": "10"
+            },
+            "$ref": "#/components/schemas/CurrencyAmount"
+          },
+          "to": {
+            "type": "object",
+            "description": "The amount and currency traded to.",
+            "example": {
+              "currency": "BTC",
+              "amount": "0.00300001"
+            },
+            "$ref": "#/components/schemas/CurrencyAmount"
+          },
+          "fiatAmount": {
+            "type": "object",
+            "description": "Gross fiat amount of to amount at the time of trade in fiat",
+            "example": {
+              "currency": "SEK",
+              "amount": "300.00"
+            },
+            "$ref": "#/components/schemas/CurrencyAmount"
+          },
+          "type": {
+            "type": "string",
+            "description": "Order type",
+            "enum": [
+              "market",
+              "limit",
+              "stop_loss",
+              "stop_loss_limit",
+              "take_profit_limit"
+            ]
+          },
+          "orderType": {
+            "type": "string",
+            "description": "Trade order type. One of: quick, orderBook"
+          },
+          "price": {
+            "type": "string",
+            "description": "Price for the trade"
+          },
+          "limitPrice": {
+            "type": "string",
+            "description": "The limit price for the trade, only for limit type"
+          },
+          "stopLossPrice": {
+            "type": "string",
+            "description": "The stop-loss threshold set on the initial order. If the market price moves unfavorably and hits \nthis level, a separate stop-loss order is created with a market execution to close the trade.\n"
+          },
+          "takeProfitPrice": {
+            "type": "string",
+            "description": "The take-profit threshold set on the initial order. If the market price moves favorably and reaches \nthis level, a separate take-profit order is created with a market execution to close the trade.\n"
+          },
+          "triggerPrice": {
+            "type": "string",
+            "description": "The price at which a conditional stop-loss or take-profit order is triggered. This is returned \nas part of the secondary order that is created based on the stopLossPrice or takeProfitPrice \ndefined in the initial order.\n"
+          },
+          "status": {
+            "description": "The status the trade is in",
+            "$ref": "#/components/schemas/ETradeOrderStatus"
+          },
+          "clientId": {
+            "type": "string",
+            "description": "Unique ID for this trade."
+          },
+          "openTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-01-27T11:29:20+0100",
+            "description": "Order open date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format."
+          },
+          "closeTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-01-27T11:29:20+0100",
+            "description": "Order close date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format."
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-01-27T11:29:20+0100",
+            "description": "Time when an open trade order will be automatically expired and terminated."
+          },
+          "fulfillment": {
+            "type": "string",
+            "description": "Percentage of order fulfillment (decimal 0.1 = 10%)",
+            "example": 0.1
+          }
+        }
+      },
+      "BuyOrder": {
+        "type": "object",
+        "required": [
+          "fiat",
+          "crypto"
+        ],
+        "properties": {
+          "fiat": {
+            "type": "object",
+            "description": "Information about the fiat currency and amount involved in the transaction.",
+            "example": {
+              "currency": "SEK",
+              "amount": "510.00"
+            },
+            "$ref": "#/components/schemas/CurrencyAmount"
+          },
+          "crypto": {
+            "type": "object",
+            "description": "Information about the crypto currency and amount involved in the transaction.",
+            "example": {
+              "currency": "BTC",
+              "amount": "0.00200001"
+            },
+            "$ref": "#/components/schemas/CurrencyAmount"
+          },
+          "paymentMethod": {
+            "type": "string",
+            "example": "klarna_bankgiro",
+            "description": "Payment method used"
+          },
+          "recurring": {
+            "type": "boolean",
+            "example": false,
+            "description": "If the buy order is a recurring order"
+          },
+          "paymentDetails": {
+            "type": "object",
+            "reference": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Reference and additional payment details"
+          },
+          "actions": {
+            "type": "array",
+            "description": "Order action history",
+            "items": {
+              "$ref": "#/components/schemas/OrderAction"
+            }
+          }
+        }
+      },
+      "SellOrder": {
+        "type": "object",
+        "required": [
+          "receivedCrypto",
+          "sold",
+          "payout",
+          "payoutMethod"
+        ],
+        "properties": {
+          "receivedCrypto": {
+            "type": "object",
+            "example": {
+              "currency": "BTC",
+              "amount": "0.00200001"
+            },
+            "description": "Amount of crypto currency received after fees.",
+            "$ref": "#/components/schemas/CurrencyAmount"
+          },
+          "sold": {
+            "type": "object",
+            "example": {
+              "currency": "SEK",
+              "amount": "510.00"
+            },
+            "description": "Amount of fiat money sold.",
+            "$ref": "#/components/schemas/CurrencyAmount"
+          },
+          "payout": {
+            "type": "object",
+            "example": {
+              "currency": "SEK",
+              "amount": "475.00"
+            },
+            "description": "Amount of fiat paid out to the user after fees when the order type is `sell`",
+            "$ref": "#/components/schemas/CurrencyAmount"
+          },
+          "payoutMethod": {
+            "type": "string",
+            "example": "SE Bank transfer",
+            "description": "Payout method used when the order type is `sell`."
+          },
+          "payoutDetails": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Additional payout details when the order type is `sell`."
+          },
+          "actions": {
+            "type": "array",
+            "description": "Order action history",
+            "items": {
+              "$ref": "#/components/schemas/OrderAction"
+            }
+          }
+        }
+      },
+      "CryptoTransaction": {
+        "type": "object",
+        "required": [
+          "type",
+          "txAddress",
+          "txHash"
+        ],
+        "properties": {
+          "crypto": {
+            "type": "object",
+            "description": "Information about the crypto currency and amount involved in the transaction.",
+            "example": {
+              "currency": "BTC",
+              "amount": "0.00200001"
+            },
+            "$ref": "#/components/schemas/CurrencyAmount"
+          },
+          "fiat": {
+            "type": "object",
+            "description": "The fiat value of the crypto amount at the time of the transaction.",
+            "example": {
+              "currency": "SEK",
+              "amount": "510.00"
+            },
+            "$ref": "#/components/schemas/CurrencyAmount"
+          },
+          "txAddress": {
+            "type": "string",
+            "description": "Receiving crypto address of the transaction"
+          },
+          "txHash": {
+            "type": "string",
+            "description": "The blockchain transaction hash"
+          },
+          "remittance": {
+            "type": "string",
+            "description": "remittance info"
+          },
+          "type": {
+            "type": "string",
+            "description": "Crypto transaction type",
+            "enum": [
+              "withdrawal",
+              "deposit",
+              "internal"
+            ]
+          }
+        }
+      },
+      "CancelOrderInput": {
+        "type": "object",
+        "required": [
+          "orderId"
+        ],
+        "properties": {
+          "orderId": {
+            "type": "string",
+            "description": "Order identifier.",
+            "example": "TZ12HH34"
+          }
+        }
+      },
+      "EditOrder": {
+        "type": "object",
+        "description": "Performs a full update of an existing order. All fields in this object will be used to update the existing order. Price and amount are required fields. Stop loss and take profit are optional - they can be set to null to detach/remove existing stop loss or take profit orders from the main order.",
+        "required": [
+          "price",
+          "amount"
+        ],
+        "properties": {
+          "price": {
+            "type": "string",
+            "description": "Used to update the limit price of limit orders. Also used to update both the trigger price and limit price of exit orders (stop_loss, stop_loss_limit, take_profit_limit) as they are the same.",
+            "example": "150"
+          },
+          "amount": {
+            "type": "string",
+            "description": "The quantity of the order",
+            "example": "1"
+          },
+          "stopLossPrice": {
+            "type": "string",
+            "description": "Used to update the stop loss price of the entry position order. If set, after the order is filled, a stop loss order with a trigger price equal to this value is created.",
+            "example": "120"
+          },
+          "takeProfitPrice": {
+            "type": "string",
+            "description": "Used to update the take profit price of the entry position order. If set, after the order is filled, a take profit order with a trigger price equal to this value is created.",
+            "example": "180"
+          }
+        }
+      },
+      "OAuth2TokenRequest": {
+        "type": "object",
+        "title": "OAuth2TokenRequest",
+        "required": [
+          "grant_type"
+        ],
+        "properties": {
+          "grant_type": {
+            "description": "Grant types:\n- `urn:safello:params:oauth:grant-type:bankid`\n- `client_credentials`\n- `refresh_token`\n",
+            "type": "string",
+            "example": "urn:ietf:params:oauth:grant-type:bankid"
+          },
+          "request_id": {
+            "description": "The request_id retrieved from /oauth2/bankid request",
+            "type": "string",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "refresh_token": {
+            "description": "The refresh token previously issued to the client."
+          },
+          "scope": {
+            "description": "The scope of the access request",
+            "type": "string",
+            "example": "read write"
+          }
+        }
+      },
+      "BankIdRequest": {
+        "type": "object",
+        "title": "BankIdRequest",
+        "required": [
+          "pnr"
+        ],
+        "properties": {
+          "pnr": {
+            "description": "Personal Identity Number (12 digits)",
+            "type": "string",
+            "example": {
+              "pnr": "195505120028"
+            }
+          },
+          "corporate": {
+            "required": false,
+            "description": "Set to true to get the first corporate account connected to the bank id (if it exists)",
+            "type": "boolean"
+          },
+          "orgNr": {
+            "required": false,
+            "description": "Specific organization number to get the corporate account connected to the bank id (if it exists)",
+            "type": "string"
+          }
+        }
+      },
+      "OAuth2Error": {
+        "type": "object",
+        "title": "TokenError",
+        "properties": {
+          "error": {
+            "description": "Type of error.",
+            "type": "string"
+          },
+          "error_description": {
+            "description": "Additional information for understanding the error that occurred.",
+            "type": "string"
+          },
+          "error_uri": {
+            "description": "A URI to a web page with information about the error.",
+            "type": "string"
+          },
+          "bank_id_qr_data": {
+            "description": "Bank id qr code data for starting bank id",
+            "type": "string"
+          },
+          "bank_id_hint": {
+            "description": "The current progress for bank id",
+            "type": "string"
+          }
+        }
+      },
+      "HistoricalOhlcvDataResponse": {
+        "type": "object",
+        "properties": {
+          "ts": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when the response was generated."
+          },
+          "resolution": {
+            "type": "string",
+            "enum": [
+              "1m",
+              "5m",
+              "15m",
+              "1h",
+              "4h",
+              "1d",
+              "1w",
+              "1mo"
+            ],
+            "description": "The requested timeframe resolution."
+          },
+          "pair": {
+            "type": "string",
+            "description": "Asset pair of order"
+          },
+          "inverted": {
+            "type": "boolean",
+            "description": "Indicates whether the received data corresponds to the inverted asset pair."
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OhlcvData"
+            }
+          }
+        }
+      },
+      "OhlcvData": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp for the candlestick."
+          },
+          "open": {
+            "type": "string",
+            "description": "Opening price."
+          },
+          "high": {
+            "type": "string",
+            "description": "Highest price during the timeframe."
+          },
+          "low": {
+            "type": "string",
+            "description": "Lowest price during the timeframe."
+          },
+          "close": {
+            "type": "string",
+            "description": "Closing price."
+          },
+          "volume": {
+            "type": "string",
+            "description": "Volume traded during the timeframe."
+          },
+          "ticks": {
+            "type": "integer",
+            "description": "Number of trades executed in the timeframe."
+          }
+        }
+      },
+      "Ticker": {
+        "type": "object",
+        "properties": {
+          "pair": {
+            "type": "string",
+            "description": "Trade pair",
+            "example": "BTC_SEK"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp at which the ticker was calculated"
+          },
+          "quoteVolume": {
+            "type": "string",
+            "description": "Volume within the last 24 hours in the quote currency"
+          },
+          "baseVolume": {
+            "type": "string",
+            "description": "Volume within the last 24 hours in the base currency"
+          },
+          "lastPrice": {
+            "type": "string",
+            "description": "Price of the last trade"
+          },
+          "bestBid": {
+            "type": "string",
+            "description": "Price of the current best bid"
+          },
+          "bestAsk": {
+            "type": "string",
+            "description": "Price of the current best ask"
+          },
+          "high": {
+            "type": "string",
+            "description": "Highest matched price within the last 24 hours"
+          },
+          "low": {
+            "type": "string",
+            "description": "Lowest matched price within the last 24 hours"
+          },
+          "mid": {
+            "type": "string",
+            "description": "Mid price between ask and bid"
+          }
+        }
+      },
+      "CurrencyRate": {
+        "type": "object",
+        "properties": {
+          "ask": {
+            "type": "string",
+            "example": "343110.6053375",
+            "description": "Ask price"
+          },
+          "baseAsk": {
+            "type": "string",
+            "example": "328335.5075",
+            "description": "Base ask price"
+          },
+          "mid": {
+            "type": "string",
+            "example": "330000.0000",
+            "description": "Mid price"
+          },
+          "baseBid": {
+            "type": "string",
+            "example": "330303.5525",
+            "description": "Base bid price"
+          },
+          "bid": {
+            "type": "string",
+            "example": "313788.374875",
+            "description": "Bid price"
+          },
+          "cryptoCurrency": {
+            "type": "string",
+            "description": "Crypto currency code",
+            "example": "BTC"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Fiat currency",
+            "example": "SEK"
+          }
+        }
+      },
+      "Market24hTickerData": {
+        "type": "object",
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "description": "The trading pair symbol"
+          },
+          "high": {
+            "type": "string",
+            "description": "The highest price in the last 24 hours."
+          },
+          "low": {
+            "type": "string",
+            "description": "The lowest price in the last 24 hours."
+          },
+          "bid": {
+            "type": "string",
+            "description": "The current highest bid price."
+          },
+          "ask": {
+            "type": "string",
+            "description": "The current lowest ask price."
+          },
+          "volume": {
+            "type": "string",
+            "description": "The 24-hour trading volume for base."
+          },
+          "quoteVolume": {
+            "type": "string",
+            "description": "The 24-hour trading volume for counter."
+          },
+          "priceChangePercent": {
+            "type": "string",
+            "description": "The percentage price change over the last 24 hours."
+          }
+        }
+      },
+      "Fees": {
+        "type": "object",
+        "properties": {
+          "orderBook": {
+            "type": "object",
+            "properties": {
+              "maker": {
+                "type": "string",
+                "description": "Maker fee in decimal percentage (0.1 = 10%)",
+                "example": 0.004
+              },
+              "taker": {
+                "type": "string",
+                "description": "Taker fee in decimal percentage (0.1 = 10%)",
+                "example": 0.006
+              }
+            }
+          }
+        }
+      },
+      "EOrderStatus": {
+        "type": "string",
+        "description": "Represents all possible order status states, combining those used in both BI and API services.",
+        "enum": [
+          "none",
+          "pending",
+          "processing",
+          "rejected",
+          "completed",
+          "done",
+          "paid",
+          "traded",
+          "mempool",
+          "exchange",
+          "waiting",
+          "error",
+          "stopped",
+          "refunded",
+          "declined",
+          "halted",
+          "pending-approval",
+          "paid-and-pending-approval",
+          "received",
+          "pending_tr"
+        ]
+      },
+      "ETradeOrderStatus": {
+        "type": "string",
+        "enum": [
+          "open",
+          "partiallyFilled",
+          "filled",
+          "cancelled",
+          "exchangeRejected"
+        ]
+      },
+      "MarketChartRecord": {
+        "type": "object",
+        "example": [
+          {
+            "timestamp": 1643038200000,
+            "price": "317258.03"
+          }
+        ],
+        "description": "Object with the data point to plot.",
+        "properties": {
+          "timestamp": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1643037000000,
+            "description": "Timestamp representing the number of milliseconds since\n[UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time)\n"
+          },
+          "price": {
+            "type": "string",
+            "example": "317258.03",
+            "description": "Unitary price for the cryptocurrency in COUNTER\n"
+          }
+        }
+      }
+    }
+  }
+}

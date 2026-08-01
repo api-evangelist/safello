@@ -1,0 +1,16 @@
+generated: '2026-07-21'
+method: searched
+source: https://safello.github.io/safello-api/docs/getting-started/getting-started-auth
+test_environment:
+  staging_host: https://api.s4f3.io
+  production_host: https://api.safello.com
+  token_endpoint: https://api.s4f3.io/oauth2/token
+test_mode:
+  header: 'Test: true'
+  behaviour: 'On the staging host, sending the "Test: true" header bypasses actual Swedish BankID verification
+    so the BankID grant flow can be exercised without a real BankID.'
+required_headers:
+- source-ip-address
+- source-user-agent
+notes: Test values (BankID personal numbers, etc.) are provisioned per institutional client; Safello does
+  not publish universal magic test identifiers. Access tokens expire after 5 minutes on both environments.

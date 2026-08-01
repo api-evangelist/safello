@@ -1,0 +1,41 @@
+# Safello
+
+> Safello is a Swedish cryptocurrency brokerage (founded 2013, registered with Finansinspektionen, listed on Nasdaq First North Growth Market) that lets users buy, sell, and store digital assets. Its Institutional API offers "Cryptocurrency as a Service" (CaaS) to third-party organisations — market data, customer onboarding (BankID + KYC), buy/sell/trade orders, wallets, and compliance verification.
+
+## APIs
+
+- [Safello Institutional API (v2.2.30)](https://safello.github.io/safello-api/api): Cryptocurrency-as-a-Service REST API. Base URL https://api.safello.com. OAuth2 (client credentials, authorization code, custom BankID grant) + Basic auth. 34 operations across Market, Account, Orders, Wallet, and Compliance.
+- [Safello App API (v1)](https://safello.github.io/safello-api/docs/intro): Legacy consumer app API at https://app.safello.com (AccessToken + App-Id headers).
+
+## Specs
+
+- [Institutional OpenAPI 3.0.0](openapi/safello-institutional-openapi.json)
+- [App OpenAPI 3.1.0](openapi/safello-app-openapi.json)
+- [OAuth 2.0 Authorization Server Metadata (RFC 8414)](well-known/safello-oauth-authorization-server.json)
+
+## Docs
+
+- [Getting Started](https://safello.github.io/safello-api/docs/getting-started/getting-started-intro)
+- [Authentication](https://safello.github.io/safello-api/docs/getting-started/getting-started-auth)
+- [Tokens in Detail](https://safello.github.io/safello-api/docs/getting-started/tokens)
+- [Customer Onboarding](https://safello.github.io/safello-api/docs/customer-onboarding/customer-onboarding-intro)
+- [Buying](https://safello.github.io/safello-api/docs/buying-and-selling/buying)
+- [Selling](https://safello.github.io/safello-api/docs/buying-and-selling/selling)
+- [Wallet](https://safello.github.io/safello-api/docs/buying-and-selling/wallet)
+- [Error Codes](https://safello.github.io/safello-api/docs/other-resources/error-codes)
+
+## Enrichment Artifacts
+
+- [Authentication profile](authentication/safello-authentication.yml)
+- [OAuth scopes](scopes/safello-scopes.yml)
+- [Conventions](conventions/safello-conventions.yml)
+- [Error catalog](errors/safello-error-codes.yml)
+- [Data model](data-model/safello-data-model.yml)
+- [Sandbox / test environment](sandbox/safello-sandbox.yml)
+- [Vulnerability disclosure](security/safello-vulnerability-disclosure.yml)
+- [Conformance](conformance/safello-conformance.yml)
+- [Agent skills](skills/_index.yml)
+
+## Security
+
+- [Bug Bounty / Responsible Disclosure](https://safello.com/security-bug-bounty) — security@safello.com (PGP required)

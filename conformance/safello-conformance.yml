@@ -1,0 +1,42 @@
+generated: '2026-07-21'
+method: searched
+source: openapi + https://api.safello.com/.well-known/oauth-authorization-server
+standards:
+- id: oauth2
+  conforms: true
+  evidence: OpenAPI securitySchemes type oauth2 (clientCredentials, authorizationCode, custom BankID grant);
+    RFC 8414 authorization-server metadata published at api.safello.com
+- id: rfc8414-as-metadata
+  conforms: true
+  evidence: /.well-known/oauth-authorization-server returns 200 with issuer, token/authorize/jwks/revoke/introspect
+    endpoints
+- id: rfc7636-pkce
+  conforms: true
+  evidence: 'code_challenge_methods_supported: [S256] in authorization-server metadata'
+- id: rfc7662-token-introspection
+  conforms: true
+  evidence: introspection_endpoint published; docs describe /oauth2/introspect for refresh-token status
+- id: rfc7009-token-revocation
+  conforms: true
+  evidence: revocation_endpoint https://api.safello.com/oauth2/revoke published
+- id: private_key_jwt
+  conforms: true
+  evidence: token_endpoint_auth_methods_supported includes private_key_jwt and client_secret_jwt
+- id: jwt-access-tokens
+  conforms: true
+  evidence: 'docs: access tokens are JWTs with exp claim (Unix epoch)'
+- id: oidc
+  conforms: false
+  evidence: no /.well-known/openid-configuration served (403); OIDC not advertised
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: errors use service-specific code strings in BadRequest + OAuth2 error object, not application/problem+json
+- id: psd2
+  conforms: false
+- id: json:api
+  conforms: false
+compliance_program:
+  regulated: true
+  notes: Safello is registered with the Swedish Financial Supervisory Authority (Finansinspektionen) since
+    2013 and listed on Nasdaq First North Growth Market (2021). This is regulatory registration, not a
+    published SOC 2 / ISO 27001 security-certification program.

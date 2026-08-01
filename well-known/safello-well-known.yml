@@ -1,0 +1,18 @@
+generated: '2026-07-21'
+method: searched
+host: https://api.safello.com
+documents:
+- path: /.well-known/oauth-authorization-server
+  status: 200
+  file: safello-oauth-authorization-server.json
+  note: RFC 8414 OAuth 2.0 Authorization Server Metadata
+- path: /.well-known/openid-configuration
+  status: 403
+- path: /.well-known/security.txt
+  status: 403
+- path: /.well-known/api-catalog
+  status: 403
+- path: /.well-known/ai-plugin.json
+  status: 403
+notes: app.safello.com and safello.com returned 404 for all probed /.well-known/ paths. api.safello.com
+  serves RFC 8414 authorization-server metadata; other paths return 403 (auth-gated).

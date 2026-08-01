@@ -1,0 +1,26 @@
+{
+  "provider": "safello",
+  "sources": [
+    "safello-account-api-openapi.yml",
+    "safello-auth-api-openapi.yml",
+    "safello-compliance-api-openapi.yml",
+    "safello-market-api-openapi.yml",
+    "safello-orders-api-openapi.yml",
+    "safello-prices-api-openapi.yml",
+    "safello-wallet-api-openapi.yml"
+  ],
+  "outputs": [
+    "safello-account-api-openapi.yml",
+    "safello-auth-api-openapi.yml",
+    "safello-compliance-api-openapi.yml",
+    "safello-market-api-openapi.yml",
+    "safello-orders-api-openapi.yml",
+    "safello-prices-api-openapi.yml",
+    "safello-wallet-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

@@ -1,0 +1,38 @@
+generated: '2026-07-21'
+method: searched
+source: https://safello.github.io/safello-api/docs/getting-started/getting-started-auth + openapi
+authentication:
+  style: OAuth2 Bearer JWT
+  token_endpoint: /oauth2/token
+  flows:
+  - client_credentials
+  - authorizationCode
+  - urn:safello:params:oauth:grant-type:bankid
+  - refresh_token
+  token_type: JWT
+  access_token_ttl_seconds: 300
+  refresh_token: one-time use; reusing a refresh token twice invalidates the session
+  see: authentication/safello-authentication.yml
+idempotency:
+  supported: false
+  note: No Idempotency-Key header or idempotent-retry contract documented in the OpenAPI or docs.
+pagination:
+  style: offset
+  params:
+  - offset
+  - size
+  note: List endpoints (e.g. GET /v2/orders) use offset + size query parameters; some market endpoints
+    use limit.
+request_headers:
+  required:
+  - source-ip-address
+  - source-user-agent
+  note: source-ip-address and source-user-agent identify the end customer behind an institutional integration.
+error_envelope:
+  shape: service-specific code string in 400 body; OAuth2 error object for token errors
+  see: errors/safello-problem-types.yml, errors/safello-error-codes.yml
+versioning:
+  style: uri-path (/v2/)
+  see: lifecycle/safello-lifecycle.yml
+rate_limit_signaling:
+  documented: false

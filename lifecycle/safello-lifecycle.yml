@@ -1,0 +1,19 @@
+generated: '2026-07-21'
+method: searched
+source: https://safello.github.io/safello-api/docs/intro
+versioning:
+  scheme: uri-path
+  current: v2
+  spec_version: 2.2.30
+  docs: https://safello.github.io/safello-api/api
+  note: Institutional API paths are prefixed /v2/. A legacy app API (v1, app.safello.com) also exists.
+deprecation:
+  policy_url: null
+  sunset_header: null
+  note: No published deprecation/sunset policy found.
+sla:
+  url: null
+status_page: null
+status_page_note: No confirmed Safello status page. safello.statuspage.io is an unclaimed Statuspage subdomain
+  that 302-redirects to statuspage.io marketing, so it is NOT a live Safello status page.
+deprecated_operations: []

@@ -1,0 +1,1439 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Safello API",
+    "description": "Powering your app with crypto",
+    "version": "0.1.0",
+    "license": {
+      "name": "Private",
+      "url": "TBD"
+    }
+  },
+  "tags": [
+    {
+      "name": "prices",
+      "x-displayName": "Prices",
+      "description": "Price endpoints"
+    },
+    {
+      "name": "auth",
+      "x-displayName": "Authentication",
+      "description": "Authentication flow"
+    },
+    {
+      "name": "account",
+      "x-displayName": "Account",
+      "description": "Account management"
+    },
+    {
+      "name": "orders",
+      "x-displayName": "Orders",
+      "description": "Buy and sell crypto"
+    },
+    {
+      "name": "wallet",
+      "x-displayName": "Wallet",
+      "description": "User's wallet"
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://app.safello.com"
+    }
+  ],
+  "paths": {
+    "/api/prices": {
+      "get": {
+        "operationId": "getPriceHistory",
+        "tags": [
+          "prices"
+        ],
+        "summary": "Price history",
+        "description": "Gets historical price data for a cryptocurrency in a given interval.\n\nThe resulting array can be plotted in a graph and contains a list of tuple arrays with 2 elements:\n\n1. A timestamp representing the number of milliseconds since [UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time).\n2. Unitary price for the cryptocurrency in SEK.\n",
+        "parameters": [
+          {
+            "name": "crypto",
+            "in": "query",
+            "description": "Cryptocurrency",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "BTC",
+                "ETH",
+                "LINK",
+                "MATIC",
+                "DOT"
+              ],
+              "default": "BTC"
+            }
+          },
+          {
+            "name": "interval",
+            "in": "query",
+            "description": "Time interval for the result",
+            "schema": {
+              "type": "string",
+              "default": "MAX",
+              "enum": [
+                "DAILY",
+                "WEEKLY",
+                "MONTHLY",
+                "QUARTERLY",
+                "HALF_YEARLY",
+                "YEARLY",
+                "YTD",
+                "MAX"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Price historical datapoints",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "example": [
+                    [
+                      1643037000000,
+                      310438.36
+                    ],
+                    [
+                      1643037600000,
+                      314322.28
+                    ],
+                    [
+                      1643038200000,
+                      317258.03
+                    ],
+                    "..."
+                  ],
+                  "items": {
+                    "type": "array",
+                    "description": "Tuple array with the datapoint to plot.",
+                    "prefixItems": [
+                      {
+                        "type": "integer",
+                        "example": 1643037000000,
+                        "description": "Timestamp representing the number of milliseconds since\n[UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time).\n"
+                      },
+                      {
+                        "type": "number",
+                        "example": 310438.36,
+                        "description": "Unitary price for the cryptocurrency in SEK."
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v1/rate": {
+      "get": {
+        "operationId": "getPrice",
+        "tags": [
+          "prices"
+        ],
+        "summary": "Get price",
+        "description": "Gets the current price for a single crypto currency",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "query",
+            "required": true,
+            "description": "AppID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "crypto",
+            "in": "query",
+            "description": "Crypto currency code",
+            "schema": {
+              "type": "string",
+              "default": "BTC",
+              "enum": [
+                "BTC",
+                "ETH",
+                "DOT",
+                "LINK",
+                "MATIC"
+              ]
+            }
+          },
+          {
+            "name": "currency",
+            "in": "query",
+            "description": "Fiat currency",
+            "schema": {
+              "type": "string",
+              "default": "SEK",
+              "enum": [
+                "SEK"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Price retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ask": {
+                      "type": "number",
+                      "example": 343110.6053375,
+                      "description": "Ask price"
+                    },
+                    "baseAsk": {
+                      "type": "number",
+                      "example": 328335.5075,
+                      "description": "Base ask price"
+                    },
+                    "baseBid": {
+                      "type": "number",
+                      "example": 330303.5525,
+                      "description": "Base bid price"
+                    },
+                    "bid": {
+                      "type": "number",
+                      "example": 313788.374875,
+                      "description": "Bid price"
+                    },
+                    "cryptoCurrency": {
+                      "type": "string",
+                      "description": "Crypto currency",
+                      "example": "btc"
+                    },
+                    "currency": {
+                      "type": "string",
+                      "description": "Fiat currency",
+                      "example": "sek"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "498": {
+            "$ref": "#/components/responses/AppIdRequired"
+          }
+        }
+      }
+    },
+    "/v1/auth": {
+      "post": {
+        "operationId": "startAuth",
+        "tags": [
+          "auth"
+        ],
+        "summary": "Start authentication",
+        "description": "Starts an authentication request",
+        "security": [
+          {
+            "AppId": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "method",
+            "in": "query",
+            "description": "Authentication method to use",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "bankid_se"
+              ],
+              "default": "bankid_se"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "redirectPath": {
+                    "description": "Relative path inside the safello webapp to redirect the user to after logging in.",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authentication request started successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Object with information to complete the authentication process",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "redirect"
+                      ],
+                      "description": "Describes the type of response"
+                    },
+                    "pollingUrl": {
+                      "type": "string",
+                      "format": "url",
+                      "description": "The URL you should call for checking the status of the authentication process",
+                      "example": "https://app.safello.com/v1/auth?method=bankid_se&token=1b36b7ef-1bd2-4739-94cf-4df3e374f848"
+                    },
+                    "qrCodes": {
+                      "type": "array",
+                      "example": [
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.0.4b7dbdaba727420352a1a752d1ba5cd8c650ec131cf10e477eca140fd8d1d259",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.1.8469c1f109735e1bbc6b6107d4112401b9446c1caea4611f171e02b7c8eea127",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.2.0a536926783b52e8837f2bba7f3738d5de641c65b7325e1fc643da7cdc64427a",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.3.afca20f1bb0ca126924679ea4832e31642653f47c63457987495a06f7a2881e7",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.4.dd0db3170ce1e91b6f1098a2e0b2a020dc3c4356b032f71db0a79e0f0d12fab9",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.5.993e453c28e5e78768b1a1c418e6ce3f7316e19dee2606a1880a757e959cc8c4",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.6.48e6e9181a684c3be7a44bd30d5738de83541c65a0c2a515ee034c0754437078",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.7.6442dde57ac0c1e0c29254da48fc33163166678bfa94af514d7dc469cc750b09",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.8.e19e127b7227d3fce01c69f98cd9cccb8979c157b19ee9720edca4c03903b54f",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.9.c099b293a9f5f1714a1aed5e7cf97b4a482794e00d14f2589180806526fb3247",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.10.e003d65ff82ee66d44a347d9c25567278a7fd04aecfdf97e1cd316118eccefc6",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.11.6d6ed759392e2d1faa5c4024770937afc50df35ecb2d217945c757f1ca846752",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.12.c09a8114bb2bb2a5a7e3680553f6848d5be714e41bd367a1f6e6b351abbd6328",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.13.863fbcf444c57707b0d44080e6afd55d4060c568f92817007963ccd337cbe747",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.14.3894cc97e94b282828f5175b9e75099f83aa566d8bc497f944d45b61b293f299",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.15.d1b2d859308ca1c57e50d53708f37a49869716dcd3d826909811ca1e4c5745f2",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.16.b5b29ca20d50362862dd893771750d0e32b4ed4eea3436e96661b42aa28ebb5e",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.17.30511a502e4a63cdcdb8f8162acd28ef35fc0e9e302438e1aeddfed4764e28c3",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.18.ae76fdedcd4711185e576bb5e3161520c15f29df6bdd62a317b5b3df7b307acf",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.19.12ad2ca8d0e7a8605147d55d1fc11f14cbe81b487c1aa567aca95f51623e98ed",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.20.2394cf188b5c41f391a22d9c34f62af54bb508285e5de46704a4defe7bfbe26f",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.21.4702aade9b50bfc87d0a28582af2acf2fd8d011bbaf37a2bba689087c72639f7",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.22.6d6f633f934c9c480deeb5009001e4d92d81b31beaec87c9f3a70ef5940d30c1",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.23.5e08553a79441a08d7f1b3afac3805dadb44d67d36dc76f5f0eb9bbb909d80c1",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.24.c769e4cbc6a15220fce70cae83cb288b3b80dabd1b48ac4a75148a4c2659e4c0",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.25.9ee3892d4fb3a7a2a9beb50b00f10a572ed4b7a9a16475d77be7628e1b7d24eb",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.26.0ee2729dc7fe72043c67e245baee23b4380d0dd729cf864b4ff09c5de57e736c",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.27.4d6fc7e05f1c1990d8251c6c5bcdf30ca48ce35b90fdbaadc6b58fb8fa2769d2",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.28.0e8e89a192f01b30d108bd17e652d988f408a8b96626243150806fc87008f248",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.29.220b823f1d8326994180e0ee42f6b6a61ffc5107e27c7859b7a1412294df2825",
+                        "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.30.dab46b87905527b38a44ae6eac955942db3f86152c16301bc0f5572e96eb6ac0"
+                      ],
+                      "description": "Array with strings to be displayed as QR codes for scanning using the BankID app.\n\nYou must iterate through the array and display one QR code at a time for each\nsecond elapsed since the moment you receive the response.\n\nOnce you exhaust the elements in this array, you need to start a new authentication request.\n",
+                      "items": {
+                        "type": "string",
+                        "example": "bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.0.4b7dbdaba727420352a1a752d1ba5cd8c650ec131cf10e477eca140fd8d1d259"
+                      }
+                    },
+                    "redirectUrl": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "bankid:///?autostarttoken=92bbfe55-daf3-4b3a-803b-177b8b800364&redirect=https%3A%2F%2Fapp.safello.com%3FbankIdPollingRef%3D1b36b7ef-1bd2-4739-94cf-4df3e374f848%26redirect%3D%252Faccount",
+                      "description": "URL to use for redirecting your user to the BankID app if they have it installed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "498": {
+            "$ref": "#/components/responses/AppIdRequired"
+          }
+        }
+      },
+      "get": {
+        "operationId": "checkAuthStatus",
+        "tags": [
+          "auth"
+        ],
+        "summary": "Authentication status",
+        "description": "Checks the status for an authentication request.\n\nAfter creating an authentication request, you should call this endpoint every 1-2 seconds\n to check wether or not the user has finished authenticating with BankID.\n",
+        "security": [
+          {
+            "AppId": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "description": "Token"
+          },
+          {
+            "name": "method",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "bankid_se"
+              ],
+              "default": "bankid_se",
+              "description": "Authentication method to use"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "WAITING_FOR_CONFIRMATION",
+                        "WAITING_FOR_SIGN",
+                        "ERROR"
+                      ],
+                      "description": "While we wait for the user to identify, this code represents the latest status of the authentication request.\n\n- `WAITING_FOR_CONFIRMATION`: The user needs to open the BankID app and start authenticating.\n- `WAITING_FOR_SIGN`: The user has interacted with the BankID app but hasn't submitted a signature.\n- `ERROR`: Either the authorization request timed out, or the user has canceled the process, or some other error ocurred.\n"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "If the status is not successful, this attribute describes the current state",
+                      "example": "User has not yet confirmed their identity with the given ref"
+                    },
+                    "accessToken": {
+                      "type": "string",
+                      "description": "Upon completion, this attribute contains the JWT token to be included in\nany request that requires authentication.\n"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "412": {
+            "$ref": "#/components/responses/PreconditionFailed"
+          }
+        }
+      }
+    },
+    "/v1/auth/user": {
+      "get": {
+        "operationId": "getUser",
+        "security": [
+          {
+            "AccessToken": []
+          }
+        ],
+        "tags": [
+          "auth"
+        ],
+        "summary": "Get logged in user",
+        "description": "Returns information about the logged in user",
+        "responses": {
+          "200": {
+            "description": "An object with user information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v1/system/acceptTerms": {
+      "post": {
+        "operationId": "acceptTerms",
+        "security": [
+          {
+            "AccessToken": []
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "Accept T&C",
+        "description": "Accept Terms and Conditions",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "marketingEmails": {
+                    "type": "boolean",
+                    "description": "Opt in to receiving marketing emails from Safello",
+                    "default": false,
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully accepted terms"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v1/email": {
+      "post": {
+        "operationId": "sendVerificationEmail",
+        "security": [
+          {
+            "AccessToken": []
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "Send verification email",
+        "description": "Send email to verify the user has access to that account",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "emailAddress"
+                ],
+                "properties": {
+                  "emailAddress": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "Email address to verify",
+                    "example": "user@example.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email verification sent"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v1/email/verify": {
+      "put": {
+        "operationId": "verifyEmail",
+        "security": [
+          {
+            "AccessToken": []
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "Verify email",
+        "description": "Verify user's email address",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "code"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "integer",
+                    "description": "Verification code sent to the user's email",
+                    "example": 123456
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email verified successfully"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v1/kyc/require": {
+      "get": {
+        "operationId": "requireKyc",
+        "security": [
+          {
+            "AccessToken": []
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "Check if KYC is required",
+        "description": "Use this endpoint to check is the user is required to complete the KYC questionaire to\ncontinue trading\n",
+        "responses": {
+          "200": {
+            "description": "Check result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "requireKyc": {
+                      "type": "boolean",
+                      "description": "Indicates if the user is required to complete the KYC questionaire"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v1/kyc": {
+      "get": {
+        "operationId": "kycQuestions",
+        "security": [
+          {
+            "AccessToken": []
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "KYC questions",
+        "description": "Gets a list of questions to ask the user in order to complete the \"Know Your Customer\" (KYC)\nquestionnaire.\n",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "description": "Two-letter language code, [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)\n",
+              "example": "sv"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of KYC questions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "questions": {
+                      "type": "array",
+                      "description": "Array of KYC questions",
+                      "items": {
+                        "type": "object",
+                        "description": "Quetion object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "Question ID",
+                            "example": 11
+                          },
+                          "question": {
+                            "type": "string",
+                            "description": "Stated question to present to the user",
+                            "example": "Är du bosatt i ett annat land än Sverige?"
+                          },
+                          "multipleChoice": {
+                            "type": "boolean",
+                            "description": "Indicates if the question offers multiple choice answers",
+                            "example": true
+                          },
+                          "alternatives": {
+                            "type": "array",
+                            "description": "If the question is multiple choice, this array contains the\nchoice options to present to the user\n",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer",
+                                  "description": "Answer ID",
+                                  "example": 1
+                                },
+                                "answer": {
+                                  "type": "string",
+                                  "description": "Answer text",
+                                  "example": "Nej"
+                                }
+                              }
+                            }
+                          },
+                          "questionVersion": {
+                            "type": "integer",
+                            "description": "Question version",
+                            "example": 1
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "Status for this question",
+                            "example": "waiting"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      },
+      "post": {
+        "operationId": "answerKYC",
+        "security": [
+          {
+            "AccessToken": []
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "Answer KYC questionaire",
+        "description": "Submits the user's answers to the KYC questionaire\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "answers": {
+                    "type": "array",
+                    "description": "Array of answers",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "questionId"
+                      ],
+                      "properties": {
+                        "questionId": {
+                          "type": "integer",
+                          "description": "Question ID"
+                        },
+                        "alternativeId": {
+                          "type": "integer",
+                          "description": "If the question is multiple-choice, here you send the answer ID",
+                          "example": 1
+                        },
+                        "textAnswer": {
+                          "type": "string",
+                          "description": "Free text answer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "KYC questionaire submitted"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    },
+    "/v1/order": {
+      "post": {
+        "operationId": "createBuyOrder",
+        "security": [
+          {
+            "AccessToken": []
+          }
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Create buy order",
+        "description": "Creates a new order to buy crypto currency using fiat money.\n\nUpon creation, you can monitor the status of the order by calling\n[Check order status](#operation/checkOrderStatus).\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "fiatAmount",
+                  "fiatCurrency"
+                ],
+                "properties": {
+                  "cryptoCurrency": {
+                    "type": "string",
+                    "enum": [
+                      "BTC",
+                      "ETH",
+                      "LINK",
+                      "MATIC",
+                      "DOT"
+                    ],
+                    "default": "BTC",
+                    "description": "Cryptocurrency to buy"
+                  },
+                  "fiatAmount": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "example": 350,
+                    "description": "Amount of fiat money to buy"
+                  },
+                  "fiatCurrency": {
+                    "type": "string",
+                    "enum": [
+                      "SEK"
+                    ],
+                    "example": "SEK",
+                    "description": "Currency the `fiatAmount` is in"
+                  },
+                  "useWallet": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Indicates if the crypto bought should be sent to Safello's custodial wallet"
+                  },
+                  "receivingAddress": {
+                    "type": "string",
+                    "description": "When not using the Safello wallet, use this field to specify the crypto address\nwhere the crypto should be sent to\n",
+                    "example": "mkHS9ne12qx9pS9VojpwU5xtRd4T7X7ZUt"
+                  },
+                  "paymentMethod": {
+                    "type": "string",
+                    "enum": [
+                      "swish",
+                      "klarna_bankgiro",
+                      "klarna_sepa",
+                      "credit_card",
+                      "sepa",
+                      "bank_transfer_dk",
+                      "bank_transfer_se"
+                    ],
+                    "description": "Payment method used"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "example": 46555555555,
+                    "description": "Phone number used to make the payment.\nYou must send it when the payment method is `swish`.\n"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrderCreated"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          },
+          "406": {
+            "$ref": "#/components/responses/BuyLimitExceeded"
+          },
+          "412": {
+            "$ref": "#/components/responses/PreconditionFailed"
+          }
+        }
+      },
+      "get": {
+        "operationId": "checkOrderStatus",
+        "security": [
+          {
+            "AccessToken": []
+          }
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Check order status",
+        "description": "Checks the status of an order. Used to monitor if a buy or sell order has been completed.\n",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "query",
+            "required": true,
+            "description": "Order identifier"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          },
+          "412": {
+            "$ref": "#/components/responses/PreconditionFailed"
+          }
+        }
+      }
+    },
+    "/v1/order/sell": {
+      "post": {
+        "operationId": "createSellOrder",
+        "security": [
+          {
+            "AccessToken": []
+          }
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Create sell order",
+        "description": "Creates an order to sell crypto currency and receive fiat money.\n\nUpon creation, you can monitor the status of the order by calling\n[Check order status](#operation/checkOrderStatus).\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "cryptoAmount",
+                  "fiatCurrency"
+                ],
+                "properties": {
+                  "cryptoCurrency": {
+                    "type": "string",
+                    "enum": [
+                      "BTC",
+                      "ETH",
+                      "LINK",
+                      "MATIC",
+                      "DOT"
+                    ],
+                    "default": "BTC",
+                    "description": "Cryptocurrency to buy"
+                  },
+                  "cryptoAmount": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "example": 350,
+                    "description": "Amount of fiat money to buy"
+                  },
+                  "fiatCurrency": {
+                    "type": "string",
+                    "enum": [
+                      "SEK"
+                    ],
+                    "example": "SEK",
+                    "description": "Currency to convert the crypto to"
+                  },
+                  "useWallet": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Indicates if the crypto bought should be sent to Safello's custodial wallet"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrderCreated"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          },
+          "412": {
+            "$ref": "#/components/responses/PreconditionFailed"
+          }
+        }
+      }
+    },
+    "/v1/wallet": {
+      "get": {
+        "operationId": "getWallet",
+        "security": [
+          {
+            "AccessToken": []
+          }
+        ],
+        "tags": [
+          "wallet"
+        ],
+        "summary": "Get wallet",
+        "description": "Retrieves the user's wallet\n",
+        "responses": {
+          "200": {
+            "description": "Wallet retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Wallet"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthenticatedError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "AccessToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Access-Token"
+      },
+      "AppId": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "App-Id"
+      }
+    },
+    "responses": {
+      "NotAuthenticatedError": {
+        "description": "Not authenticated",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Description of the error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PreconditionFailed": {
+        "description": "Some required parameter was not sent",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Description of the error",
+                  "example": "\\\"token\\\" is required"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "Status code number",
+                  "example": 412
+                },
+                "code": {
+                  "type": "string",
+                  "description": "Short string identifying the error",
+                  "example": "VALIDATION_ERROR"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BuyLimitExceeded": {
+        "description": "Buy limit exceeded",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Description of the error",
+                  "example": "You cannot place an order higher than your buy limit of 500 SEK"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "Status code number",
+                  "example": 406
+                },
+                "code": {
+                  "type": "string",
+                  "description": "Short string identifying the error",
+                  "example": "BUY_LIMIT_EXCEEDED"
+                }
+              }
+            }
+          }
+        }
+      },
+      "AppIdRequired": {
+        "description": "This request requires you to send an App ID",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Description of the error"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "Status code number",
+                  "example": 498
+                },
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    "MISSING_APP_ID"
+                  ],
+                  "description": "Short string identifying the error",
+                  "example": "MISSING_APP_ID"
+                }
+              }
+            }
+          }
+        }
+      },
+      "OrderCreated": {
+        "description": "Order created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "orderId": {
+                  "type": "string",
+                  "example": "AS0ZZHU",
+                  "description": "Identifier for the newly created order. Use it to check its status"
+                },
+                "pollingUrl": {
+                  "type": "string",
+                  "format": "URL",
+                  "example": "http://app.safello.com/v1/order?orderId=AS0ZZHU",
+                  "description": "URL to call for checking the order status"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "User ID",
+            "example": 123456
+          },
+          "country": {
+            "type": "string",
+            "description": "Two-letter country code",
+            "example": "SE"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email",
+            "example": "user@example.com"
+          },
+          "emailActive": {
+            "type": "boolean",
+            "example": true,
+            "description": "Indicates if a user has completed the process of email verification"
+          },
+          "features": {
+            "type": "object",
+            "description": "Indicates the list of features this user has access to"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "John",
+            "description": "User's first name"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe",
+            "description": "User's last name"
+          },
+          "hasAcceptedLatestTerms": {
+            "type": "boolean",
+            "example": true,
+            "description": "Indicates wether or not the user has accepted the latest Terms and Conditions for using Safello."
+          },
+          "hasAcceptedOldTerms": {
+            "type": "boolean",
+            "example": true,
+            "description": "Indicates wether or not the user has ever accepted any previous version of Safello's Terms and Conditions."
+          },
+          "intercomHash": {
+            "description": "To be documented",
+            "example": "F5E92CF0430E769964F2B8E3231E53AC2721B8C447C2D24FC07CBE1933CCA57D"
+          },
+          "language": {
+            "type": "string",
+            "example": "sv",
+            "description": "Two-letter language code, [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)"
+          },
+          "level": {
+            "type": "integer",
+            "example": 1,
+            "description": "Defines what percentage fee the user gets"
+          },
+          "premium": {
+            "type": "boolean",
+            "example": false,
+            "description": "Indicates if the user has a premium account"
+          },
+          "safeEnvironment": {
+            "type": "boolean",
+            "example": false,
+            "description": "Indicates if the user was put under safe mode"
+          },
+          "telephoneNumber": {
+            "type": "string",
+            "format": "phoneNumber",
+            "example": 46555555555,
+            "description": "User's contact number"
+          },
+          "tier": {
+            "type": "integer",
+            "example": 3,
+            "description": "Relates to the maximum amount of money this user is allowed to buy"
+          }
+        }
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "AS0ZZHU"
+          },
+          "orderId": {
+            "type": "string",
+            "example": "AS0ZZHU"
+          },
+          "cryptoAmount": {
+            "type": "number",
+            "example": 0.002
+          },
+          "cryptoCurrency": {
+            "type": "string",
+            "example": "BTC"
+          },
+          "currency": {
+            "type": "string",
+            "example": "SEK"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-01-27T11:29:20+0100"
+          },
+          "receivedCryptoAmount": {
+            "format": "number",
+            "example": 0.002
+          },
+          "txHash": {
+            "type": "string"
+          },
+          "soldAmount": {
+            "example": 180.11
+          },
+          "payoutAmount": {
+            "type": "number",
+            "example": 167.5
+          },
+          "status": {
+            "type": "string",
+            "example": "completed"
+          },
+          "walletOrder": {
+            "type": "boolean",
+            "example": true
+          },
+          "type": {
+            "example": "sell"
+          },
+          "paymentMethod": {
+            "type": "string",
+            "example": "swish"
+          },
+          "paid": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-01-27T11:29:20+0100"
+          },
+          "fiatCurrency": {
+            "type": "string",
+            "example": "SEK"
+          }
+        }
+      },
+      "Wallet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Wallet ID",
+            "example": 40
+          },
+          "owner": {
+            "type": "integer",
+            "example": 18454,
+            "description": "ID of the user who owns this wallet"
+          },
+          "balances": {
+            "type": "object",
+            "description": "Current crypto holdings",
+            "properties": {
+              "BTC": {
+                "type": "number",
+                "example": 0.0536256,
+                "description": "Amount of Bitcoin stored in the wallet"
+              },
+              "ETH": {
+                "type": "number",
+                "example": 1.05258976,
+                "description": "Amount of Ethereum stored in the wallet"
+              },
+              "DOT": {
+                "type": "number",
+                "example": 3.21198403,
+                "description": "Amount of Polkadot stored in the wallet"
+              },
+              "LINK": {
+                "type": "number",
+                "example": 1.49877354,
+                "description": "Amount of Chainlink stored in the wallet"
+              },
+              "MATIC": {
+                "type": "number",
+                "example": 2.46843299,
+                "description": "Amount of Polygon stored in the wallet"
+              }
+            }
+          },
+          "created": {
+            "type": "integer",
+            "example": 1633507676000,
+            "description": "Timestamp representing the number of milliseconds since\n[UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time).\n"
+          },
+          "depositAddresses": {
+            "type": "array",
+            "description": "Crypto addresses used to deposit to this wallet",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "Identifier for this address"
+                },
+                "active": {
+                  "type": "boolean",
+                  "example": true,
+                  "description": "Is this address active?"
+                },
+                "address": {
+                  "type": "string",
+                  "example": "tb1qrk9j3rgnc8vdjy7vdtfcj6hez8csd5surx3wmu",
+                  "description": "Crypto address"
+                },
+                "created": {
+                  "type": "integer",
+                  "example": 1634041941000,
+                  "description": "Date at which the address was created.\nTimestamp representing the number of milliseconds since\n[UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time).\n"
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "Crypto currency stored in this address",
+                  "example": "BTC"
+                },
+                "wallet": {
+                  "type": "integer",
+                  "description": "ID of the wallet this address belongs to"
+                }
+              }
+            }
+          },
+          "withdrawalAddresses": {
+            "type": "array",
+            "description": "Crypto addresses associated with this wallet for withdrawals",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "example": 37,
+                  "description": "Identifier for this address"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "My wallet",
+                  "description": "Name given to this wallet"
+                },
+                "active": {
+                  "type": "boolean",
+                  "example": true,
+                  "description": "Is this address active?"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "ACCEPTED"
+                  ]
+                },
+                "address": {
+                  "type": "string",
+                  "example": "tb1qrk9j3rgnc8vdjy7vdtfcj6hez8csd5surx3wmu",
+                  "description": "Crypto address"
+                },
+                "created": {
+                  "type": "integer",
+                  "example": 1634041941000,
+                  "description": "Date at which the address was created.\nTimestamp representing the number of milliseconds since\n[UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time).\n"
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "Crypto currency stored in this address",
+                  "example": "BTC"
+                },
+                "wallet": {
+                  "type": "integer",
+                  "description": "ID of the wallet this address belongs to"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+generated: '2026-07-21'
+method: derived
+workflows:
+  - file: safello-onboard-customer.yml
+    workflowId: onboardCustomerBankId
+    title: Onboard a customer with BankID
+    summary: BankID auth, email verification, terms acceptance, and KYC to reach a trade-ready customer.
+  - file: safello-buy-crypto.yml
+    workflowId: buyCrypto
+    title: Buy cryptocurrency
+    summary: Verify buy compliance, quote fees, create a buy order, and poll it to completion.
