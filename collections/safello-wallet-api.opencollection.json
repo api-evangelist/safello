@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Safello account wallet API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "wallet",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v1/wallet",
+            "auth": {
+              "type": "apikey",
+              "key": "Access-Token",
+              "value": "{{Access-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves the user's wallet\n"
+        },
+        {
+          "info": {
+            "name": "Wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/wallet"
+          },
+          "docs": "Retrieves the user's wallet\n"
+        },
+        {
+          "info": {
+            "name": "Wallet performance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/wallet/performance"
+          },
+          "docs": "Retrieves the user's current wallet performance right now\n"
+        },
+        {
+          "info": {
+            "name": "Wallet performance history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/wallet/performance-history",
+            "params": [
+              {
+                "name": "crypto",
+                "value": "",
+                "type": "query",
+                "description": "Cryptocurrency code"
+              },
+              {
+                "name": "fiat",
+                "value": "",
+                "type": "query",
+                "description": "Fiat currency"
+              },
+              {
+                "name": "timePeriod",
+                "value": "",
+                "type": "query",
+                "description": "Time period to get performance history."
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Start date if timePeriod is CUSTOM"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query",
+                "description": "End date if timePeriod is CUSTOM"
+              },
+              {
+                "name": "performanceSince",
+                "value": "",
+                "type": "query",
+                "description": "Date where to calculate the performance from. Default to wallet creation date when timePeriod is CUSTOM or the first date on all other time periods"
+              }
+            ]
+          },
+          "docs": "Retrieves the user's wallet performance history. Each data point is one day at midnight UTC. \n\nFor example a data point at 2022-01-01 would mean what the performance was at 2022-01-01 00:00 UTC\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

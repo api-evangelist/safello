@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Safello account compliance API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "compliance",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Verify compliance status for a sell operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.safello.com/v2/compliance/verify/orders/sell",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verify the compliance status for a sell operation\n"
+        },
+        {
+          "info": {
+            "name": "Verify compliance status for a buy operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.safello.com/v2/compliance/verify/orders/buy",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verify the compliance status for a buy operation\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

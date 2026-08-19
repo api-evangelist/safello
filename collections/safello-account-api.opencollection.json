@@ -1,0 +1,274 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Safello account API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Accept T&C",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.safello.com/v1/system/acceptTerms",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Access-Token",
+              "value": "{{Access-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Accept Terms and Conditions"
+        },
+        {
+          "info": {
+            "name": "Send verification email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.safello.com/v1/email",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Access-Token",
+              "value": "{{Access-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Send email to verify the user has access to that account"
+        },
+        {
+          "info": {
+            "name": "Verify email",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.safello.com/v1/email/verify",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Access-Token",
+              "value": "{{Access-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Verify user's email address"
+        },
+        {
+          "info": {
+            "name": "Check if KYC is required",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v1/kyc/require",
+            "auth": {
+              "type": "apikey",
+              "key": "Access-Token",
+              "value": "{{Access-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Use this endpoint to check is the user is required to complete the KYC questionaire to\ncontinue trading\n"
+        },
+        {
+          "info": {
+            "name": "KYC questions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v1/kyc",
+            "params": [
+              {
+                "name": "lang",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Access-Token",
+              "value": "{{Access-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Gets a list of questions to ask the user in order to complete the \"Know Your Customer\" (KYC)\nquestionnaire.\n"
+        },
+        {
+          "info": {
+            "name": "Answer KYC questionaire",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.safello.com/v1/kyc",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Access-Token",
+              "value": "{{Access-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Submits the user's answers to the KYC questionaire\n"
+        },
+        {
+          "info": {
+            "name": "Get logged in user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/account/user"
+          },
+          "docs": "Returns information about the logged in user"
+        },
+        {
+          "info": {
+            "name": "Accept T&C",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.safello.com/v2/account/terms",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accept Terms and Conditions"
+        },
+        {
+          "info": {
+            "name": "Send verification email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.safello.com/v2/account/email",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send email to verify the user has access to that account"
+        },
+        {
+          "info": {
+            "name": "Verify email",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.safello.com/v2/account/email",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verify user's email address"
+        },
+        {
+          "info": {
+            "name": "Check if KYC is required",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/account/kyc"
+          },
+          "docs": "Use this endpoint to check is the user is required to complete the KYC questionnaire to\ncontinue trading\n"
+        },
+        {
+          "info": {
+            "name": "KYC questions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/account/kyc-questions",
+            "params": [
+              {
+                "name": "lang",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "questionnaire",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Gets a list of questions to ask the user in order to complete the \"Know Your Customer\" (KYC)\nquestionnaire.\n"
+        },
+        {
+          "info": {
+            "name": "Answer KYC questionnaire",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.safello.com/v2/account/kyc-questions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits the user's answers to the KYC questionnaire\n"
+        },
+        {
+          "info": {
+            "name": "Get user bank accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/account/bank-account"
+          },
+          "docs": "Get a list of all bank account the user has connected"
+        },
+        {
+          "info": {
+            "name": "Add or update bank account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.safello.com/v2/account/bank-account",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "A unique bank account (clearing number + bank account number) can only be added once to a user. Adding the same bank account a second time will update the existing and return the same Bank Account ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,586 @@
+{
+  "item": [
+    {
+      "id": "e3146386-d1da-4c06-94b2-fcbb2ab0247c",
+      "name": "wallet",
+      "description": {
+        "content": "User's wallet",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8349b8ef-90ca-4c37-a345-f4ef1150af94",
+          "name": "Get wallet",
+          "request": {
+            "name": "Get wallet",
+            "description": {
+              "content": "Retrieves the user's wallet\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "wallet"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Access-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7b3a2e42-43a1-42bc-8abf-66156fa2f903",
+              "name": "Wallet retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Access-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 40,\n  \"owner\": 18454,\n  \"balances\": {\n    \"BTC\": 0.0536256,\n    \"ETH\": 1.05258976,\n    \"DOT\": 3.21198403,\n    \"LINK\": 1.49877354,\n    \"MATIC\": 2.46843299\n  },\n  \"created\": 1633507676000,\n  \"depositAddresses\": [\n    {\n      \"id\": 9372,\n      \"active\": true,\n      \"address\": \"tb1qrk9j3rgnc8vdjy7vdtfcj6hez8csd5surx3wmu\",\n      \"created\": 1634041941000,\n      \"currency\": \"BTC\",\n      \"wallet\": 1940\n    },\n    {\n      \"id\": 6448,\n      \"active\": true,\n      \"address\": \"tb1qrk9j3rgnc8vdjy7vdtfcj6hez8csd5surx3wmu\",\n      \"created\": 1634041941000,\n      \"currency\": \"BTC\",\n      \"wallet\": 771\n    }\n  ],\n  \"withdrawalAddresses\": [\n    {\n      \"id\": 37,\n      \"name\": \"My wallet\",\n      \"active\": true,\n      \"status\": \"ACCEPTED\",\n      \"address\": \"tb1qrk9j3rgnc8vdjy7vdtfcj6hez8csd5surx3wmu\",\n      \"created\": 1634041941000,\n      \"currency\": \"BTC\",\n      \"wallet\": 843\n    },\n    {\n      \"id\": 37,\n      \"name\": \"My wallet\",\n      \"active\": true,\n      \"status\": \"ACCEPTED\",\n      \"address\": \"tb1qrk9j3rgnc8vdjy7vdtfcj6hez8csd5surx3wmu\",\n      \"created\": 1634041941000,\n      \"currency\": \"BTC\",\n      \"wallet\": 1384\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4395cb81-641c-49d2-ad2e-f1629086f68d",
+              "name": "Not authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Access-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2a3e30ed-40a3-429b-a9d2-0ee6a31b5ab7",
+          "name": "Wallet",
+          "request": {
+            "name": "Wallet",
+            "description": {
+              "content": "Retrieves the user's wallet\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "wallet"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "eeafbf89-0d02-42e4-b06b-22dc68102dd2",
+              "name": "Wallet retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "wallet"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"balances\": [\n    {\n      \"currency\": \"SEK\",\n      \"amount\": \"510.00\"\n    },\n    {\n      \"currency\": \"SEK\",\n      \"amount\": \"510.00\"\n    }\n  ],\n  \"created\": \"2022-02-03T09:44:13.000Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07cfb682-443f-4923-93e4-e42eb4e30fa4",
+              "name": "Not authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "wallet"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "087eafc1-7cae-4208-83e0-763642e6e788",
+          "name": "Wallet performance",
+          "request": {
+            "name": "Wallet performance",
+            "description": {
+              "content": "Retrieves the user's current wallet performance right now\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "wallet",
+                "performance"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "699f00d4-6754-48aa-b30b-c99db768d15b",
+              "name": "Wallet performance",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "wallet",
+                    "performance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"fiat\": \"string\",\n  \"cryptos\": {\n    \"BTC\": {\n      \"amount\": \"1.0000000\",\n      \"fiatValue\": \"11000.0\",\n      \"performance\": {\n        \"absoluteChange\": \"1000.0\",\n        \"percentageChange\": \"0.1\"\n      }\n    }\n  },\n  \"total\": {\n    \"amount\": \"string\",\n    \"fiatValue\": \"string\",\n    \"performance\": {\n      \"absoluteChange\": \"string\",\n      \"percentageChange\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4064b886-ab7b-46fa-9a58-d644a67c225f",
+              "name": "Not authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "wallet",
+                    "performance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e17b4b4-e5b8-41ad-857c-253b14b9ba8e",
+          "name": "Wallet performance history",
+          "request": {
+            "name": "Wallet performance history",
+            "description": {
+              "content": "Retrieves the user's wallet performance history. Each data point is one day at midnight UTC. \n\nFor example a data point at 2022-01-01 would mean what the performance was at 2022-01-01 00:00 UTC\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "wallet",
+                "performance-history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "crypto",
+                  "value": "<string>,<string>",
+                  "description": "(Required) Cryptocurrency code"
+                },
+                {
+                  "disabled": false,
+                  "key": "fiat",
+                  "value": "SEK",
+                  "description": "Fiat currency"
+                },
+                {
+                  "disabled": false,
+                  "key": "timePeriod",
+                  "value": "ALL_TIME",
+                  "description": "(Required) Time period to get performance history."
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<date>",
+                  "description": "Start date if timePeriod is CUSTOM"
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<date>",
+                  "description": "End date if timePeriod is CUSTOM"
+                },
+                {
+                  "disabled": false,
+                  "key": "performanceSince",
+                  "value": "<date>",
+                  "description": "Date where to calculate the performance from. Default to wallet creation date when timePeriod is CUSTOM or the first date on all other time periods"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "f087d00d-074e-4b82-813a-6ca0c9842b12",
+              "name": "Wallet performance history",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "wallet",
+                    "performance-history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "crypto",
+                      "value": "BTC,ETH"
+                    },
+                    {
+                      "key": "fiat",
+                      "value": "SEK"
+                    },
+                    {
+                      "key": "timePeriod",
+                      "value": "ALL_TIME"
+                    },
+                    {
+                      "key": "start",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "performanceSince",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"start\": \"1953-01-14\",\n  \"end\": \"1974-10-28\",\n  \"performanceSince\": \"2010-09-12\",\n  \"fiat\": \"string\",\n  \"timePeriod\": \"string\",\n  \"data\": [\n    {\n      \"date\": \"2023-01-23\",\n      \"assetValues\": [\n        {\n          \"crypto\": \"string\",\n          \"amount\": \"string\",\n          \"fiatValue\": \"string\",\n          \"percentageChange\": \"string\",\n          \"absoluteChange\": \"string\"\n        },\n        {\n          \"crypto\": \"string\",\n          \"amount\": \"string\",\n          \"fiatValue\": \"string\",\n          \"percentageChange\": \"string\",\n          \"absoluteChange\": \"string\"\n        }\n      ],\n      \"combined\": {\n        \"fiatValue\": \"string\",\n        \"percentageChange\": \"string\",\n        \"absoluteChange\": \"string\"\n      }\n    },\n    {\n      \"date\": \"2015-10-27\",\n      \"assetValues\": [\n        {\n          \"crypto\": \"string\",\n          \"amount\": \"string\",\n          \"fiatValue\": \"string\",\n          \"percentageChange\": \"string\",\n          \"absoluteChange\": \"string\"\n        },\n        {\n          \"crypto\": \"string\",\n          \"amount\": \"string\",\n          \"fiatValue\": \"string\",\n          \"percentageChange\": \"string\",\n          \"absoluteChange\": \"string\"\n        }\n      ],\n      \"combined\": {\n        \"fiatValue\": \"string\",\n        \"percentageChange\": \"string\",\n        \"absoluteChange\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "069659d9-8940-49d2-8f65-fb62121bc089",
+              "name": "Not authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "wallet",
+                    "performance-history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "crypto",
+                      "value": "BTC,ETH"
+                    },
+                    {
+                      "key": "fiat",
+                      "value": "SEK"
+                    },
+                    {
+                      "key": "timePeriod",
+                      "value": "ALL_TIME"
+                    },
+                    {
+                      "key": "start",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "performanceSince",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.safello.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "fa0abcb8-c0e2-4b25-84ea-aa6c9da8560d",
+    "name": "Safello account wallet API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Powering your app with crypto",
+      "type": "text/plain"
+    }
+  }
+}

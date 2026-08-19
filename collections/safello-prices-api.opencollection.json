@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Safello account prices API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "prices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Price history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/api/prices",
+            "params": [
+              {
+                "name": "crypto",
+                "value": "",
+                "type": "query",
+                "description": "Cryptocurrency"
+              },
+              {
+                "name": "interval",
+                "value": "",
+                "type": "query",
+                "description": "Time interval for the result"
+              }
+            ]
+          },
+          "docs": "Gets historical price data for a cryptocurrency in a given interval.\n\nThe resulting array can be plotted in a graph and contains a list of tuple arrays with 2 elements:\n\n1. A timestamp representing the number of milliseconds since [UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time).\n2. Unitary price for the cryptocurrency in SEK.\n"
+        },
+        {
+          "info": {
+            "name": "Get price",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v1/rate",
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "query",
+                "description": "AppID"
+              },
+              {
+                "name": "crypto",
+                "value": "",
+                "type": "query",
+                "description": "Crypto currency code"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "Fiat currency"
+              }
+            ]
+          },
+          "docs": "Gets the current price for a single crypto currency"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

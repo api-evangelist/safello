@@ -1,0 +1,2511 @@
+{
+  "item": [
+    {
+      "id": "79b3ca7f-f52f-4fe5-81eb-e50fd287363f",
+      "name": "orders",
+      "description": {
+        "content": "Buy and sell crypto",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c492e6e0-5809-4706-871c-efb5ef1c7dd3",
+          "name": "Create buy order",
+          "request": {
+            "name": "Create buy order",
+            "description": {
+              "content": "Creates a new order to buy crypto currency using fiat money.\n\nUpon creation, you can monitor the status of the order by calling\n[Check order status](#operation/checkOrderStatus).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "order"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Access-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fiatAmount\": \"<number>\",\n  \"fiatCurrency\": \"<string>\",\n  \"cryptoCurrency\": \"BTC\",\n  \"useWallet\": false,\n  \"receivingAddress\": \"<string>\",\n  \"paymentMethod\": \"<string>\",\n  \"phoneNumber\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "729b4424-5ac1-4337-8234-b0365d25e8fc",
+              "name": "Order created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Access-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fiatAmount\": 350,\n  \"fiatCurrency\": \"SEK\",\n  \"cryptoCurrency\": \"BTC\",\n  \"useWallet\": false,\n  \"receivingAddress\": \"mkHS9ne12qx9pS9VojpwU5xtRd4T7X7ZUt\",\n  \"paymentMethod\": \"<string>\",\n  \"phoneNumber\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orderId\": \"AS0ZZHU\",\n  \"pollingUrl\": \"http://app.safello.com/v1/order?orderId=AS0ZZHU\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6caf760c-4214-4266-aaff-f2bcb0aac963",
+              "name": "Not authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Access-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fiatAmount\": 350,\n  \"fiatCurrency\": \"SEK\",\n  \"cryptoCurrency\": \"BTC\",\n  \"useWallet\": false,\n  \"receivingAddress\": \"mkHS9ne12qx9pS9VojpwU5xtRd4T7X7ZUt\",\n  \"paymentMethod\": \"<string>\",\n  \"phoneNumber\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19a46414-7a2e-4194-8b26-5a4866c975b0",
+              "name": "Buy limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Access-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fiatAmount\": 350,\n  \"fiatCurrency\": \"SEK\",\n  \"cryptoCurrency\": \"BTC\",\n  \"useWallet\": false,\n  \"receivingAddress\": \"mkHS9ne12qx9pS9VojpwU5xtRd4T7X7ZUt\",\n  \"paymentMethod\": \"<string>\",\n  \"phoneNumber\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 406,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34e567f3-52dc-49d2-9a52-d10ea1c7a02f",
+              "name": "Some required parameter was not sent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Access-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fiatAmount\": 350,\n  \"fiatCurrency\": \"SEK\",\n  \"cryptoCurrency\": \"BTC\",\n  \"useWallet\": false,\n  \"receivingAddress\": \"mkHS9ne12qx9pS9VojpwU5xtRd4T7X7ZUt\",\n  \"paymentMethod\": \"<string>\",\n  \"phoneNumber\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Precondition Failed",
+              "code": 412,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"\\\\\\\"token\\\\\\\" is required\",\n  \"status\": 412,\n  \"code\": \"VALIDATION_ERROR\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8f9a856b-4d40-472c-b7f1-5cf4d3719201",
+          "name": "Check order status",
+          "request": {
+            "name": "Check order status",
+            "description": {
+              "content": "Checks the status of an order. Used to monitor if a buy or sell order has been completed.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "order"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "description": {
+                    "content": "(Required) Order identifier",
+                    "type": "text/plain"
+                  },
+                  "key": "orderId",
+                  "value": ""
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Access-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "586d3d97-a39b-4bed-8a31-f36a8767a0e4",
+              "name": "Order",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "orderId",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Access-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"AS0ZZHU\",\n  \"orderId\": \"AS0ZZHU\",\n  \"cryptoAmount\": 0.002,\n  \"cryptoCurrency\": \"BTC\",\n  \"currency\": \"SEK\",\n  \"created\": \"2022-01-27T11:29:20+0100\",\n  \"receivedCryptoAmount\": {},\n  \"txHash\": \"string\",\n  \"soldAmount\": {},\n  \"payoutAmount\": 167.5,\n  \"status\": \"completed\",\n  \"walletOrder\": true,\n  \"type\": {},\n  \"paymentMethod\": \"swish\",\n  \"paid\": \"2022-01-27T11:29:20+0100\",\n  \"fiatCurrency\": \"SEK\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "71c456a8-f3ac-4b3d-9dbe-f04efa663d0c",
+              "name": "Not authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "orderId",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Access-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "179dd404-9770-4484-8939-984e28a12445",
+              "name": "Some required parameter was not sent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "orderId",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Access-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Precondition Failed",
+              "code": 412,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"\\\\\\\"token\\\\\\\" is required\",\n  \"status\": 412,\n  \"code\": \"VALIDATION_ERROR\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c316b7f-3ac0-43ec-b31f-154fc0865aa8",
+          "name": "Create sell order",
+          "request": {
+            "name": "Create sell order",
+            "description": {
+              "content": "Creates an order to sell crypto currency and receive fiat money.\n\nUpon creation, you can monitor the status of the order by calling\n[Check order status](#operation/checkOrderStatus).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "order",
+                "sell"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Access-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cryptoAmount\": \"<number>\",\n  \"fiatCurrency\": \"<string>\",\n  \"cryptoCurrency\": \"BTC\",\n  \"useWallet\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c32014b1-1d3c-4d22-b6f0-e4c72df79b7b",
+              "name": "Order created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "order",
+                    "sell"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Access-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cryptoAmount\": 350,\n  \"fiatCurrency\": \"SEK\",\n  \"cryptoCurrency\": \"BTC\",\n  \"useWallet\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orderId\": \"AS0ZZHU\",\n  \"pollingUrl\": \"http://app.safello.com/v1/order?orderId=AS0ZZHU\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5bee4e2-893d-49b3-bf09-f8a410ba48fe",
+              "name": "Not authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "order",
+                    "sell"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Access-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cryptoAmount\": 350,\n  \"fiatCurrency\": \"SEK\",\n  \"cryptoCurrency\": \"BTC\",\n  \"useWallet\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e244cdf6-4b0f-4092-b47c-e71da6810a58",
+              "name": "Some required parameter was not sent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "order",
+                    "sell"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Access-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cryptoAmount\": 350,\n  \"fiatCurrency\": \"SEK\",\n  \"cryptoCurrency\": \"BTC\",\n  \"useWallet\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Precondition Failed",
+              "code": 412,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"\\\\\\\"token\\\\\\\" is required\",\n  \"status\": 412,\n  \"code\": \"VALIDATION_ERROR\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "19faf7b8-7e9a-4c6d-b380-de5200b4644f",
+          "name": "List orders",
+          "request": {
+            "name": "List orders",
+            "description": {
+              "content": "Gets a paginated list containing the user's orders history\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Desired offset for pagination purposes"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "<integer>",
+                  "description": "Desired size for pagination purposes"
+                },
+                {
+                  "disabled": false,
+                  "key": "crypto",
+                  "value": "<string>",
+                  "description": "Crypto currency to filter by"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Type to filter by"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderType",
+                  "value": "<string>",
+                  "description": "Trade order type to filter by, only works if type is trade. One of: quick, orderBook"
+                },
+                {
+                  "disabled": false,
+                  "key": "pair",
+                  "value": "<string>",
+                  "description": "Pair of currencies to filter by"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderStatusFilter",
+                  "value": "<string>,<string>",
+                  "description": "Filter results by one or more order statuses. Accepts values of type 'EOrderStatus'."
+                },
+                {
+                  "disabled": false,
+                  "key": "tradeStatusFilter",
+                  "value": "<string>,<string>",
+                  "description": "Filter results by one or more trade order statuses. Accepts values of type 'ETradeOrderStatus'. Applies only to trade orders."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderStatusForTradeOrderFilter",
+                  "value": "<string>,<string>",
+                  "description": "Applies an additional 'EOrderStatus' filter specifically to trade orders, in combination with orderStatusFilter."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "e755d425-ca02-429a-958f-5cea22362e43",
+              "name": "Order history list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "crypto",
+                      "value": "BTC"
+                    },
+                    {
+                      "key": "type",
+                      "value": "trade"
+                    },
+                    {
+                      "key": "orderType",
+                      "value": "orderBook"
+                    },
+                    {
+                      "key": "pair",
+                      "value": "BTC_USDC"
+                    },
+                    {
+                      "key": "orderStatusFilter",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tradeStatusFilter",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "orderStatusForTradeOrderFilter",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"offset\": 5324,\n  \"size\": 7565,\n  \"total\": 4000,\n  \"data\": [\n    {\n      \"id\": \"AS0ZZHU\",\n      \"parentOrder\": {\n        \"value\": \"<Circular reference to #/components/schemas/Order_2 detected>\"\n      },\n      \"created\": \"2022-01-27T11:29:20+0100\",\n      \"approved\": \"2022-01-27T11:29:20+0100\",\n      \"feeRate\": \"0.05\",\n      \"fee\": {\n        \"currency\": \"SEK\",\n        \"amount\": \"35.00\"\n      },\n      \"discountFeeId\": \"1083aeae-b88d-d0ef-0b38-a7d26f631c0f\",\n      \"walletId\": \"e609a814-5ab9-3dc4-14e2-b57e944694c5\",\n      \"buy\": {\n        \"fiat\": {\n          \"currency\": \"SEK\",\n          \"amount\": \"510.00\"\n        },\n        \"crypto\": {\n          \"currency\": \"BTC\",\n          \"amount\": \"0.00200001\"\n        },\n        \"paymentMethod\": \"klarna_bankgiro\",\n        \"recurring\": false,\n        \"paymentDetails\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"actions\": [\n          {\n            \"type\": \"approved\",\n            \"email\": \"vitalik@ethereum.org\",\n            \"created\": \"2022-02-03T09:44:13.000Z\"\n          },\n          {\n            \"type\": \"approved\",\n            \"email\": \"vitalik@ethereum.org\",\n            \"created\": \"2022-02-03T09:44:13.000Z\"\n          }\n        ]\n      },\n      \"sell\": {\n        \"receivedCrypto\": {\n          \"currency\": \"BTC\",\n          \"amount\": \"0.00200001\"\n        },\n        \"sold\": {\n          \"currency\": \"SEK\",\n          \"amount\": \"510.00\"\n        },\n        \"payout\": {\n          \"currency\": \"SEK\",\n          \"amount\": \"475.00\"\n        },\n        \"payoutMethod\": \"SE Bank transfer\",\n        \"payoutDetails\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"actions\": [\n          {\n            \"type\": \"approved\",\n            \"email\": \"vitalik@ethereum.org\",\n            \"created\": \"2022-02-03T09:44:13.000Z\"\n          },\n          {\n            \"type\": \"approved\",\n            \"email\": \"vitalik@ethereum.org\",\n            \"created\": \"2022-02-03T09:44:13.000Z\"\n          }\n        ]\n      },\n      \"trade\": {\n        \"pair\": \"BTC_USDC\",\n        \"amount\": \"string\",\n        \"counterAmount\": \"string\",\n        \"side\": \"buy\",\n        \"type\": \"limit\",\n        \"clientId\": \"string\",\n        \"originalAmount\": {\n          \"currency\": \"USDC\",\n          \"amount\": \"10\"\n        },\n        \"from\": {\n          \"currency\": \"USDC\",\n          \"amount\": \"10\"\n        },\n        \"to\": {\n          \"currency\": \"BTC\",\n          \"amount\": \"0.00300001\"\n        },\n        \"fiatAmount\": {\n          \"currency\": \"SEK\",\n          \"amount\": \"300.00\"\n        },\n        \"orderType\": \"string\",\n        \"price\": \"string\",\n        \"limitPrice\": \"string\",\n        \"stopLossPrice\": \"string\",\n        \"takeProfitPrice\": \"string\",\n        \"triggerPrice\": \"string\",\n        \"status\": \"open\",\n        \"openTime\": \"2022-01-27T11:29:20+0100\",\n        \"closeTime\": \"2022-01-27T11:29:20+0100\",\n        \"endTime\": \"2022-01-27T11:29:20+0100\",\n        \"fulfillment\": \"string\"\n      },\n      \"transaction\": {\n        \"type\": \"deposit\",\n        \"txAddress\": \"string\",\n        \"txHash\": \"string\",\n        \"crypto\": {\n          \"currency\": \"BTC\",\n          \"amount\": \"0.00200001\"\n        },\n        \"fiat\": {\n          \"currency\": \"SEK\",\n          \"amount\": \"510.00\"\n        },\n        \"remittance\": \"string\"\n      },\n      \"status\": \"completed\",\n      \"type\": \"string\",\n      \"statusErrorCode\": \"string\"\n    },\n    {\n      \"id\": \"AS0ZZHU\",\n      \"parentOrder\": {\n        \"value\": \"<Circular reference to #/components/schemas/Order_2 detected>\"\n      },\n      \"created\": \"2022-01-27T11:29:20+0100\",\n      \"approved\": \"2022-01-27T11:29:20+0100\",\n      \"feeRate\": \"0.05\",\n      \"fee\": {\n        \"currency\": \"SEK\",\n        \"amount\": \"35.00\"\n      },\n      \"discountFeeId\": \"45a57387-9fcf-2178-fda2-de844d8c8c36\",\n      \"walletId\": \"4bb7f172-d785-ed6b-6cd6-47ca8f4f8573\",\n      \"buy\": {\n        \"fiat\": {\n          \"currency\": \"SEK\",\n          \"amount\": \"510.00\"\n        },\n        \"crypto\": {\n          \"currency\": \"BTC\",\n          \"amount\": \"0.00200001\"\n        },\n        \"paymentMethod\": \"klarna_bankgiro\",\n        \"recurring\": false,\n        \"paymentDetails\": {\n          \"key_0\": \"string\"\n        },\n        \"actions\": [\n          {\n            \"type\": \"approved\",\n            \"email\": \"vitalik@ethereum.org\",\n            \"created\": \"2022-02-03T09:44:13.000Z\"\n          },\n          {\n            \"type\": \"approved\",\n            \"email\": \"vitalik@ethereum.org\",\n            \"created\": \"2022-02-03T09:44:13.000Z\"\n          }\n        ]\n      },\n      \"sell\": {\n        \"receivedCrypto\": {\n          \"currency\": \"BTC\",\n          \"amount\": \"0.00200001\"\n        },\n        \"sold\": {\n          \"currency\": \"SEK\",\n          \"amount\": \"510.00\"\n        },\n        \"payout\": {\n          \"currency\": \"SEK\",\n          \"amount\": \"475.00\"\n        },\n        \"payoutMethod\": \"SE Bank transfer\",\n        \"payoutDetails\": {\n          \"key_0\": \"string\"\n        },\n        \"actions\": [\n          {\n            \"type\": \"approved\",\n            \"email\": \"vitalik@ethereum.org\",\n            \"created\": \"2022-02-03T09:44:13.000Z\"\n          },\n          {\n            \"type\": \"approved\",\n            \"email\": \"vitalik@ethereum.org\",\n            \"created\": \"2022-02-03T09:44:13.000Z\"\n          }\n        ]\n      },\n      \"trade\": {\n        \"pair\": \"BTC_USDC\",\n        \"amount\": \"string\",\n        \"counterAmount\": \"string\",\n        \"side\": \"sell\",\n        \"type\": \"stop_loss_limit\",\n        \"clientId\": \"string\",\n        \"originalAmount\": {\n          \"currency\": \"USDC\",\n          \"amount\": \"10\"\n        },\n        \"from\": {\n          \"currency\": \"USDC\",\n          \"amount\": \"10\"\n        },\n        \"to\": {\n          \"currency\": \"BTC\",\n          \"amount\": \"0.00300001\"\n        },\n        \"fiatAmount\": {\n          \"currency\": \"SEK\",\n          \"amount\": \"300.00\"\n        },\n        \"orderType\": \"string\",\n        \"price\": \"string\",\n        \"limitPrice\": \"string\",\n        \"stopLossPrice\": \"string\",\n        \"takeProfitPrice\": \"string\",\n        \"triggerPrice\": \"string\",\n        \"status\": \"filled\",\n        \"openTime\": \"2022-01-27T11:29:20+0100\",\n        \"closeTime\": \"2022-01-27T11:29:20+0100\",\n        \"endTime\": \"2022-01-27T11:29:20+0100\",\n        \"fulfillment\": \"string\"\n      },\n      \"transaction\": {\n        \"type\": \"internal\",\n        \"txAddress\": \"string\",\n        \"txHash\": \"string\",\n        \"crypto\": {\n          \"currency\": \"BTC\",\n          \"amount\": \"0.00200001\"\n        },\n        \"fiat\": {\n          \"currency\": \"SEK\",\n          \"amount\": \"510.00\"\n        },\n        \"remittance\": \"string\"\n      },\n      \"status\": \"completed\",\n      \"type\": \"string\",\n      \"statusErrorCode\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3bc6f4f5-7384-4443-aeed-acdd1ffcd4fc",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "crypto",
+                      "value": "BTC"
+                    },
+                    {
+                      "key": "type",
+                      "value": "trade"
+                    },
+                    {
+                      "key": "orderType",
+                      "value": "orderBook"
+                    },
+                    {
+                      "key": "pair",
+                      "value": "BTC_USDC"
+                    },
+                    {
+                      "key": "orderStatusFilter",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tradeStatusFilter",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "orderStatusForTradeOrderFilter",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd37bea2-4702-40dd-bdef-09b90326cd64",
+              "name": "Not authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "crypto",
+                      "value": "BTC"
+                    },
+                    {
+                      "key": "type",
+                      "value": "trade"
+                    },
+                    {
+                      "key": "orderType",
+                      "value": "orderBook"
+                    },
+                    {
+                      "key": "pair",
+                      "value": "BTC_USDC"
+                    },
+                    {
+                      "key": "orderStatusFilter",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tradeStatusFilter",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "orderStatusForTradeOrderFilter",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "63243cf0-5e44-4533-ae52-9c31debf66e5",
+          "name": "Create buy order",
+          "request": {
+            "name": "Create buy order",
+            "description": {
+              "content": "Creates a new order to buy crypto currency using fiat money.\n\nUpon creation, you can monitor the status of the order by calling\n[Check order status](#operation/checkOrderStatus).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "orders",
+                "buy"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) IP Address of the originator of the request",
+                "key": "Source-IP-Address",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) User-Agent of the originator of the request",
+                "key": "Source-User-Agent",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cryptoCurrency\": \"<string>\",\n  \"fiat\": {\n    \"currency\": \"<string>\",\n    \"amount\": \"<string>\"\n  },\n  \"paymentMethod\": \"<string>\",\n  \"walletId\": \"<uuid>\",\n  \"paymentDetails\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2c81c1ce-9fb0-4595-8f31-90753c562bb3",
+              "name": "Buy order created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "buy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) IP Address of the originator of the request",
+                    "key": "Source-IP-Address",
+                    "value": "192.168.0.1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) User-Agent of the originator of the request",
+                    "key": "Source-User-Agent",
+                    "value": "curl/7.37.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cryptoCurrency\": \"BTC\",\n  \"fiat\": {\n    \"currency\": \"SEK\",\n    \"amount\": \"510.00\"\n  },\n  \"paymentMethod\": \"<string>\",\n  \"walletId\": \"<uuid>\",\n  \"paymentDetails\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orderId\": \"AS0ZZHU\",\n  \"pollingUrl\": \"https://app.safello.com/v2/order?orderId=AS0ZZHU\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4ac7494-aeea-411c-ade5-5163e468d5db",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "buy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) IP Address of the originator of the request",
+                    "key": "Source-IP-Address",
+                    "value": "192.168.0.1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) User-Agent of the originator of the request",
+                    "key": "Source-User-Agent",
+                    "value": "curl/7.37.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cryptoCurrency\": \"BTC\",\n  \"fiat\": {\n    \"currency\": \"SEK\",\n    \"amount\": \"510.00\"\n  },\n  \"paymentMethod\": \"<string>\",\n  \"walletId\": \"<uuid>\",\n  \"paymentDetails\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e8e58e8-b29d-4a65-b8a4-c306232d0310",
+              "name": "Not authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "buy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) IP Address of the originator of the request",
+                    "key": "Source-IP-Address",
+                    "value": "192.168.0.1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) User-Agent of the originator of the request",
+                    "key": "Source-User-Agent",
+                    "value": "curl/7.37.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cryptoCurrency\": \"BTC\",\n  \"fiat\": {\n    \"currency\": \"SEK\",\n    \"amount\": \"510.00\"\n  },\n  \"paymentMethod\": \"<string>\",\n  \"walletId\": \"<uuid>\",\n  \"paymentDetails\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a00273f7-d844-4882-b24c-3d8c4bad6c02",
+          "name": "Create trade order",
+          "request": {
+            "name": "Create trade order",
+            "description": {
+              "content": "Creates a new trade order to exchange crypto.\n\nUpon creation, you can monitor the status of the order by calling\n[Check order status](#operation/checkOrderStatus).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "orders",
+                "trade"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) IP Address of the originator of the request",
+                "key": "Source-IP-Address",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) User-Agent of the originator of the request",
+                "key": "Source-User-Agent",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pair\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"side\": \"<string>\",\n  \"type\": \"<string>\",\n  \"clientId\": \"<string>\",\n  \"amountInCounter\": true,\n  \"orderType\": \"quick\",\n  \"price\": \"<string>\",\n  \"stopLossPrice\": \"<string>\",\n  \"takeProfitPrice\": \"<string>\",\n  \"walletId\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "113e5acb-8ab3-4153-8c05-7265c25c2e5c",
+              "name": "Trade order created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "trade"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) IP Address of the originator of the request",
+                    "key": "Source-IP-Address",
+                    "value": "192.168.0.1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) User-Agent of the originator of the request",
+                    "key": "Source-User-Agent",
+                    "value": "curl/7.37.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pair\": \"BTC_USDC\",\n  \"amount\": \"<string>\",\n  \"side\": \"<string>\",\n  \"type\": \"<string>\",\n  \"clientId\": \"<string>\",\n  \"amountInCounter\": true,\n  \"orderType\": \"quick\",\n  \"price\": \"<string>\",\n  \"stopLossPrice\": \"<string>\",\n  \"takeProfitPrice\": \"<string>\",\n  \"walletId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orderId\": \"AS0ZZHU\",\n  \"pollingUrl\": \"https://app.safello.com/v2/order?orderId=AS0ZZHU\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "32858a04-a21a-4eb9-9c02-8d5d649f6ea1",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "trade"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) IP Address of the originator of the request",
+                    "key": "Source-IP-Address",
+                    "value": "192.168.0.1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) User-Agent of the originator of the request",
+                    "key": "Source-User-Agent",
+                    "value": "curl/7.37.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pair\": \"BTC_USDC\",\n  \"amount\": \"<string>\",\n  \"side\": \"<string>\",\n  \"type\": \"<string>\",\n  \"clientId\": \"<string>\",\n  \"amountInCounter\": true,\n  \"orderType\": \"quick\",\n  \"price\": \"<string>\",\n  \"stopLossPrice\": \"<string>\",\n  \"takeProfitPrice\": \"<string>\",\n  \"walletId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d09c5ff-0223-4a1b-a8af-3a3ecf55ac97",
+              "name": "Not authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "trade"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) IP Address of the originator of the request",
+                    "key": "Source-IP-Address",
+                    "value": "192.168.0.1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) User-Agent of the originator of the request",
+                    "key": "Source-User-Agent",
+                    "value": "curl/7.37.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pair\": \"BTC_USDC\",\n  \"amount\": \"<string>\",\n  \"side\": \"<string>\",\n  \"type\": \"<string>\",\n  \"clientId\": \"<string>\",\n  \"amountInCounter\": true,\n  \"orderType\": \"quick\",\n  \"price\": \"<string>\",\n  \"stopLossPrice\": \"<string>\",\n  \"takeProfitPrice\": \"<string>\",\n  \"walletId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c329cb15-4dfd-4c01-85b0-9b0826292f98",
+          "name": "Cancel a trade order",
+          "request": {
+            "name": "Cancel a trade order",
+            "description": {
+              "content": "Cancels a limit trade order.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "orders",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) IP Address of the originator of the request",
+                "key": "Source-IP-Address",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) User-Agent of the originator of the request",
+                "key": "Source-User-Agent",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2215a3f5-6e07-4be2-a87c-28297f0cc2e6",
+              "name": "Successfully canceled order.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) IP Address of the originator of the request",
+                    "key": "Source-IP-Address",
+                    "value": "192.168.0.1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) User-Agent of the originator of the request",
+                    "key": "Source-User-Agent",
+                    "value": "curl/7.37.0"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": \"TZ12HH34\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "044cc3d6-b471-4449-981f-97cfea3fad78",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) IP Address of the originator of the request",
+                    "key": "Source-IP-Address",
+                    "value": "192.168.0.1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) User-Agent of the originator of the request",
+                    "key": "Source-User-Agent",
+                    "value": "curl/7.37.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": \"TZ12HH34\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e28d7e4-483a-4652-8cd5-e9a044bda840",
+              "name": "Not authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) IP Address of the originator of the request",
+                    "key": "Source-IP-Address",
+                    "value": "192.168.0.1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) User-Agent of the originator of the request",
+                    "key": "Source-User-Agent",
+                    "value": "curl/7.37.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": \"TZ12HH34\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a29e75b5-a7e3-442b-8b5c-667ca60747af",
+          "name": "Edits an open trade order",
+          "request": {
+            "name": "Edits an open trade order",
+            "description": {
+              "content": "Edits an open trade order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "orders",
+                ":orderId",
+                "edit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) Order identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"stopLossPrice\": \"<string>\",\n  \"takeProfitPrice\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5c7f6141-ab94-4f8e-9258-a0ae92bcdcff",
+              "name": "Successfully edited order.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    ":orderId",
+                    "edit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"price\": \"150\",\n  \"amount\": \"1\",\n  \"stopLossPrice\": \"120\",\n  \"takeProfitPrice\": \"180\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ce47643b-30d0-4fdb-8a4c-c57ae6924acc",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    ":orderId",
+                    "edit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"price\": \"150\",\n  \"amount\": \"1\",\n  \"stopLossPrice\": \"120\",\n  \"takeProfitPrice\": \"180\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9164efc4-6b50-4e78-9236-0b0f92bcb9f1",
+              "name": "Not authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    ":orderId",
+                    "edit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"price\": \"150\",\n  \"amount\": \"1\",\n  \"stopLossPrice\": \"120\",\n  \"takeProfitPrice\": \"180\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "199c0728-0ae1-4c6f-a361-109f92c08408",
+          "name": "Create sell order",
+          "request": {
+            "name": "Create sell order",
+            "description": {
+              "content": "Creates an order to sell crypto currency and receive fiat money.\n\nUpon creation, you can monitor the status of the order by calling\n[Check order status](#operation/checkOrderStatus).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "orders",
+                "sell"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) IP Address of the originator of the request",
+                "key": "Source-IP-Address",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) User-Agent of the originator of the request",
+                "key": "Source-User-Agent",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fiatCurrency\": \"<string>\",\n  \"crypto\": {\n    \"currency\": \"<string>\",\n    \"amount\": \"<string>\"\n  },\n  \"bankAccountId\": \"<uuid>\",\n  \"payoutMethod\": \"<string>\",\n  \"payoutDetails\": {\n    \"key_0\": \"<string>\"\n  },\n  \"walletId\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9cae41ee-a432-4b28-93d6-a4798b8b6cbd",
+              "name": "Sell order created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "sell"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) IP Address of the originator of the request",
+                    "key": "Source-IP-Address",
+                    "value": "192.168.0.1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) User-Agent of the originator of the request",
+                    "key": "Source-User-Agent",
+                    "value": "curl/7.37.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fiatCurrency\": \"SEK\",\n  \"crypto\": {\n    \"currency\": \"BTC\",\n    \"amount\": \"0.00200001\"\n  },\n  \"bankAccountId\": \"<uuid>\",\n  \"payoutMethod\": \"SE Bank transfer\",\n  \"payoutDetails\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"walletId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orderId\": \"AS0ZZHU\",\n  \"pollingUrl\": \"https://app.safello.com/v2/order?orderId=AS0ZZHU\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "49d52298-245b-41dd-ae75-e747701c1bb8",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "sell"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) IP Address of the originator of the request",
+                    "key": "Source-IP-Address",
+                    "value": "192.168.0.1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) User-Agent of the originator of the request",
+                    "key": "Source-User-Agent",
+                    "value": "curl/7.37.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fiatCurrency\": \"SEK\",\n  \"crypto\": {\n    \"currency\": \"BTC\",\n    \"amount\": \"0.00200001\"\n  },\n  \"bankAccountId\": \"<uuid>\",\n  \"payoutMethod\": \"SE Bank transfer\",\n  \"payoutDetails\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"walletId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "93c3d709-037a-48ed-ab10-88591482a855",
+              "name": "Not authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "sell"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) IP Address of the originator of the request",
+                    "key": "Source-IP-Address",
+                    "value": "192.168.0.1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) User-Agent of the originator of the request",
+                    "key": "Source-User-Agent",
+                    "value": "curl/7.37.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fiatCurrency\": \"SEK\",\n  \"crypto\": {\n    \"currency\": \"BTC\",\n    \"amount\": \"0.00200001\"\n  },\n  \"bankAccountId\": \"<uuid>\",\n  \"payoutMethod\": \"SE Bank transfer\",\n  \"payoutDetails\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"walletId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ddc553bd-0b9c-4a11-a995-a858ebb9d940",
+          "name": "Check order status",
+          "request": {
+            "name": "Check order status",
+            "description": {
+              "content": "Checks the status of an order. Used to monitor if a buy or sell order has been completed.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "orders",
+                ":orderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) Order identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "5f3fb6e8-9526-4d32-9621-9fa1d4a55cef",
+              "name": "Order",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"AS0ZZHU\",\n  \"parentOrder\": {\n    \"id\": \"AS0ZZHU\",\n    \"parentOrder\": {\n      \"value\": \"<Circular reference to #/components/schemas/Order_2 detected>\"\n    },\n    \"created\": \"2022-01-27T11:29:20+0100\",\n    \"approved\": \"2022-01-27T11:29:20+0100\",\n    \"feeRate\": \"0.05\",\n    \"fee\": {\n      \"currency\": \"SEK\",\n      \"amount\": \"35.00\"\n    },\n    \"discountFeeId\": \"7bde1037-2658-906b-efbe-12bdc70e4cea\",\n    \"walletId\": \"8e1fb175-6d49-2425-f57f-78e17cb1fcb1\",\n    \"buy\": {\n      \"fiat\": {\n        \"currency\": \"SEK\",\n        \"amount\": \"510.00\"\n      },\n      \"crypto\": {\n        \"currency\": \"BTC\",\n        \"amount\": \"0.00200001\"\n      },\n      \"paymentMethod\": \"klarna_bankgiro\",\n      \"recurring\": false,\n      \"paymentDetails\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"actions\": [\n        {\n          \"type\": \"approved\",\n          \"email\": \"vitalik@ethereum.org\",\n          \"created\": \"2022-02-03T09:44:13.000Z\"\n        },\n        {\n          \"type\": \"approved\",\n          \"email\": \"vitalik@ethereum.org\",\n          \"created\": \"2022-02-03T09:44:13.000Z\"\n        }\n      ]\n    },\n    \"sell\": {\n      \"receivedCrypto\": {\n        \"currency\": \"BTC\",\n        \"amount\": \"0.00200001\"\n      },\n      \"sold\": {\n        \"currency\": \"SEK\",\n        \"amount\": \"510.00\"\n      },\n      \"payout\": {\n        \"currency\": \"SEK\",\n        \"amount\": \"475.00\"\n      },\n      \"payoutMethod\": \"SE Bank transfer\",\n      \"payoutDetails\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"actions\": [\n        {\n          \"type\": \"approved\",\n          \"email\": \"vitalik@ethereum.org\",\n          \"created\": \"2022-02-03T09:44:13.000Z\"\n        },\n        {\n          \"type\": \"approved\",\n          \"email\": \"vitalik@ethereum.org\",\n          \"created\": \"2022-02-03T09:44:13.000Z\"\n        }\n      ]\n    },\n    \"trade\": {\n      \"pair\": \"BTC_USDC\",\n      \"amount\": \"string\",\n      \"counterAmount\": \"string\",\n      \"side\": \"buy\",\n      \"type\": \"market\",\n      \"clientId\": \"string\",\n      \"originalAmount\": {\n        \"currency\": \"USDC\",\n        \"amount\": \"10\"\n      },\n      \"from\": {\n        \"currency\": \"USDC\",\n        \"amount\": \"10\"\n      },\n      \"to\": {\n        \"currency\": \"BTC\",\n        \"amount\": \"0.00300001\"\n      },\n      \"fiatAmount\": {\n        \"currency\": \"SEK\",\n        \"amount\": \"300.00\"\n      },\n      \"orderType\": \"string\",\n      \"price\": \"string\",\n      \"limitPrice\": \"string\",\n      \"stopLossPrice\": \"string\",\n      \"takeProfitPrice\": \"string\",\n      \"triggerPrice\": \"string\",\n      \"status\": \"partiallyFilled\",\n      \"openTime\": \"2022-01-27T11:29:20+0100\",\n      \"closeTime\": \"2022-01-27T11:29:20+0100\",\n      \"endTime\": \"2022-01-27T11:29:20+0100\",\n      \"fulfillment\": \"string\"\n    },\n    \"transaction\": {\n      \"type\": \"withdrawal\",\n      \"txAddress\": \"string\",\n      \"txHash\": \"string\",\n      \"crypto\": {\n        \"currency\": \"BTC\",\n        \"amount\": \"0.00200001\"\n      },\n      \"fiat\": {\n        \"currency\": \"SEK\",\n        \"amount\": \"510.00\"\n      },\n      \"remittance\": \"string\"\n    },\n    \"status\": \"completed\",\n    \"type\": \"string\",\n    \"statusErrorCode\": \"string\"\n  },\n  \"created\": \"2022-01-27T11:29:20+0100\",\n  \"approved\": \"2022-01-27T11:29:20+0100\",\n  \"feeRate\": \"0.05\",\n  \"fee\": {\n    \"currency\": \"SEK\",\n    \"amount\": \"35.00\"\n  },\n  \"discountFeeId\": \"409b61f4-3ae6-5e69-27c0-72511ca192f8\",\n  \"walletId\": \"53b1ea59-e34f-eb6e-b826-ebbcb928486e\",\n  \"buy\": {\n    \"fiat\": {\n      \"currency\": \"SEK\",\n      \"amount\": \"510.00\"\n    },\n    \"crypto\": {\n      \"currency\": \"BTC\",\n      \"amount\": \"0.00200001\"\n    },\n    \"paymentMethod\": \"klarna_bankgiro\",\n    \"recurring\": false,\n    \"paymentDetails\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"actions\": [\n      {\n        \"type\": \"approved\",\n        \"email\": \"vitalik@ethereum.org\",\n        \"created\": \"2022-02-03T09:44:13.000Z\"\n      },\n      {\n        \"type\": \"approved\",\n        \"email\": \"vitalik@ethereum.org\",\n        \"created\": \"2022-02-03T09:44:13.000Z\"\n      }\n    ]\n  },\n  \"sell\": {\n    \"receivedCrypto\": {\n      \"currency\": \"BTC\",\n      \"amount\": \"0.00200001\"\n    },\n    \"sold\": {\n      \"currency\": \"SEK\",\n      \"amount\": \"510.00\"\n    },\n    \"payout\": {\n      \"currency\": \"SEK\",\n      \"amount\": \"475.00\"\n    },\n    \"payoutMethod\": \"SE Bank transfer\",\n    \"payoutDetails\": {\n      \"key_0\": \"string\"\n    },\n    \"actions\": [\n      {\n        \"type\": \"approved\",\n        \"email\": \"vitalik@ethereum.org\",\n        \"created\": \"2022-02-03T09:44:13.000Z\"\n      },\n      {\n        \"type\": \"approved\",\n        \"email\": \"vitalik@ethereum.org\",\n        \"created\": \"2022-02-03T09:44:13.000Z\"\n      }\n    ]\n  },\n  \"trade\": {\n    \"pair\": \"BTC_USDC\",\n    \"amount\": \"string\",\n    \"counterAmount\": \"string\",\n    \"side\": \"buy\",\n    \"type\": \"market\",\n    \"clientId\": \"string\",\n    \"originalAmount\": {\n      \"currency\": \"USDC\",\n      \"amount\": \"10\"\n    },\n    \"from\": {\n      \"currency\": \"USDC\",\n      \"amount\": \"10\"\n    },\n    \"to\": {\n      \"currency\": \"BTC\",\n      \"amount\": \"0.00300001\"\n    },\n    \"fiatAmount\": {\n      \"currency\": \"SEK\",\n      \"amount\": \"300.00\"\n    },\n    \"orderType\": \"string\",\n    \"price\": \"string\",\n    \"limitPrice\": \"string\",\n    \"stopLossPrice\": \"string\",\n    \"takeProfitPrice\": \"string\",\n    \"triggerPrice\": \"string\",\n    \"status\": \"open\",\n    \"openTime\": \"2022-01-27T11:29:20+0100\",\n    \"closeTime\": \"2022-01-27T11:29:20+0100\",\n    \"endTime\": \"2022-01-27T11:29:20+0100\",\n    \"fulfillment\": \"string\"\n  },\n  \"transaction\": {\n    \"type\": \"withdrawal\",\n    \"txAddress\": \"string\",\n    \"txHash\": \"string\",\n    \"crypto\": {\n      \"currency\": \"BTC\",\n      \"amount\": \"0.00200001\"\n    },\n    \"fiat\": {\n      \"currency\": \"SEK\",\n      \"amount\": \"510.00\"\n    },\n    \"remittance\": \"string\"\n  },\n  \"status\": \"completed\",\n  \"type\": \"string\",\n  \"statusErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "740c8976-8897-40e5-af5f-928397dde9c1",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d547ad4-49b3-468a-925e-5193def74166",
+              "name": "Not authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1827fd17-549b-4ab0-b830-768ef6ad24ef",
+          "name": "Get fees",
+          "request": {
+            "name": "Get fees",
+            "description": {
+              "content": "Get fees for different order types",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "orders",
+                "fees"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "b0a67043-bd92-4c64-9642-f4f88b2f8bba",
+              "name": "Fees",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "fees"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orderBook\": {\n    \"maker\": \"string\",\n    \"taker\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8ce87ca-df11-4486-bec4-ed42114ef0b0",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "fees"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d992c2a-2e1d-41be-8c0d-46866dd90e41",
+              "name": "Not authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "fees"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.safello.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "772dc304-ed9a-4d3c-8596-9e086e995014",
+    "name": "Safello account orders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Powering your app with crypto",
+      "type": "text/plain"
+    }
+  }
+}

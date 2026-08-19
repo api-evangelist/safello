@@ -119,3 +119,9 @@ tools:
 - name: verifyBuyOrderCompliance
   description: Verify compliance status for a buy operation
   source_operation: openapi/safello-institutional-openapi.json#verifyBuyOrderCompliance
+deployment:
+  mode: none
+  verified: derived
+  tools: 37
+  checked: '2026-08-12'
+  source: catalog MCP census

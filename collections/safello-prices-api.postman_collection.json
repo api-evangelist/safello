@@ -1,0 +1,323 @@
+{
+  "item": [
+    {
+      "id": "b65b3dbb-5a64-4c35-9a7e-4b2cf8c577ea",
+      "name": "prices",
+      "description": {
+        "content": "Price endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "80983336-0724-47e3-a5bf-c645d013cc85",
+          "name": "Price history",
+          "request": {
+            "name": "Price history",
+            "description": {
+              "content": "Gets historical price data for a cryptocurrency in a given interval.\n\nThe resulting array can be plotted in a graph and contains a list of tuple arrays with 2 elements:\n\n1. A timestamp representing the number of milliseconds since [UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time).\n2. Unitary price for the cryptocurrency in SEK.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "prices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "crypto",
+                  "value": "BTC",
+                  "description": "Cryptocurrency"
+                },
+                {
+                  "disabled": false,
+                  "key": "interval",
+                  "value": "MAX",
+                  "description": "Time interval for the result"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0b135fc6-15fe-40a2-8727-d61f94d7c98d",
+              "name": "Price historical datapoints",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "prices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "crypto",
+                      "value": "BTC"
+                    },
+                    {
+                      "key": "interval",
+                      "value": "MAX"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  [],\n  []\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "523adc3b-c15e-4222-af61-662ec8901418",
+              "name": "Not authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "prices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "crypto",
+                      "value": "BTC"
+                    },
+                    {
+                      "key": "interval",
+                      "value": "MAX"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "444c9262-6ddb-4268-9c82-0418ed4efac4",
+          "name": "Get price",
+          "request": {
+            "name": "Get price",
+            "description": {
+              "content": "Gets the current price for a single crypto currency",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "rate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "appId",
+                  "value": "<string>",
+                  "description": "(Required) AppID"
+                },
+                {
+                  "disabled": false,
+                  "key": "crypto",
+                  "value": "BTC",
+                  "description": "Crypto currency code"
+                },
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "SEK",
+                  "description": "Fiat currency"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "82ac1e99-e317-40a1-8137-4f427ba23169",
+              "name": "Price retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "appId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "crypto",
+                      "value": "BTC"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "SEK"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ask\": 343110.6053375,\n  \"baseAsk\": 328335.5075,\n  \"baseBid\": 330303.5525,\n  \"bid\": 313788.374875,\n  \"cryptoCurrency\": \"btc\",\n  \"currency\": \"sek\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb89ceff-2fae-432d-af27-5822add5f524",
+              "name": "This request requires you to send an App ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "appId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "crypto",
+                      "value": "BTC"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "SEK"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "code": 498,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"status\": 498,\n  \"code\": \"MISSING_APP_ID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.safello.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "abd65fb2-a5b9-4181-b10a-ce2fcc0492e6",
+    "name": "Safello account prices API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Powering your app with crypto",
+      "type": "text/plain"
+    }
+  }
+}

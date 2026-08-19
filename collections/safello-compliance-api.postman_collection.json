@@ -1,0 +1,228 @@
+{
+  "item": [
+    {
+      "id": "d541ae38-6500-42c9-bf02-58d6fb3baedf",
+      "name": "compliance",
+      "description": {
+        "content": "User's compliance information/status",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "811276d5-0955-4a1a-8663-eaed1f72873c",
+          "name": "Verify compliance status for a sell operation",
+          "request": {
+            "name": "Verify compliance status for a sell operation",
+            "description": {
+              "content": "Verify the compliance status for a sell operation\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "compliance",
+                "verify",
+                "orders",
+                "sell"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fiatCurrency\": \"<string>\",\n  \"crypto\": {\n    \"currency\": \"<string>\",\n    \"amount\": \"<string>\"\n  },\n  \"bankAccountId\": \"<uuid>\",\n  \"payoutMethod\": \"<string>\",\n  \"payoutDetails\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  },\n  \"walletId\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a0caf172-f96d-4520-b194-d271a71f0292",
+              "name": "Compliance status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "compliance",
+                    "verify",
+                    "orders",
+                    "sell"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fiatCurrency\": \"SEK\",\n  \"crypto\": {\n    \"currency\": \"BTC\",\n    \"amount\": \"0.00200001\"\n  },\n  \"bankAccountId\": \"<uuid>\",\n  \"payoutMethod\": \"SE Bank transfer\",\n  \"payoutDetails\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"walletId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"decision\": \"ACCEPT\",\n    \"rejections\": [\n      {\n        \"reason\": \"KYC\",\n        \"code\": \"BASIC\"\n      },\n      {\n        \"reason\": \"KYC\",\n        \"code\": \"BASIC\"\n      }\n    ]\n  },\n  {\n    \"decision\": \"ACCEPT\",\n    \"rejections\": [\n      {\n        \"reason\": \"KYC\",\n        \"code\": \"BASIC\"\n      },\n      {\n        \"reason\": \"KYC\",\n        \"code\": \"BASIC\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5569a60a-253f-47b8-90e7-6d512fc8af2f",
+          "name": "Verify compliance status for a buy operation",
+          "request": {
+            "name": "Verify compliance status for a buy operation",
+            "description": {
+              "content": "Verify the compliance status for a buy operation\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "compliance",
+                "verify",
+                "orders",
+                "buy"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cryptoCurrency\": \"<string>\",\n  \"fiat\": {\n    \"currency\": \"<string>\",\n    \"amount\": \"<string>\"\n  },\n  \"paymentMethod\": \"<string>\",\n  \"walletId\": \"<uuid>\",\n  \"paymentDetails\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bfd66274-24d6-4844-824f-8411199fffe8",
+              "name": "Compliance status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "compliance",
+                    "verify",
+                    "orders",
+                    "buy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cryptoCurrency\": \"BTC\",\n  \"fiat\": {\n    \"currency\": \"SEK\",\n    \"amount\": \"510.00\"\n  },\n  \"paymentMethod\": \"<string>\",\n  \"walletId\": \"<uuid>\",\n  \"paymentDetails\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"decision\": \"ACCEPT\",\n    \"rejections\": [\n      {\n        \"reason\": \"KYC\",\n        \"code\": \"BASIC\"\n      },\n      {\n        \"reason\": \"KYC\",\n        \"code\": \"BASIC\"\n      }\n    ]\n  },\n  {\n    \"decision\": \"ACCEPT\",\n    \"rejections\": [\n      {\n        \"reason\": \"KYC\",\n        \"code\": \"BASIC\"\n      },\n      {\n        \"reason\": \"KYC\",\n        \"code\": \"BASIC\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.safello.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a44933c2-f029-4ff5-bd35-c191b97483c0",
+    "name": "Safello account compliance API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Powering your app with crypto",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,287 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Safello account market API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "market",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Cryptocurrency symbols",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/market/symbols/crypto"
+          },
+          "docs": "Lists the crypto currency symbols supported by Safello\n"
+        },
+        {
+          "info": {
+            "name": "List Fiat currency symbols",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/market/symbols/fiat"
+          },
+          "docs": "Lists the fiat currency symbols supported by Safello\n"
+        },
+        {
+          "info": {
+            "name": "List trading pairs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/market/symbols/pairs"
+          },
+          "docs": "Lists the trading pairs supported by Safello\n"
+        },
+        {
+          "info": {
+            "name": "Market chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/market/chart/:pair",
+            "params": [
+              {
+                "name": "pair",
+                "value": "BTC_SEK",
+                "type": "path",
+                "description": "Trading pair symbol using underscore as delimiter."
+              },
+              {
+                "name": "interval",
+                "value": "",
+                "type": "query",
+                "description": "Time interval for the result"
+              }
+            ]
+          },
+          "docs": "Get the chart for the selected market\n"
+        },
+        {
+          "info": {
+            "name": "Get price",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/market/prices/rates/:crypto",
+            "params": [
+              {
+                "name": "crypto",
+                "value": "",
+                "type": "path",
+                "description": "Cryptocurrency code - one of BTC, ETH, LINK, MATIC, or DOT"
+              },
+              {
+                "name": "fiat",
+                "value": "",
+                "type": "query",
+                "description": "Fiat currency"
+              }
+            ]
+          },
+          "docs": "Gets the current price for a single crypto currency"
+        },
+        {
+          "info": {
+            "name": "Get all prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/market/prices/rates",
+            "params": [
+              {
+                "name": "fiat",
+                "value": "",
+                "type": "query",
+                "description": "Fiat currency"
+              }
+            ]
+          },
+          "docs": "Gets the current prices for all supported crypto currencies"
+        },
+        {
+          "info": {
+            "name": "Get trade pair price",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/market/ticker/:pair",
+            "params": [
+              {
+                "name": "pair",
+                "value": "BTC_SEK",
+                "type": "path",
+                "description": "Trading pair symbol using underscore as delimiter."
+              }
+            ]
+          },
+          "docs": "Gets the current price for a trade pair"
+        },
+        {
+          "info": {
+            "name": "Get all trade pair tickers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/market/tickers"
+          },
+          "docs": "Gets the current prices for all trade pairs"
+        },
+        {
+          "info": {
+            "name": "Get the best performers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/market/best-performers",
+            "params": [
+              {
+                "name": "interval",
+                "value": "",
+                "type": "query",
+                "description": "Time interval to get best performers for"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "How many best performers to return"
+              }
+            ]
+          },
+          "docs": "Get the best performers"
+        },
+        {
+          "info": {
+            "name": "Get the most popular crypto currencies that are actively traded on the Safello platform",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/market/popular-cryptos",
+            "params": [
+              {
+                "name": "interval",
+                "value": "",
+                "type": "query",
+                "description": "Time interval to get popular coins for"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "How many popular coins to return"
+              }
+            ]
+          },
+          "docs": "Get the most popular crypto currencies that are actively traded on the Safello platform"
+        },
+        {
+          "info": {
+            "name": "Get historical candlestick data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/market/ohlcv",
+            "params": [
+              {
+                "name": "resolution",
+                "value": "",
+                "type": "query",
+                "description": "Timeframe resolution for candlestick data."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "ISO-8601 UTC start date for the requested historical data."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "ISO-8601 UTC end date for the requested historical data."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of data points to return."
+              },
+              {
+                "name": "pair",
+                "value": "BTC_SEK",
+                "type": "query",
+                "description": "Trading pair symbol using underscore as delimiter."
+              },
+              {
+                "name": "inverted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to retrieve data for the inverted trading pair. Defaults to `false`."
+              }
+            ]
+          },
+          "docs": "Get historical candlestick data"
+        },
+        {
+          "info": {
+            "name": "Get 24H market data for a pair",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/market/24h-data/:pair",
+            "params": [
+              {
+                "name": "pair",
+                "value": "BTC_SEK",
+                "type": "path",
+                "description": "Trading pair symbol using underscore as delimiter (e.g., BTC_SEK)."
+              }
+            ]
+          },
+          "docs": "Retrieve market data (24h ticker stats) for a given trading pair."
+        },
+        {
+          "info": {
+            "name": "Get trade pair order book",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/market/order-book/:pair",
+            "params": [
+              {
+                "name": "pair",
+                "value": "BTC_SEK",
+                "type": "path",
+                "description": "Trading pair symbol using underscore as delimiter."
+              }
+            ]
+          },
+          "docs": "Gets the order book for a trade pair"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

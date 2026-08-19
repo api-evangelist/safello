@@ -1,0 +1,305 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Safello account orders API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check order status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v1/order",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "query",
+                "description": "Order identifier"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Access-Token",
+              "value": "{{Access-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Checks the status of an order. Used to monitor if a buy or sell order has been completed.\n"
+        },
+        {
+          "info": {
+            "name": "Create buy order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.safello.com/v1/order",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Access-Token",
+              "value": "{{Access-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new order to buy crypto currency using fiat money.\n\nUpon creation, you can monitor the status of the order by calling\n[Check order status](#operation/checkOrderStatus).\n"
+        },
+        {
+          "info": {
+            "name": "Create sell order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.safello.com/v1/order/sell",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Access-Token",
+              "value": "{{Access-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates an order to sell crypto currency and receive fiat money.\n\nUpon creation, you can monitor the status of the order by calling\n[Check order status](#operation/checkOrderStatus).\n"
+        },
+        {
+          "info": {
+            "name": "List orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/orders",
+            "params": [
+              {
+                "name": "offset",
+                "value": "0",
+                "type": "query",
+                "description": "Desired offset for pagination purposes"
+              },
+              {
+                "name": "size",
+                "value": "10",
+                "type": "query",
+                "description": "Desired size for pagination purposes"
+              },
+              {
+                "name": "crypto",
+                "value": "BTC",
+                "type": "query",
+                "description": "Crypto currency to filter by"
+              },
+              {
+                "name": "type",
+                "value": "trade",
+                "type": "query",
+                "description": "Type to filter by"
+              },
+              {
+                "name": "orderType",
+                "value": "orderBook",
+                "type": "query",
+                "description": "Trade order type to filter by, only works if type is trade. One of: quick, orderBook"
+              },
+              {
+                "name": "pair",
+                "value": "BTC_USDC",
+                "type": "query",
+                "description": "Pair of currencies to filter by"
+              },
+              {
+                "name": "orderStatusFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by one or more order statuses. Accepts values of type 'EOrderStatus'."
+              },
+              {
+                "name": "tradeStatusFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by one or more trade order statuses. Accepts values of type 'ETradeOrderStatus'. Applies only to trade orders."
+              },
+              {
+                "name": "orderStatusForTradeOrderFilter",
+                "value": "",
+                "type": "query",
+                "description": "Applies an additional 'EOrderStatus' filter specifically to trade orders, in combination with orderStatusFilter."
+              }
+            ]
+          },
+          "docs": "Gets a paginated list containing the user's orders history\n"
+        },
+        {
+          "info": {
+            "name": "Create buy order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.safello.com/v2/orders/buy",
+            "headers": [
+              {
+                "name": "Source-IP-Address",
+                "value": "192.168.0.1"
+              },
+              {
+                "name": "Source-User-Agent",
+                "value": "curl/7.37.0"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new order to buy crypto currency using fiat money.\n\nUpon creation, you can monitor the status of the order by calling\n[Check order status](#operation/checkOrderStatus).\n"
+        },
+        {
+          "info": {
+            "name": "Create trade order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.safello.com/v2/orders/trade",
+            "headers": [
+              {
+                "name": "Source-IP-Address",
+                "value": "192.168.0.1"
+              },
+              {
+                "name": "Source-User-Agent",
+                "value": "curl/7.37.0"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new trade order to exchange crypto.\n\nUpon creation, you can monitor the status of the order by calling\n[Check order status](#operation/checkOrderStatus).\n"
+        },
+        {
+          "info": {
+            "name": "Cancel a trade order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.safello.com/v2/orders/cancel",
+            "headers": [
+              {
+                "name": "Source-IP-Address",
+                "value": "192.168.0.1"
+              },
+              {
+                "name": "Source-User-Agent",
+                "value": "curl/7.37.0"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancels a limit trade order.\n"
+        },
+        {
+          "info": {
+            "name": "Edits an open trade order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.safello.com/v2/orders/:orderId/edit",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "Order identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Edits an open trade order."
+        },
+        {
+          "info": {
+            "name": "Create sell order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.safello.com/v2/orders/sell",
+            "headers": [
+              {
+                "name": "Source-IP-Address",
+                "value": "192.168.0.1"
+              },
+              {
+                "name": "Source-User-Agent",
+                "value": "curl/7.37.0"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an order to sell crypto currency and receive fiat money.\n\nUpon creation, you can monitor the status of the order by calling\n[Check order status](#operation/checkOrderStatus).\n"
+        },
+        {
+          "info": {
+            "name": "Check order status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/orders/:orderId",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "Order identifier"
+              }
+            ]
+          },
+          "docs": "Checks the status of an order. Used to monitor if a buy or sell order has been completed.\n"
+        },
+        {
+          "info": {
+            "name": "Get fees",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v2/orders/fees"
+          },
+          "docs": "Get fees for different order types"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,993 @@
+{
+  "item": [
+    {
+      "id": "d04184d5-f5f4-47ad-8e80-f1299d0f5fa8",
+      "name": "auth",
+      "description": {
+        "content": "Authentication flow",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7dd3a33b-59db-4af8-9b17-eb1dcb6c5a89",
+          "name": "Start authentication",
+          "request": {
+            "name": "Start authentication",
+            "description": {
+              "content": "Starts an authentication request",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "auth"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "method",
+                  "value": "bankid_se",
+                  "description": "Authentication method to use"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "App-Id"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"redirectPath\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "33bfbdec-4567-4203-ba2e-6bfdd7d852dd",
+              "name": "Authentication request started successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "method",
+                      "value": "bankid_se"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "App-Id",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"redirectPath\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"redirect\",\n  \"pollingUrl\": \"https://app.safello.com/v1/auth?method=bankid_se&token=1b36b7ef-1bd2-4739-94cf-4df3e374f848\",\n  \"qrCodes\": [\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.0.4b7dbdaba727420352a1a752d1ba5cd8c650ec131cf10e477eca140fd8d1d259\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.1.8469c1f109735e1bbc6b6107d4112401b9446c1caea4611f171e02b7c8eea127\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.2.0a536926783b52e8837f2bba7f3738d5de641c65b7325e1fc643da7cdc64427a\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.3.afca20f1bb0ca126924679ea4832e31642653f47c63457987495a06f7a2881e7\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.4.dd0db3170ce1e91b6f1098a2e0b2a020dc3c4356b032f71db0a79e0f0d12fab9\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.5.993e453c28e5e78768b1a1c418e6ce3f7316e19dee2606a1880a757e959cc8c4\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.6.48e6e9181a684c3be7a44bd30d5738de83541c65a0c2a515ee034c0754437078\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.7.6442dde57ac0c1e0c29254da48fc33163166678bfa94af514d7dc469cc750b09\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.8.e19e127b7227d3fce01c69f98cd9cccb8979c157b19ee9720edca4c03903b54f\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.9.c099b293a9f5f1714a1aed5e7cf97b4a482794e00d14f2589180806526fb3247\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.10.e003d65ff82ee66d44a347d9c25567278a7fd04aecfdf97e1cd316118eccefc6\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.11.6d6ed759392e2d1faa5c4024770937afc50df35ecb2d217945c757f1ca846752\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.12.c09a8114bb2bb2a5a7e3680553f6848d5be714e41bd367a1f6e6b351abbd6328\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.13.863fbcf444c57707b0d44080e6afd55d4060c568f92817007963ccd337cbe747\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.14.3894cc97e94b282828f5175b9e75099f83aa566d8bc497f944d45b61b293f299\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.15.d1b2d859308ca1c57e50d53708f37a49869716dcd3d826909811ca1e4c5745f2\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.16.b5b29ca20d50362862dd893771750d0e32b4ed4eea3436e96661b42aa28ebb5e\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.17.30511a502e4a63cdcdb8f8162acd28ef35fc0e9e302438e1aeddfed4764e28c3\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.18.ae76fdedcd4711185e576bb5e3161520c15f29df6bdd62a317b5b3df7b307acf\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.19.12ad2ca8d0e7a8605147d55d1fc11f14cbe81b487c1aa567aca95f51623e98ed\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.20.2394cf188b5c41f391a22d9c34f62af54bb508285e5de46704a4defe7bfbe26f\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.21.4702aade9b50bfc87d0a28582af2acf2fd8d011bbaf37a2bba689087c72639f7\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.22.6d6f633f934c9c480deeb5009001e4d92d81b31beaec87c9f3a70ef5940d30c1\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.23.5e08553a79441a08d7f1b3afac3805dadb44d67d36dc76f5f0eb9bbb909d80c1\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.24.c769e4cbc6a15220fce70cae83cb288b3b80dabd1b48ac4a75148a4c2659e4c0\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.25.9ee3892d4fb3a7a2a9beb50b00f10a572ed4b7a9a16475d77be7628e1b7d24eb\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.26.0ee2729dc7fe72043c67e245baee23b4380d0dd729cf864b4ff09c5de57e736c\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.27.4d6fc7e05f1c1990d8251c6c5bcdf30ca48ce35b90fdbaadc6b58fb8fa2769d2\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.28.0e8e89a192f01b30d108bd17e652d988f408a8b96626243150806fc87008f248\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.29.220b823f1d8326994180e0ee42f6b6a61ffc5107e27c7859b7a1412294df2825\",\n    \"bankid.1902e211-6c0f-45ed-b2fa-412298a50ea0.30.dab46b87905527b38a44ae6eac955942db3f86152c16301bc0f5572e96eb6ac0\"\n  ],\n  \"redirectUrl\": \"bankid:///?autostarttoken=92bbfe55-daf3-4b3a-803b-177b8b800364&redirect=https%3A%2F%2Fapp.safello.com%3FbankIdPollingRef%3D1b36b7ef-1bd2-4739-94cf-4df3e374f848%26redirect%3D%252Faccount\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "675c1841-0058-4e95-a623-6c982f13a0cd",
+              "name": "This request requires you to send an App ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "method",
+                      "value": "bankid_se"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "App-Id",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"redirectPath\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 498,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"status\": 498,\n  \"code\": \"MISSING_APP_ID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3412b446-849e-497d-b1b2-fc00bf5bb351",
+          "name": "Authentication status",
+          "request": {
+            "name": "Authentication status",
+            "description": {
+              "content": "Checks the status for an authentication request.\n\nAfter creating an authentication request, you should call this endpoint every 1-2 seconds\n to check wether or not the user has finished authenticating with BankID.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "auth"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "description": {
+                    "content": "(Required) Token",
+                    "type": "text/plain"
+                  },
+                  "key": "token",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "method",
+                  "value": "bankid_se"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "App-Id"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f76be236-35ec-4c58-bc82-f8adaaea4207",
+              "name": "Status retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": ""
+                    },
+                    {
+                      "key": "method",
+                      "value": "bankid_se"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "App-Id",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"ERROR\",\n  \"message\": \"User has not yet confirmed their identity with the given ref\",\n  \"accessToken\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca4735ac-29e0-4368-a631-515280571b9e",
+              "name": "Some required parameter was not sent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": ""
+                    },
+                    {
+                      "key": "method",
+                      "value": "bankid_se"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "App-Id",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Precondition Failed",
+              "code": 412,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"\\\\\\\"token\\\\\\\" is required\",\n  \"status\": 412,\n  \"code\": \"VALIDATION_ERROR\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "649fe32b-c4b2-4b7e-b7e3-cdb13b6f5700",
+          "name": "Get logged in user",
+          "request": {
+            "name": "Get logged in user",
+            "description": {
+              "content": "Returns information about the logged in user",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "auth",
+                "user"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Access-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "69bb2ac3-112d-494e-9322-789136ee2c15",
+              "name": "An object with user information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "auth",
+                    "user"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Access-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 123456,\n  \"country\": \"SE\",\n  \"email\": \"user@example.com\",\n  \"emailActive\": true,\n  \"features\": {},\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"hasAcceptedLatestTerms\": true,\n  \"hasAcceptedOldTerms\": true,\n  \"intercomHash\": {},\n  \"language\": \"sv\",\n  \"level\": 1,\n  \"premium\": false,\n  \"safeEnvironment\": false,\n  \"telephoneNumber\": \"string\",\n  \"tier\": 3\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30cd0864-0df7-431f-a50f-5ff89b6070b1",
+              "name": "Not authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "auth",
+                    "user"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Access-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4ba7dcb4-97f4-4a32-8014-9f6a52cabe08",
+          "name": "BankID Auth Grant",
+          "request": {
+            "name": "BankID Auth Grant",
+            "description": {
+              "content": "Starts an authorization request",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth2",
+                "bankid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) IP Address of the originator of the request",
+                "key": "Source-IP-Address",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) User-Agent of the originator of the request",
+                "key": "Source-User-Agent",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "pnr",
+                  "value": "<string>",
+                  "description": "(Required) Personal Identity Number (12 digits)"
+                },
+                {
+                  "disabled": false,
+                  "key": "corporate",
+                  "value": "<boolean>",
+                  "description": "Set to true to get the first corporate account connected to the bank id (if it exists)"
+                },
+                {
+                  "disabled": false,
+                  "key": "orgNr",
+                  "value": "<string>",
+                  "description": "Specific organization number to get the corporate account connected to the bank id (if it exists)"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "879a9458-8555-48fe-8bf9-87f6088e9843",
+              "name": "Authorization request started successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth2",
+                    "bankid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) IP Address of the originator of the request",
+                    "key": "Source-IP-Address",
+                    "value": "192.168.0.1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) User-Agent of the originator of the request",
+                    "key": "Source-User-Agent",
+                    "value": "curl/7.37.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Personal Identity Number (12 digits)",
+                        "type": "text/plain"
+                      },
+                      "key": "pnr",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Set to true to get the first corporate account connected to the bank id (if it exists)",
+                        "type": "text/plain"
+                      },
+                      "key": "corporate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Specific organization number to get the corporate account connected to the bank id (if it exists)",
+                        "type": "text/plain"
+                      },
+                      "key": "orgNr",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Cache-Control",
+                  "value": "no-store",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "Pragma",
+                  "value": "no-cache",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"auto_start_token\": \"sagtuvAgOax1\",\n  \"interval\": 2,\n  \"expires_in\": 120\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f04c08a4-0e14-477b-9a5f-78996825c2d0",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth2",
+                    "bankid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) IP Address of the originator of the request",
+                    "key": "Source-IP-Address",
+                    "value": "192.168.0.1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) User-Agent of the originator of the request",
+                    "key": "Source-User-Agent",
+                    "value": "curl/7.37.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Personal Identity Number (12 digits)",
+                        "type": "text/plain"
+                      },
+                      "key": "pnr",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Set to true to get the first corporate account connected to the bank id (if it exists)",
+                        "type": "text/plain"
+                      },
+                      "key": "corporate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Specific organization number to get the corporate account connected to the bank id (if it exists)",
+                        "type": "text/plain"
+                      },
+                      "key": "orgNr",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"invalid_request\",\n  \"error_description\": \"Missing a required parameter\",\n  \"error_uri\": \"https://datatracker.ietf.org/doc/html/rfc6749#section-5.2\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a58f5237-f2e3-46e9-b553-4f6df34d9d1c",
+          "name": "Request Access Token",
+          "request": {
+            "name": "Request Access Token",
+            "description": {},
+            "url": {
+              "path": [
+                "oauth2",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "grant_type",
+                  "value": "<string>",
+                  "description": "(Required) Grant types:\n- `urn:safello:params:oauth:grant-type:bankid`\n- `client_credentials`\n- `refresh_token`\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "request_id",
+                  "value": "<string>",
+                  "description": "The request_id retrieved from /oauth2/bankid request"
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>",
+                  "description": "The scope of the access request"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "89dcd0fb-cc23-4269-8e2a-3d8728b8af4c",
+              "name": "Issuance of access token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth2",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Grant types:\n- `urn:safello:params:oauth:grant-type:bankid`\n- `client_credentials`\n- `refresh_token`\n",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "urn:ietf:params:oauth:grant-type:bankid"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The request_id retrieved from /oauth2/bankid request",
+                        "type": "text/plain"
+                      },
+                      "key": "request_id",
+                      "value": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The scope of the access request",
+                        "type": "text/plain"
+                      },
+                      "key": "scope",
+                      "value": "read write"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Cache-Control",
+                  "value": "no-store",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "Pragma",
+                  "value": "no-cache",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": 3600,\n  \"refresh_token\": \"tGzv3JOkF0XG5Qx2TlKWIA\",\n  \"scope\": \"read write\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f50ea41c-51fb-4d01-b8e9-a70c47770891",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth2",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Grant types:\n- `urn:safello:params:oauth:grant-type:bankid`\n- `client_credentials`\n- `refresh_token`\n",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "urn:ietf:params:oauth:grant-type:bankid"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The request_id retrieved from /oauth2/bankid request",
+                        "type": "text/plain"
+                      },
+                      "key": "request_id",
+                      "value": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The scope of the access request",
+                        "type": "text/plain"
+                      },
+                      "key": "scope",
+                      "value": "read write"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Cache-Control",
+                  "value": "no-store",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "Pragma",
+                  "value": "no-cache",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"expired_token\",\n  \"error_description\": \"Client authentication failed\",\n  \"error_uri\": \"http://example.test/token_expired.html\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.safello.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e51b49e9-e872-4674-8163-fcb3e2dfdfe3",
+    "name": "Safello account auth API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Powering your app with crypto",
+      "type": "text/plain"
+    }
+  }
+}

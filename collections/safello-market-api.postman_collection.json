@@ -1,0 +1,1812 @@
+{
+  "item": [
+    {
+      "id": "40d201bc-5d81-420f-83e7-db9460ee6236",
+      "name": "market",
+      "description": {
+        "content": "Market endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "354b00fb-6837-4121-adb3-d8b80faa95ba",
+          "name": "List Cryptocurrency symbols",
+          "request": {
+            "name": "List Cryptocurrency symbols",
+            "description": {
+              "content": "Lists the crypto currency symbols supported by Safello\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "market",
+                "symbols",
+                "crypto"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "6c0677ce-d22d-47c9-ab8a-954c94fcbe85",
+              "name": "Cryptocurrency Symbols retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "symbols",
+                    "crypto"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"currency\": \"BTC\",\n    \"minorAmountDecimals\": 8,\n    \"displayName\": \"Bitcoin\",\n    \"status\": \"active\",\n    \"availableActions\": [\n      \"buy\",\n      \"sell\"\n    ],\n    \"network\": \"Bitcoin\",\n    \"dateAdded\": \"2023-06-15\",\n    \"color\": {\n      \"light\": \"#FFD700\",\n      \"dark\": \"#000000\"\n    }\n  },\n  {\n    \"currency\": \"BTC\",\n    \"minorAmountDecimals\": 8,\n    \"displayName\": \"Bitcoin\",\n    \"status\": \"active\",\n    \"availableActions\": [\n      \"buy\",\n      \"sell\"\n    ],\n    \"network\": \"Bitcoin\",\n    \"dateAdded\": \"2023-06-15\",\n    \"color\": {\n      \"light\": \"#FFD700\",\n      \"dark\": \"#000000\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16d1678b-8bef-4472-9890-75c7f3317545",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "symbols",
+                    "crypto"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "018d09a3-cb24-42fe-b3cf-f0a9791cf031",
+          "name": "List Fiat currency symbols",
+          "request": {
+            "name": "List Fiat currency symbols",
+            "description": {
+              "content": "Lists the fiat currency symbols supported by Safello\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "market",
+                "symbols",
+                "fiat"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "13129d54-f933-4a31-8893-98bc39eec568",
+              "name": "Fiat Symbols retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "symbols",
+                    "fiat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"currency\": \"SEK\",\n    \"minorAmountDecimals\": 2,\n    \"displayName\": \"Kronor\",\n    \"status\": \"active\"\n  },\n  {\n    \"currency\": \"SEK\",\n    \"minorAmountDecimals\": 2,\n    \"displayName\": \"Kronor\",\n    \"status\": \"active\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff0bc373-005d-444e-b820-d5194732b63d",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "symbols",
+                    "fiat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8a3a040a-ba3a-43ee-978c-676614aae67d",
+          "name": "List trading pairs",
+          "request": {
+            "name": "List trading pairs",
+            "description": {
+              "content": "Lists the trading pairs supported by Safello\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "market",
+                "symbols",
+                "pairs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "81b7d3c8-c5a4-498d-b5a1-19a272db58fa",
+              "name": "Trading pairs retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "symbols",
+                    "pairs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"pair\": \"BTC_USDC\",\n    \"baseDecimals\": 8,\n    \"counterDecimals\": 5,\n    \"status\": \"active\",\n    \"availableActions\": [\n      \"buy\",\n      \"sell\"\n    ],\n    \"minimumOrder\": {\n      \"currency\": \"BTC\",\n      \"amount\": \"0.0005\"\n    }\n  },\n  {\n    \"pair\": \"BTC_USDC\",\n    \"baseDecimals\": 8,\n    \"counterDecimals\": 5,\n    \"status\": \"active\",\n    \"availableActions\": [\n      \"buy\",\n      \"sell\"\n    ],\n    \"minimumOrder\": {\n      \"currency\": \"BTC\",\n      \"amount\": \"0.0005\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "679ea6fb-eafa-4693-8e41-777722a800e5",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "symbols",
+                    "pairs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "797e2dc4-88d1-469c-8d0a-07bcaac65cbf",
+          "name": "Market chart",
+          "request": {
+            "name": "Market chart",
+            "description": {
+              "content": "Get the chart for the selected market\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "market",
+                "chart",
+                ":pair"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "interval",
+                  "value": "MAX",
+                  "description": "Time interval for the result"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "pair",
+                  "description": "(Required) Trading pair symbol using underscore as delimiter."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "9c3dd913-3d13-47ae-95bd-4195f4a6d54d",
+              "name": "Market chart data points",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "chart",
+                    ":pair"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "interval",
+                      "value": "MAX"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pair",
+                      "description": "(Required) Trading pair symbol using underscore as delimiter."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"timestamp\": 1643037000000,\n    \"price\": \"317258.03\"\n  },\n  {\n    \"timestamp\": 1643037000000,\n    \"price\": \"317258.03\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7c4b8be-dc61-4a1e-99e2-a73470690020",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "chart",
+                    ":pair"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "interval",
+                      "value": "MAX"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pair",
+                      "description": "(Required) Trading pair symbol using underscore as delimiter."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f5f8bdbc-cb42-4b62-867f-ce874b2b6cb7",
+          "name": "Get price",
+          "request": {
+            "name": "Get price",
+            "description": {
+              "content": "Gets the current price for a single crypto currency",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "market",
+                "prices",
+                "rates",
+                ":crypto"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fiat",
+                  "value": "SEK",
+                  "description": "Fiat currency"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "crypto",
+                  "description": "(Required) Cryptocurrency code - one of BTC, ETH, LINK, MATIC, or DOT"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "23c7385d-46b6-4a14-907d-3819ef794df5",
+              "name": "Pair ticker",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "prices",
+                    "rates",
+                    ":crypto"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fiat",
+                      "value": "SEK"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crypto",
+                      "description": "(Required) Cryptocurrency code - one of BTC, ETH, LINK, MATIC, or DOT"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ask\": \"343110.6053375\",\n  \"baseAsk\": \"328335.5075\",\n  \"mid\": \"330000.0000\",\n  \"baseBid\": \"330303.5525\",\n  \"bid\": \"313788.374875\",\n  \"cryptoCurrency\": \"BTC\",\n  \"currency\": \"SEK\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "206cb49b-f933-4d96-b6ab-e4d78808f7fb",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "prices",
+                    "rates",
+                    ":crypto"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fiat",
+                      "value": "SEK"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crypto",
+                      "description": "(Required) Cryptocurrency code - one of BTC, ETH, LINK, MATIC, or DOT"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4747ae87-9335-48f4-99d1-fa69cf720092",
+          "name": "Get all prices",
+          "request": {
+            "name": "Get all prices",
+            "description": {
+              "content": "Gets the current prices for all supported crypto currencies",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "market",
+                "prices",
+                "rates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fiat",
+                  "value": "SEK",
+                  "description": "Fiat currency"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "bca1c20f-15ba-4d23-8f03-23e9e21263d2",
+              "name": "List of currency rates for all supported crypto currencies",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "prices",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fiat",
+                      "value": "SEK"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6528128-06cb-4b5c-9bd0-09dc8c3490d7",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "prices",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fiat",
+                      "value": "SEK"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ba3673a0-51b0-4899-aed2-48ce691de408",
+          "name": "Get trade pair price",
+          "request": {
+            "name": "Get trade pair price",
+            "description": {
+              "content": "Gets the current price for a trade pair",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "market",
+                "ticker",
+                ":pair"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "pair",
+                  "description": "(Required) Trading pair symbol using underscore as delimiter."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "38b67b67-c919-467b-86d0-fdaab2c9a598",
+              "name": "Pair ticker",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "ticker",
+                    ":pair"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pair",
+                      "description": "(Required) Trading pair symbol using underscore as delimiter."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pair\": \"BTC_SEK\",\n  \"timestamp\": \"2015-08-15T09:42:46.771Z\",\n  \"quoteVolume\": \"string\",\n  \"baseVolume\": \"string\",\n  \"lastPrice\": \"string\",\n  \"bestBid\": \"string\",\n  \"bestAsk\": \"string\",\n  \"high\": \"string\",\n  \"low\": \"string\",\n  \"mid\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0275bb0-9ab7-4326-a2fb-2a0555b14344",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "ticker",
+                    ":pair"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pair",
+                      "description": "(Required) Trading pair symbol using underscore as delimiter."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "11e8c005-e77d-4fd9-b78d-921b7754d722",
+          "name": "Get all trade pair tickers",
+          "request": {
+            "name": "Get all trade pair tickers",
+            "description": {
+              "content": "Gets the current prices for all trade pairs",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "market",
+                "tickers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "90828319-de10-4ca0-b238-d5b5262b522d",
+              "name": "All trade pair tickers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "tickers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"pair\": \"BTC_SEK\",\n    \"timestamp\": \"2026-07-08T13:44:52.847Z\",\n    \"quoteVolume\": \"string\",\n    \"baseVolume\": \"string\",\n    \"lastPrice\": \"string\",\n    \"bestBid\": \"string\",\n    \"bestAsk\": \"string\",\n    \"high\": \"string\",\n    \"low\": \"string\",\n    \"mid\": \"string\"\n  },\n  {\n    \"pair\": \"BTC_SEK\",\n    \"timestamp\": \"1980-11-02T20:36:07.485Z\",\n    \"quoteVolume\": \"string\",\n    \"baseVolume\": \"string\",\n    \"lastPrice\": \"string\",\n    \"bestBid\": \"string\",\n    \"bestAsk\": \"string\",\n    \"high\": \"string\",\n    \"low\": \"string\",\n    \"mid\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72021a62-70c3-45ce-a7c3-9ebf534e9fd7",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "tickers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0ccb4e7b-7e7f-4833-94e0-a24a21b0fca9",
+          "name": "Get the best performers",
+          "request": {
+            "name": "Get the best performers",
+            "description": {
+              "content": "Get the best performers",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "market",
+                "best-performers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "interval",
+                  "value": "DAILY",
+                  "description": "Time interval to get best performers for"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "5",
+                  "description": "How many best performers to return"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "3af392c1-0613-4ef5-8e51-112f983d258e",
+              "name": "Market best performers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "best-performers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "interval",
+                      "value": "DAILY"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"pair\": \"BTC_SEK\",\n      \"price\": \"1234.56\",\n      \"percentageChange\": \"0.1234\",\n      \"absoluteChange\": \"1234.56\"\n    },\n    {\n      \"pair\": \"BTC_SEK\",\n      \"price\": \"1234.56\",\n      \"percentageChange\": \"0.1234\",\n      \"absoluteChange\": \"1234.56\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d654ee52-3fc8-4ced-9637-80744d3252ca",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "best-performers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "interval",
+                      "value": "DAILY"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7004aeca-eb7b-4064-aff9-47e2264e55a6",
+          "name": "Get the most popular crypto currencies that are actively traded on the Safello platform",
+          "request": {
+            "name": "Get the most popular crypto currencies that are actively traded on the Safello platform",
+            "description": {
+              "content": "Get the most popular crypto currencies that are actively traded on the Safello platform",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "market",
+                "popular-cryptos"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "interval",
+                  "value": "DAILY",
+                  "description": "Time interval to get popular coins for"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "5",
+                  "description": "How many popular coins to return"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "4140a259-acd5-403d-bb63-745ad8bcb9e3",
+              "name": "Market best performers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "popular-cryptos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "interval",
+                      "value": "DAILY"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"pair\": \"BTC_SEK\",\n      \"price\": \"1234.56\",\n      \"percentageChange\": \"0.1234\",\n      \"absoluteChange\": \"1234.56\"\n    },\n    {\n      \"pair\": \"BTC_SEK\",\n      \"price\": \"1234.56\",\n      \"percentageChange\": \"0.1234\",\n      \"absoluteChange\": \"1234.56\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ebcca687-3395-44da-b5e9-9325191c2591",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "popular-cryptos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "interval",
+                      "value": "DAILY"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "67c0539a-2dc8-4a2b-8ac7-34e87bc55dec",
+          "name": "Get historical candlestick data",
+          "request": {
+            "name": "Get historical candlestick data",
+            "description": {
+              "content": "Get historical candlestick data",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "market",
+                "ohlcv"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "resolution",
+                  "value": "<string>",
+                  "description": "(Required) Timeframe resolution for candlestick data."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<dateTime>",
+                  "description": "(Required) ISO-8601 UTC start date for the requested historical data."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<dateTime>",
+                  "description": "(Required) ISO-8601 UTC end date for the requested historical data."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "1000",
+                  "description": "Number of data points to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "pair",
+                  "value": "<string>",
+                  "description": "(Required) Trading pair symbol using underscore as delimiter."
+                },
+                {
+                  "disabled": false,
+                  "key": "inverted",
+                  "value": "false",
+                  "description": "Whether to retrieve data for the inverted trading pair. Defaults to `false`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "c1dc23d3-0070-4c8c-8790-a1eb49d769d6",
+              "name": "Successful response with historical OHLCV data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "ohlcv"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "resolution",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "pair",
+                      "value": "BTC_SEK"
+                    },
+                    {
+                      "key": "inverted",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ts\": \"1961-01-12T16:24:50.821Z\",\n  \"resolution\": \"1mo\",\n  \"pair\": \"string\",\n  \"inverted\": false,\n  \"data\": [\n    {\n      \"timestamp\": \"1964-04-11T02:44:41.041Z\",\n      \"open\": \"string\",\n      \"high\": \"string\",\n      \"low\": \"string\",\n      \"close\": \"string\",\n      \"volume\": \"string\",\n      \"ticks\": 2381\n    },\n    {\n      \"timestamp\": \"1969-11-07T08:57:44.558Z\",\n      \"open\": \"string\",\n      \"high\": \"string\",\n      \"low\": \"string\",\n      \"close\": \"string\",\n      \"volume\": \"string\",\n      \"ticks\": 3943\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5664a43e-11d9-4264-8ccd-339c970f5446",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "ohlcv"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "resolution",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "pair",
+                      "value": "BTC_SEK"
+                    },
+                    {
+                      "key": "inverted",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d9a91e6d-3b76-41c2-a9ef-d581f8ace2cf",
+          "name": "Get 24H market data for a pair",
+          "request": {
+            "name": "Get 24H market data for a pair",
+            "description": {
+              "content": "Retrieve market data (24h ticker stats) for a given trading pair.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "market",
+                "24h-data",
+                ":pair"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "pair",
+                  "description": "(Required) Trading pair symbol using underscore as delimiter (e.g., BTC_SEK)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "8d90a830-e388-403b-99cc-25e5256da09d",
+              "name": "Successful response with ticker data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "24h-data",
+                    ":pair"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pair",
+                      "description": "(Required) Trading pair symbol using underscore as delimiter (e.g., BTC_SEK)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"symbol\": \"string\",\n  \"high\": \"string\",\n  \"low\": \"string\",\n  \"bid\": \"string\",\n  \"ask\": \"string\",\n  \"volume\": \"string\",\n  \"quoteVolume\": \"string\",\n  \"priceChangePercent\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d8d67a1-00da-4668-83e3-18762f054e0f",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "24h-data",
+                    ":pair"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pair",
+                      "description": "(Required) Trading pair symbol using underscore as delimiter (e.g., BTC_SEK)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "62aa2ed3-5d8f-4f4b-861a-4c0d948b29b2",
+          "name": "Get trade pair order book",
+          "request": {
+            "name": "Get trade pair order book",
+            "description": {
+              "content": "Gets the order book for a trade pair",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "market",
+                "order-book",
+                ":pair"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "pair",
+                  "description": "(Required) Trading pair symbol using underscore as delimiter."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "87a85c2c-39e0-4e7a-b5a6-d8a01fdc55f0",
+              "name": "Order Book",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "order-book",
+                    ":pair"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pair",
+                      "description": "(Required) Trading pair symbol using underscore as delimiter."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pair\": \"BTC_USDC\",\n  \"timestamp\": \"2022-12-30T01:11:38.662Z\",\n  \"bids\": [\n    {\n      \"price\": \"49905.65\",\n      \"amount\": \"5.31251274\"\n    },\n    {\n      \"price\": \"49905.65\",\n      \"amount\": \"5.31251274\"\n    }\n  ],\n  \"asks\": [\n    {\n      \"price\": \"50653.80\",\n      \"amount\": \"0.45186957\"\n    },\n    {\n      \"price\": \"50653.80\",\n      \"amount\": \"0.45186957\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "66198172-828c-4d03-b338-c359b13d428f",
+              "name": "The data you have sent is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "market",
+                    "order-book",
+                    ":pair"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pair",
+                      "description": "(Required) Trading pair symbol using underscore as delimiter."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot place an order higher than your buy limit of 500 SEK\",\n  \"status\": 400,\n  \"code\": \"BUY_LIMIT_EXCEEDED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.safello.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1921b82e-50ba-41ec-a557-12e65b7b5ba0",
+    "name": "Safello account market API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Powering your app with crypto",
+      "type": "text/plain"
+    }
+  }
+}

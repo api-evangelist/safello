@@ -1,0 +1,134 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Safello account auth API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authentication status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v1/auth",
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Token"
+              },
+              {
+                "name": "method",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "App-Id",
+              "value": "{{App-Id}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Checks the status for an authentication request.\n\nAfter creating an authentication request, you should call this endpoint every 1-2 seconds\n to check wether or not the user has finished authenticating with BankID.\n"
+        },
+        {
+          "info": {
+            "name": "Start authentication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.safello.com/v1/auth",
+            "params": [
+              {
+                "name": "method",
+                "value": "",
+                "type": "query",
+                "description": "Authentication method to use"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "App-Id",
+              "value": "{{App-Id}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Starts an authentication request"
+        },
+        {
+          "info": {
+            "name": "Get logged in user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.safello.com/v1/auth/user",
+            "auth": {
+              "type": "apikey",
+              "key": "Access-Token",
+              "value": "{{Access-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns information about the logged in user"
+        },
+        {
+          "info": {
+            "name": "BankID Auth Grant",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.safello.com/oauth2/bankid",
+            "headers": [
+              {
+                "name": "Source-IP-Address",
+                "value": "192.168.0.1"
+              },
+              {
+                "name": "Source-User-Agent",
+                "value": "curl/7.37.0"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Starts an authorization request"
+        },
+        {
+          "info": {
+            "name": "Request Access Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.safello.com/oauth2/token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Request Access Token"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
