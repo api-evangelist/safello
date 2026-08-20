@@ -47,6 +47,8 @@ apis:
   humanURL: https://safello.github.io/safello-api/api
   baseURL: https://api.safello.com
   tags:
+  - Account
+  tags_raw:
   - account
   properties:
   - type: OpenAPI
@@ -61,6 +63,8 @@ apis:
   humanURL: https://safello.github.io/safello-api/api
   baseURL: https://api.safello.com
   tags:
+  - Authentication
+  tags_raw:
   - auth
   properties:
   - type: OpenAPI
@@ -75,6 +79,8 @@ apis:
   humanURL: https://safello.github.io/safello-api/api
   baseURL: https://api.safello.com
   tags:
+  - Compliance
+  tags_raw:
   - compliance
   properties:
   - type: OpenAPI
@@ -89,6 +95,8 @@ apis:
   humanURL: https://safello.github.io/safello-api/api
   baseURL: https://api.safello.com
   tags:
+  - Market
+  tags_raw:
   - market
   properties:
   - type: OpenAPI
@@ -103,6 +111,8 @@ apis:
   humanURL: https://safello.github.io/safello-api/api
   baseURL: https://api.safello.com
   tags:
+  - Order
+  tags_raw:
   - orders
   properties:
   - type: OpenAPI
@@ -117,6 +127,8 @@ apis:
   humanURL: https://safello.github.io/safello-api/api
   baseURL: https://api.safello.com
   tags:
+  - Prices
+  tags_raw:
   - prices
   properties:
   - type: OpenAPI
@@ -131,6 +143,8 @@ apis:
   humanURL: https://safello.github.io/safello-api/api
   baseURL: https://api.safello.com
   tags:
+  - Wallets
+  tags_raw:
   - wallet
   properties:
   - type: OpenAPI
