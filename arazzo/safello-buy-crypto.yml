@@ -4,29 +4,32 @@ info:
   version: 1.0.0
   summary: Verify buy compliance, quote fees, create a buy order, and poll it to completion.
 sourceDescriptions:
-  - name: safello
-    url: ../openapi/safello-institutional-openapi.json
-    type: openapi
+- name: complianceApi
+  url: ../openapi/safello-compliance-api-openapi.yml
+  type: openapi
+- name: ordersApi
+  url: ../openapi/safello-orders-api-openapi.yml
+  type: openapi
 workflows:
-  - workflowId: buyCrypto
-    summary: Place and track a fiat-to-crypto buy order for an onboarded customer.
-    inputs:
-      type: object
-      properties:
-        crypto: { type: string }
-        fiatAmount: { type: number }
-    steps:
-      - stepId: verifyCompliance
-        operationId: verifyBuyOrderCompliance
-      - stepId: getFees
-        operationId: getFees
-      - stepId: createBuyOrder
-        operationId: createBuyOrder
-        outputs:
-          orderId: $response.body#/id
-      - stepId: checkStatus
-        operationId: checkOrderStatus
-        parameters:
-          - name: orderId
-            in: path
-            value: $steps.createBuyOrder.outputs.orderId
+- workflowId: buyCrypto
+  summary: Place and track a fiat-to-crypto buy order for an onboarded customer.
+  inputs:
+    type: object
+    properties:
+      crypto: {type: string}
+      fiatAmount: {type: number}
+  steps:
+  - stepId: verifyCompliance
+    operationId: verifyBuyOrderCompliance
+  - stepId: getFees
+    operationId: getFees
+  - stepId: createBuyOrder
+    operationId: createBuyOrder
+    outputs:
+      orderId: $response.body#/id
+  - stepId: checkStatus
+    operationId: checkOrderStatus
+    parameters:
+    - name: orderId
+      in: path
+      value: $steps.createBuyOrder.outputs.orderId
