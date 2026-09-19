@@ -107,7 +107,7 @@ apis:
   humanURL: https://safello.github.io/safello-api/api
   baseURL: https://api.safello.com
   tags:
-  - Market
+  - Markets
   tags_raw:
   - market
   properties:
