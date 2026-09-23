@@ -1,26 +1,38 @@
 {
   "provider": "safello",
   "sources": [
-    "safello-account-api-openapi.yml",
-    "safello-auth-api-openapi.yml",
-    "safello-compliance-api-openapi.yml",
-    "safello-market-api-openapi.yml",
-    "safello-orders-api-openapi.yml",
-    "safello-prices-api-openapi.yml",
-    "safello-wallet-api-openapi.yml"
+    "_original/safello-app-openapi.json",
+    "_original/safello-institutional-openapi.json"
   ],
   "outputs": [
     "safello-account-api-openapi.yml",
     "safello-auth-api-openapi.yml",
-    "safello-compliance-api-openapi.yml",
-    "safello-market-api-openapi.yml",
     "safello-orders-api-openapi.yml",
     "safello-prices-api-openapi.yml",
-    "safello-wallet-api-openapi.yml"
+    "safello-wallet-api-openapi.yml",
+    "safello-compliance-api-openapi.yml",
+    "safello-market-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "safello-app-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "safello-institutional-openapi.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "tag 'account' spans 2 source specs (safello-app-openapi.json, safello-institutional-openapi.json): per-path servers applied",
+    "tag 'auth' spans 2 source specs (safello-app-openapi.json, safello-institutional-openapi.json): per-path servers applied",
+    "tag 'orders' spans 2 source specs (safello-app-openapi.json, safello-institutional-openapi.json): per-path servers applied",
+    "tag 'wallet' spans 2 source specs (safello-app-openapi.json, safello-institutional-openapi.json): per-path servers applied",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "safello-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "safello-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "safello-compliance-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "safello-market-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "safello-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "safello-prices-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "safello-wallet-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

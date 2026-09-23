@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Safello account prices API
+  title: Safello Prices API
   description: Powering your app with crypto
   version: 0.1.0
   license:
@@ -9,7 +9,7 @@ info:
 servers:
 - url: https://app.safello.com
 tags:
-- name: prices
+- name: Prices
   x-displayName: Prices
   description: Price endpoints
 paths:
@@ -17,7 +17,7 @@ paths:
     get:
       operationId: getPriceHistory
       tags:
-      - prices
+      - Prices
       summary: Price history
       description: 'Gets historical price data for a cryptocurrency in a given interval.
 
@@ -25,11 +25,9 @@ paths:
         The resulting array can be plotted in a graph and contains a list of tuple arrays with 2 elements:
 
 
-        1. A timestamp representing the number of milliseconds since [UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time).
+        1. A timestamp representing the number of milliseconds since UNIX Epoch Time.
 
-        2. Unitary price for the cryptocurrency in SEK.
-
-        '
+        2. Unitary price for the cryptocurrency in SEK.'
       parameters:
       - name: crypto
         in: query
@@ -93,7 +91,7 @@ paths:
     get:
       operationId: getPrice
       tags:
-      - prices
+      - Prices
       summary: Get price
       description: Gets the current price for a single crypto currency
       parameters:
@@ -159,16 +157,6 @@ paths:
           $ref: '#/components/responses/AppIdRequired'
 components:
   responses:
-    NotAuthenticatedError:
-      description: Not authenticated
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Description of the error
     AppIdRequired:
       description: This request requires you to send an App ID
       content:
@@ -189,6 +177,16 @@ components:
                 - MISSING_APP_ID
                 description: Short string identifying the error
                 example: MISSING_APP_ID
+    NotAuthenticatedError:
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
   securitySchemes:
     AccessToken:
       type: apiKey
