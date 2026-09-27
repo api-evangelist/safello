@@ -261,7 +261,7 @@ paths:
     - url: https://api.safello.com
   /v2/orders/buy:
     post:
-      operationId: createBuyOrder
+      operationId: postV2OrdersBuy
       security:
       - OAuth2:
         - order
@@ -289,6 +289,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/NotAuthenticatedError_2'
+      x-operation-id-source: normalized
+      x-operation-id-original: createBuyOrder
     servers:
     - url: https://api.safello.com
   /v2/orders/trade:
@@ -384,7 +386,7 @@ paths:
     - url: https://api.safello.com
   /v2/orders/sell:
     post:
-      operationId: createSellOrder
+      operationId: postV2OrdersSell
       security:
       - OAuth2:
         - order
@@ -412,11 +414,13 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/NotAuthenticatedError_2'
+      x-operation-id-source: normalized
+      x-operation-id-original: createSellOrder
     servers:
     - url: https://api.safello.com
   /v2/orders/{orderId}:
     get:
-      operationId: checkOrderStatus
+      operationId: getV2OrdersByOrderId
       security:
       - OAuth2:
         - order
@@ -444,6 +448,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/NotAuthenticatedError_2'
+      x-operation-id-source: normalized
+      x-operation-id-original: checkOrderStatus
     servers:
     - url: https://api.safello.com
   /v2/orders/fees:
@@ -472,32 +478,6 @@ paths:
     - url: https://api.safello.com
 components:
   responses:
-    NotAuthenticatedError:
-      description: Not authenticated
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Description of the error
-    OrderCreated:
-      description: Order created
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              orderId:
-                type: string
-                example: AS0ZZHU
-                description: Identifier for the newly created order. Use it to check its status
-              pollingUrl:
-                type: string
-                format: URL
-                example: http://app.safello.com/v1/order?orderId=AS0ZZHU
-                description: URL to call for checking the order status
     PreconditionFailed:
       description: Some required parameter was not sent
       content:
@@ -532,6 +512,103 @@ components:
                 type: integer
                 description: Status code number
                 example: 406
+              code:
+                type: string
+                description: Short string identifying the error
+                example: BUY_LIMIT_EXCEEDED
+    OrderCreated:
+      description: Order created
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              orderId:
+                type: string
+                example: AS0ZZHU
+                description: Identifier for the newly created order. Use it to check its status
+              pollingUrl:
+                type: string
+                format: URL
+                example: http://app.safello.com/v1/order?orderId=AS0ZZHU
+                description: URL to call for checking the order status
+    NotAuthenticatedError:
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
+    SellOrderCreated:
+      description: Sell order created
+      content:
+        application/json:
+          schema:
+            title: SellOrderCreated
+            type: object
+            required:
+            - orderId
+            - pollingUrl
+            properties:
+              orderId:
+                type: string
+                example: AS0ZZHU
+                description: Identifier for the newly created order. Use it to check its status
+              pollingUrl:
+                type: string
+                format: URL
+                example: https://app.safello.com/v2/order?orderId=AS0ZZHU
+                description: URL to call to check the order status
+    NotAuthenticatedError_2:
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            title: NotAuthenticatedErrorResponse
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
+    BuyOrderCreated:
+      description: Buy order created
+      content:
+        application/json:
+          schema:
+            title: BuyOrderCreated
+            type: object
+            required:
+            - orderId
+            - pollingUrl
+            properties:
+              orderId:
+                type: string
+                example: AS0ZZHU
+                description: Identifier for the newly created order. Use it to check its status
+              pollingUrl:
+                type: string
+                format: URL
+                example: https://app.safello.com/v2/order?orderId=AS0ZZHU
+                description: URL to call to check the order status
+    BadRequest:
+      description: The data you have sent is not valid
+      content:
+        application/json:
+          schema:
+            title: BadRequestResponse
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
+                example: You cannot place an order higher than your buy limit of 500 SEK
+              status:
+                type: integer
+                description: Status code number
+                example: 400
               code:
                 type: string
                 description: Short string identifying the error
@@ -577,77 +654,6 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/Order_2'
-    BuyOrderCreated:
-      description: Buy order created
-      content:
-        application/json:
-          schema:
-            title: BuyOrderCreated
-            type: object
-            required:
-            - orderId
-            - pollingUrl
-            properties:
-              orderId:
-                type: string
-                example: AS0ZZHU
-                description: Identifier for the newly created order. Use it to check its status
-              pollingUrl:
-                type: string
-                format: URL
-                example: https://app.safello.com/v2/order?orderId=AS0ZZHU
-                description: URL to call to check the order status
-    NotAuthenticatedError_2:
-      description: Not authenticated
-      content:
-        application/json:
-          schema:
-            title: NotAuthenticatedErrorResponse
-            type: object
-            properties:
-              message:
-                type: string
-                description: Description of the error
-    BadRequest:
-      description: The data you have sent is not valid
-      content:
-        application/json:
-          schema:
-            title: BadRequestResponse
-            type: object
-            properties:
-              message:
-                type: string
-                description: Description of the error
-                example: You cannot place an order higher than your buy limit of 500 SEK
-              status:
-                type: integer
-                description: Status code number
-                example: 400
-              code:
-                type: string
-                description: Short string identifying the error
-                example: BUY_LIMIT_EXCEEDED
-    SellOrderCreated:
-      description: Sell order created
-      content:
-        application/json:
-          schema:
-            title: SellOrderCreated
-            type: object
-            required:
-            - orderId
-            - pollingUrl
-            properties:
-              orderId:
-                type: string
-                example: AS0ZZHU
-                description: Identifier for the newly created order. Use it to check its status
-              pollingUrl:
-                type: string
-                format: URL
-                example: https://app.safello.com/v2/order?orderId=AS0ZZHU
-                description: URL to call to check the order status
   schemas:
     Order:
       type: object
@@ -699,51 +705,49 @@ components:
         fiatCurrency:
           type: string
           example: SEK
-    CurrencyAmount:
+    SellOrder:
       type: object
       required:
-      - currency
-      - amount
+      - receivedCrypto
+      - sold
+      - payout
+      - payoutMethod
       properties:
-        currency:
-          type: string
-          description: Currency (fiat or crypto) code
-          example: SEK
-        amount:
-          type: string
-          description: Value of the currency with the number of decimals as defined in the Market API.
-          example: '510.00'
-    CancelOrderInput:
-      type: object
-      required:
-      - orderId
-      properties:
-        orderId:
-          type: string
-          description: Order identifier.
-          example: TZ12HH34
-    Fees:
-      type: object
-      properties:
-        orderBook:
+        receivedCrypto:
           type: object
-          properties:
-            maker:
-              type: string
-              description: Maker fee in decimal percentage (0.1 = 10%)
-              example: 0.004
-            taker:
-              type: string
-              description: Taker fee in decimal percentage (0.1 = 10%)
-              example: 0.006
-    ETradeOrderStatus:
-      type: string
-      enum:
-      - open
-      - partiallyFilled
-      - filled
-      - cancelled
-      - exchangeRejected
+          example:
+            currency: BTC
+            amount: '0.00200001'
+          description: Amount of crypto currency received after fees.
+          $ref: '#/components/schemas/CurrencyAmount'
+        sold:
+          type: object
+          example:
+            currency: SEK
+            amount: '510.00'
+          description: Amount of fiat money sold.
+          $ref: '#/components/schemas/CurrencyAmount'
+        payout:
+          type: object
+          example:
+            currency: SEK
+            amount: '475.00'
+          description: Amount of fiat paid out to the user after fees when the order type is `sell`
+          $ref: '#/components/schemas/CurrencyAmount'
+        payoutMethod:
+          type: string
+          example: SE Bank transfer
+          description: Payout method used when the order type is `sell`.
+        payoutDetails:
+          type: object
+          additionalProperties:
+            type: string
+          description: Additional payout details when the order type is `sell`.
+        actions:
+          type: array
+          description: Order action history
+          items:
+            $ref: '#/components/schemas/OrderAction'
     BuyOrderInput:
       type: object
       required:
@@ -774,6 +778,285 @@ components:
           additionalProperties:
             type: string
           description: Additional payment details
+    TradeOrderInput:
+      type: object
+      required:
+      - pair
+      - amount
+      - side
+      - type
+      - clientId
+      properties:
+        pair:
+          type: string
+          description: A trading pair symbol
+          example: BTC_USDC
+        amount:
+          type: string
+          description: For sell orders, the amount is in the base currency. For buy orders, the amount is in the counter currency. Use 'amountInCounter' to specify the amount in the base currency.
+          example:
+            amount: '10'
+        amountInCounter:
+          type: boolean
+          default: true
+          description: For buy orders, the amount can be in the counter currency. Currently only true is supported.
+        side:
+          type: string
+          description: Order side
+          enum:
+          - buy
+          - sell
+        type:
+          type: string
+          description: Order type
+          enum:
+          - market
+          - limit
+          - stop_loss
+          - stop_loss_limit
+          - take_profit_limit
+        orderType:
+          type: string
+          description: What kind of order it is. Quick for non-advance order and orderBook for advance
+          enum:
+          - quick
+          - orderBook
+          default: quick
+        price:
+          type: string
+          description: Limit price for limit orders
+        stopLossPrice:
+          type: string
+          description: Optional. If set, triggers a market order to close the position when the price moves against the user to this level.
+        takeProfitPrice:
+          type: string
+          description: Optional. If set, triggers a market order to close the position when the price moves in favor of the user to this level.
+        clientId:
+          type: string
+          description: Unique ID for this trade.
+        walletId:
+          type: string
+          format: uuid
+          description: Wallet used in trade order. If not used the default wallet will be used instead
+    CurrencyAmount:
+      type: object
+      required:
+      - currency
+      - amount
+      properties:
+        currency:
+          type: string
+          description: Currency (fiat or crypto) code
+          example: SEK
+        amount:
+          type: string
+          description: Value of the currency with the number of decimals as defined in the Market API.
+          example: '510.00'
+    Order_2:
+      title: OrderRecord
+      type: object
+      properties:
+        id:
+          type: string
+          example: AS0ZZHU
+          description: Identifier for the order
+        parentOrder:
+          $ref: '#/components/schemas/Order_2'
+          description: The parent order for stop loss / take profit order
+        created:
+          type: string
+          format: date-time
+          example: 2022-01-27T11:29:20+0100
+          description: Order creation date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+        approved:
+          type: string
+          format: date-time
+          example: 2022-01-27T11:29:20+0100
+          description: Order approval date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+        feeRate:
+          type: string
+          example: '0.05'
+          description: Fee rate in percentage for the transaction
+        fee:
+          type: object
+          description: Fee amount
+          example:
+            currency: SEK
+            amount: '35.00'
+          $ref: '#/components/schemas/CurrencyAmount'
+        discountFeeId:
+          type: string
+          format: uuid
+          description: Discount fee UUID
+        walletId:
+          type: string
+          format: uuid
+          description: Wallet UUID
+        buy:
+          type: object
+          description: Information about the order when the order type is `buy`
+          $ref: '#/components/schemas/BuyOrder'
+        sell:
+          type: object
+          description: Information about the order when the order type is `sell`
+          $ref: '#/components/schemas/SellOrder'
+        trade:
+          type: object
+          description: Information about the trade in the transaction when the order type is `trade`
+          $ref: '#/components/schemas/TradeOrder'
+        transaction:
+          type: object
+          description: Information about the blockchain transaction when the order type is `tx`
+          $ref: '#/components/schemas/CryptoTransaction'
+        status:
+          type: string
+          example: completed
+          description: 'Order status. It can be one of the following:
+
+            - `completed`
+
+            - `done`
+
+            - `paid`
+
+            - `traded`
+
+            - `mempool`
+
+            - `exchange`
+
+            - `waiting`
+
+            - `processing`
+
+            - `pending`
+
+            - `error`
+
+            - `stopped`
+
+            - `refunded`
+
+            - `declined`
+
+            - `halted`
+
+            - `rejected`
+
+            '
+        type:
+          enum:
+          - buy
+          - sell
+          - trade
+          - tx
+          example: sell
+          description: Order type
+        statusErrorCode:
+          enum:
+          - INSUFFICIENT_EXCHANGE_BALANCE
+          example: INSUFFICIENT_EXCHANGE_BALANCE
+          description: Specific error affecting order
+    BuyOrder:
+      type: object
+      required:
+      - fiat
+      - crypto
+      properties:
+        fiat:
+          type: object
+          description: Information about the fiat currency and amount involved in the transaction.
+          example:
+            currency: SEK
+            amount: '510.00'
+          $ref: '#/components/schemas/CurrencyAmount'
+        crypto:
+          type: object
+          description: Information about the crypto currency and amount involved in the transaction.
+          example:
+            currency: BTC
+            amount: '0.00200001'
+          $ref: '#/components/schemas/CurrencyAmount'
+        paymentMethod:
+          type: string
+          example: klarna_bankgiro
+          description: Payment method used
+        recurring:
+          type: boolean
+          example: false
+          description: If the buy order is a recurring order
+        paymentDetails:
+          type: object
+          reference:
+            type: string
+          additionalProperties:
+            type: string
+          description: Reference and additional payment details
+        actions:
+          type: array
+          description: Order action history
+          items:
+            $ref: '#/components/schemas/OrderAction'
+    EditOrder:
+      type: object
+      description: Performs a full update of an existing order. All fields in this object will be used to update the existing order. Price and amount are required fields. Stop loss and take profit are optional - they can be set to null to detach/remove existing stop loss or take profit orders from the main order.
+      required:
+      - price
+      - amount
+      properties:
+        price:
+          type: string
+          description: Used to update the limit price of limit orders. Also used to update both the trigger price and limit price of exit orders (stop_loss, stop_loss_limit, take_profit_limit) as they are the same.
+          example: '150'
+        amount:
+          type: string
+          description: The quantity of the order
+          example: '1'
+        stopLossPrice:
+          type: string
+          description: Used to update the stop loss price of the entry position order. If set, after the order is filled, a stop loss order with a trigger price equal to this value is created.
+          example: '120'
+        takeProfitPrice:
+          type: string
+          description: Used to update the take profit price of the entry position order. If set, after the order is filled, a take profit order with a trigger price equal to this value is created.
+          example: '180'
+    CryptoTransaction:
+      type: object
+      required:
+      - type
+      - txAddress
+      - txHash
+      properties:
+        crypto:
+          type: object
+          description: Information about the crypto currency and amount involved in the transaction.
+          example:
+            currency: BTC
+            amount: '0.00200001'
+          $ref: '#/components/schemas/CurrencyAmount'
+        fiat:
+          type: object
+          description: The fiat value of the crypto amount at the time of the transaction.
+          example:
+            currency: SEK
+            amount: '510.00'
+          $ref: '#/components/schemas/CurrencyAmount'
+        txAddress:
+          type: string
+          description: Receiving crypto address of the transaction
+        txHash:
+          type: string
+          description: The blockchain transaction hash
+        remittance:
+          type: string
+          description: remittance info
+        type:
+          type: string
+          description: Crypto transaction type
+          enum:
+          - withdrawal
+          - deposit
+          - internal
     TradeOrder:
       type: object
       required:
@@ -886,154 +1169,6 @@ components:
           type: string
           description: Percentage of order fulfillment (decimal 0.1 = 10%)
           example: 0.1
-    SellOrder:
-      type: object
-      required:
-      - receivedCrypto
-      - sold
-      - payout
-      - payoutMethod
-      properties:
-        receivedCrypto:
-          type: object
-          example:
-            currency: BTC
-            amount: '0.00200001'
-          description: Amount of crypto currency received after fees.
-          $ref: '#/components/schemas/CurrencyAmount'
-        sold:
-          type: object
-          example:
-            currency: SEK
-            amount: '510.00'
-          description: Amount of fiat money sold.
-          $ref: '#/components/schemas/CurrencyAmount'
-        payout:
-          type: object
-          example:
-            currency: SEK
-            amount: '475.00'
-          description: Amount of fiat paid out to the user after fees when the order type is `sell`
-          $ref: '#/components/schemas/CurrencyAmount'
-        payoutMethod:
-          type: string
-          example: SE Bank transfer
-          description: Payout method used when the order type is `sell`.
-        payoutDetails:
-          type: object
-          additionalProperties:
-            type: string
-          description: Additional payout details when the order type is `sell`.
-        actions:
-          type: array
-          description: Order action history
-          items:
-            $ref: '#/components/schemas/OrderAction'
-    Order_2:
-      title: OrderRecord
-      type: object
-      properties:
-        id:
-          type: string
-          example: AS0ZZHU
-          description: Identifier for the order
-        parentOrder:
-          $ref: '#/components/schemas/Order_2'
-          description: The parent order for stop loss / take profit order
-        created:
-          type: string
-          format: date-time
-          example: 2022-01-27T11:29:20+0100
-          description: Order creation date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-        approved:
-          type: string
-          format: date-time
-          example: 2022-01-27T11:29:20+0100
-          description: Order approval date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-        feeRate:
-          type: string
-          example: '0.05'
-          description: Fee rate in percentage for the transaction
-        fee:
-          type: object
-          description: Fee amount
-          example:
-            currency: SEK
-            amount: '35.00'
-          $ref: '#/components/schemas/CurrencyAmount'
-        discountFeeId:
-          type: string
-          format: uuid
-          description: Discount fee UUID
-        walletId:
-          type: string
-          format: uuid
-          description: Wallet UUID
-        buy:
-          type: object
-          description: Information about the order when the order type is `buy`
-          $ref: '#/components/schemas/BuyOrder'
-        sell:
-          type: object
-          description: Information about the order when the order type is `sell`
-          $ref: '#/components/schemas/SellOrder'
-        trade:
-          type: object
-          description: Information about the trade in the transaction when the order type is `trade`
-          $ref: '#/components/schemas/TradeOrder'
-        transaction:
-          type: object
-          description: Information about the blockchain transaction when the order type is `tx`
-          $ref: '#/components/schemas/CryptoTransaction'
-        status:
-          type: string
-          example: completed
-          description: 'Order status. It can be one of the following:
-
-            - `completed`
-
-            - `done`
-
-            - `paid`
-
-            - `traded`
-
-            - `mempool`
-
-            - `exchange`
-
-            - `waiting`
-
-            - `processing`
-
-            - `pending`
-
-            - `error`
-
-            - `stopped`
-
-            - `refunded`
-
-            - `declined`
-
-            - `halted`
-
-            - `rejected`
-
-            '
-        type:
-          enum:
-          - buy
-          - sell
-          - trade
-          - tx
-          example: sell
-          description: Order type
-        statusErrorCode:
-          enum:
-          - INSUFFICIENT_EXCHANGE_BALANCE
-          example: INSUFFICIENT_EXCHANGE_BALANCE
-          description: Specific error affecting order
     OrderAction:
       type: object
       required:
@@ -1056,166 +1191,14 @@ components:
           description: 'Creation time in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
 
             '
-    BuyOrder:
-      type: object
-      required:
-      - fiat
-      - crypto
-      properties:
-        fiat:
-          type: object
-          description: Information about the fiat currency and amount involved in the transaction.
-          example:
-            currency: SEK
-            amount: '510.00'
-          $ref: '#/components/schemas/CurrencyAmount'
-        crypto:
-          type: object
-          description: Information about the crypto currency and amount involved in the transaction.
-          example:
-            currency: BTC
-            amount: '0.00200001'
-          $ref: '#/components/schemas/CurrencyAmount'
-        paymentMethod:
-          type: string
-          example: klarna_bankgiro
-          description: Payment method used
-        recurring:
-          type: boolean
-          example: false
-          description: If the buy order is a recurring order
-        paymentDetails:
-          type: object
-          reference:
-            type: string
-          additionalProperties:
-            type: string
-          description: Reference and additional payment details
-        actions:
-          type: array
-          description: Order action history
-          items:
-            $ref: '#/components/schemas/OrderAction'
-    EditOrder:
-      type: object
-      description: Performs a full update of an existing order. All fields in this object will be used to update the existing order. Price and amount are required fields. Stop loss and take profit are optional - they can be set to null to detach/remove existing stop loss or take profit orders from the main order.
-      required:
-      - price
-      - amount
-      properties:
-        price:
-          type: string
-          description: Used to update the limit price of limit orders. Also used to update both the trigger price and limit price of exit orders (stop_loss, stop_loss_limit, take_profit_limit) as they are the same.
-          example: '150'
-        amount:
-          type: string
-          description: The quantity of the order
-          example: '1'
-        stopLossPrice:
-          type: string
-          description: Used to update the stop loss price of the entry position order. If set, after the order is filled, a stop loss order with a trigger price equal to this value is created.
-          example: '120'
-        takeProfitPrice:
-          type: string
-          description: Used to update the take profit price of the entry position order. If set, after the order is filled, a take profit order with a trigger price equal to this value is created.
-          example: '180'
-    TradeOrderInput:
-      type: object
-      required:
-      - pair
-      - amount
-      - side
-      - type
-      - clientId
-      properties:
-        pair:
-          type: string
-          description: A trading pair symbol
-          example: BTC_USDC
-        amount:
-          type: string
-          description: For sell orders, the amount is in the base currency. For buy orders, the amount is in the counter currency. Use 'amountInCounter' to specify the amount in the base currency.
-          example:
-            amount: '10'
-        amountInCounter:
-          type: boolean
-          default: true
-          description: For buy orders, the amount can be in the counter currency. Currently only true is supported.
-        side:
-          type: string
-          description: Order side
-          enum:
-          - buy
-          - sell
-        type:
-          type: string
-          description: Order type
-          enum:
-          - market
-          - limit
-          - stop_loss
-          - stop_loss_limit
-          - take_profit_limit
-        orderType:
-          type: string
-          description: What kind of order it is. Quick for non-advance order and orderBook for advance
-          enum:
-          - quick
-          - orderBook
-          default: quick
-        price:
-          type: string
-          description: Limit price for limit orders
-        stopLossPrice:
-          type: string
-          description: Optional. If set, triggers a market order to close the position when the price moves against the user to this level.
-        takeProfitPrice:
-          type: string
-          description: Optional. If set, triggers a market order to close the position when the price moves in favor of the user to this level.
-        clientId:
-          type: string
-          description: Unique ID for this trade.
-        walletId:
-          type: string
-          format: uuid
-          description: Wallet used in trade order. If not used the default wallet will be used instead
-    CryptoTransaction:
-      type: object
-      required:
-      - type
-      - txAddress
-      - txHash
-      properties:
-        crypto:
-          type: object
-          description: Information about the crypto currency and amount involved in the transaction.
-          example:
-            currency: BTC
-            amount: '0.00200001'
-          $ref: '#/components/schemas/CurrencyAmount'
-        fiat:
-          type: object
-          description: The fiat value of the crypto amount at the time of the transaction.
-          example:
-            currency: SEK
-            amount: '510.00'
-          $ref: '#/components/schemas/CurrencyAmount'
-        txAddress:
-          type: string
-          description: Receiving crypto address of the transaction
-        txHash:
-          type: string
-          description: The blockchain transaction hash
-        remittance:
-          type: string
-          description: remittance info
-        type:
-          type: string
-          description: Crypto transaction type
-          enum:
-          - withdrawal
-          - deposit
-          - internal
+    ETradeOrderStatus:
+      type: string
+      enum:
+      - open
+      - partiallyFilled
+      - filled
+      - cancelled
+      - exchangeRejected
     SellOrderInput:
       type: object
       required:
@@ -1250,6 +1233,29 @@ components:
           type: string
           format: uuid
           description: Wallet used in sell order. If not used the default wallet will be used instead
+    Fees:
+      type: object
+      properties:
+        orderBook:
+          type: object
+          properties:
+            maker:
+              type: string
+              description: Maker fee in decimal percentage (0.1 = 10%)
+              example: 0.004
+            taker:
+              type: string
+              description: Taker fee in decimal percentage (0.1 = 10%)
+              example: 0.006
+    CancelOrderInput:
+      type: object
+      required:
+      - orderId
+      properties:
+        orderId:
+          type: string
+          description: Order identifier.
+          example: TZ12HH34
   parameters:
     userAgentParam:
       in: header

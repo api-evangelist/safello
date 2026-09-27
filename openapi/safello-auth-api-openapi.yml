@@ -199,7 +199,7 @@ paths:
     - url: https://app.safello.com
   /oauth2/bankid:
     post:
-      operationId: startAuth
+      operationId: postOauth2Bankid
       tags:
       - Auth
       summary: BankID Auth Grant
@@ -270,6 +270,8 @@ paths:
                   $ref: '#/components/examples/OAuth2UnsupportedGrantType'
                 InvalidScope:
                   $ref: '#/components/examples/OAuth2InvalidScope'
+      x-operation-id-source: normalized
+      x-operation-id-original: startAuth
     servers:
     - url: https://api.safello.com
   /oauth2/token:
@@ -371,6 +373,56 @@ paths:
     servers:
     - url: https://api.safello.com
 components:
+  responses:
+    PreconditionFailed:
+      description: Some required parameter was not sent
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
+                example: \"token\" is required
+              status:
+                type: integer
+                description: Status code number
+                example: 412
+              code:
+                type: string
+                description: Short string identifying the error
+                example: VALIDATION_ERROR
+    AppIdRequired:
+      description: This request requires you to send an App ID
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
+              status:
+                type: integer
+                description: Status code number
+                example: 498
+              code:
+                type: string
+                enum:
+                - MISSING_APP_ID
+                description: Short string identifying the error
+                example: MISSING_APP_ID
+    NotAuthenticatedError:
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
   schemas:
     User:
       type: object
@@ -439,6 +491,25 @@ components:
           type: integer
           example: 3
           description: Relates to the maximum amount of money this user is allowed to buy
+    OAuth2Error:
+      type: object
+      title: TokenError
+      properties:
+        error:
+          description: Type of error.
+          type: string
+        error_description:
+          description: Additional information for understanding the error that occurred.
+          type: string
+        error_uri:
+          description: A URI to a web page with information about the error.
+          type: string
+        bank_id_qr_data:
+          description: Bank id qr code data for starting bank id
+          type: string
+        bank_id_hint:
+          description: The current progress for bank id
+          type: string
     OAuth2TokenRequest:
       type: object
       title: OAuth2TokenRequest
@@ -486,124 +557,15 @@ components:
           required: false
           description: Specific organization number to get the corporate account connected to the bank id (if it exists)
           type: string
-    OAuth2Error:
-      type: object
-      title: TokenError
-      properties:
-        error:
-          description: Type of error.
-          type: string
-        error_description:
-          description: Additional information for understanding the error that occurred.
-          type: string
-        error_uri:
-          description: A URI to a web page with information about the error.
-          type: string
-        bank_id_qr_data:
-          description: Bank id qr code data for starting bank id
-          type: string
-        bank_id_hint:
-          description: The current progress for bank id
-          type: string
-  responses:
-    AppIdRequired:
-      description: This request requires you to send an App ID
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Description of the error
-              status:
-                type: integer
-                description: Status code number
-                example: 498
-              code:
-                type: string
-                enum:
-                - MISSING_APP_ID
-                description: Short string identifying the error
-                example: MISSING_APP_ID
-    PreconditionFailed:
-      description: Some required parameter was not sent
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Description of the error
-                example: \"token\" is required
-              status:
-                type: integer
-                description: Status code number
-                example: 412
-              code:
-                type: string
-                description: Short string identifying the error
-                example: VALIDATION_ERROR
-    NotAuthenticatedError:
-      description: Not authenticated
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Description of the error
-  examples:
-    OAuth2UnsupportedGrantType:
-      summary: Unsupported grant type
-      description: The authorization grant type is not supported by the authorization server.
-      value:
-        error: unsupported_grant_type
-        error_description: Grant type not supported by server
-        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
-    OAuth2InvalidScope:
-      summary: Scope invalid
-      description: The requested scope is invalid, unknown, malformed, or exceeds the scope granted by the resource owner.
-      value:
-        error: invalid_scope
-        error_description: Invalid scope
-        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-3.3
-    OAuth2UnauthorizedClient:
-      summary: Client Unauthorized
-      description: 'The authenticated client is not authorized to use this
-
-        authorization grant type.
-
-        '
-      value:
-        error: unauthorized_client
-    OAuth2InvalidClient:
-      summary: Invalid client
-      description: Client authentication failed.
-      value:
-        error: invalid_client
-        error_description: Authentication failed.
-        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1
-    OAuth2InvalidGrant:
-      summary: Authorization grant invalid
-      description: 'The provided authorization grant or refresh token is
-
-        invalid, expired, revoked or was issued to another client.
-
-        '
-      value:
-        error: invalid_grant
-        error_description: Authorization grant invalid
-        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
-    OAuth2InvalidRequest:
-      summary: Invalid request
-      description: "The request is missing a required parameter, includes an \nunsupported parameter value (other than grant type), \nrepeats a parameter, includes multiple credentials, \nutilizes more than one mechanism for authenticating the \nclient, or is otherwise malformed.\n"
-      value:
-        error: invalid_request
-        error_description: Missing a required parameter
-        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
+  headers:
+    Cache-Control:
+      schema:
+        type: string
+      example: no-store
+    Pragma:
+      schema:
+        type: string
+      example: no-cache
   parameters:
     sourceIpParam:
       in: header
@@ -621,15 +583,55 @@ components:
         type: string
       required: true
       example: curl/7.37.0
-  headers:
-    Pragma:
-      schema:
-        type: string
-      example: no-cache
-    Cache-Control:
-      schema:
-        type: string
-      example: no-store
+  examples:
+    OAuth2InvalidGrant:
+      summary: Authorization grant invalid
+      description: 'The provided authorization grant or refresh token is
+
+        invalid, expired, revoked or was issued to another client.
+
+        '
+      value:
+        error: invalid_grant
+        error_description: Authorization grant invalid
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
+    OAuth2InvalidClient:
+      summary: Invalid client
+      description: Client authentication failed.
+      value:
+        error: invalid_client
+        error_description: Authentication failed.
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1
+    OAuth2UnsupportedGrantType:
+      summary: Unsupported grant type
+      description: The authorization grant type is not supported by the authorization server.
+      value:
+        error: unsupported_grant_type
+        error_description: Grant type not supported by server
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
+    OAuth2UnauthorizedClient:
+      summary: Client Unauthorized
+      description: 'The authenticated client is not authorized to use this
+
+        authorization grant type.
+
+        '
+      value:
+        error: unauthorized_client
+    OAuth2InvalidRequest:
+      summary: Invalid request
+      description: "The request is missing a required parameter, includes an \nunsupported parameter value (other than grant type), \nrepeats a parameter, includes multiple credentials, \nutilizes more than one mechanism for authenticating the \nclient, or is otherwise malformed.\n"
+      value:
+        error: invalid_request
+        error_description: Missing a required parameter
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
+    OAuth2InvalidScope:
+      summary: Scope invalid
+      description: The requested scope is invalid, unknown, malformed, or exceeds the scope granted by the resource owner.
+      value:
+        error: invalid_scope
+        error_description: Invalid scope
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-3.3
   securitySchemes:
     AccessToken:
       type: apiKey

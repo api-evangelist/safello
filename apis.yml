@@ -54,7 +54,7 @@ tags:
 - BankID
 apis:
 - aid: safello:safello-account-api
-  name: Safello account API
+  name: Safello Account API
   description: Account management
   humanURL: https://safello.github.io/safello-api/api
   baseURL: https://api.safello.com
@@ -70,7 +70,7 @@ apis:
   - type: APIReference
     url: https://safello.github.io/safello-api/api
 - aid: safello:safello-auth-api
-  name: Safello auth API
+  name: Safello Auth API
   description: Authentication flow
   humanURL: https://safello.github.io/safello-api/api
   baseURL: https://api.safello.com
@@ -86,7 +86,7 @@ apis:
   - type: APIReference
     url: https://safello.github.io/safello-api/api
 - aid: safello:safello-compliance-api
-  name: Safello compliance API
+  name: Safello Compliance API
   description: User's compliance information/status
   humanURL: https://safello.github.io/safello-api/api
   baseURL: https://api.safello.com
@@ -102,7 +102,7 @@ apis:
   - type: APIReference
     url: https://safello.github.io/safello-api/api
 - aid: safello:safello-market-api
-  name: Safello market API
+  name: Safello Market API
   description: Market endpoints
   humanURL: https://safello.github.io/safello-api/api
   baseURL: https://api.safello.com
@@ -118,7 +118,7 @@ apis:
   - type: APIReference
     url: https://safello.github.io/safello-api/api
 - aid: safello:safello-orders-api
-  name: Safello orders API
+  name: Safello Orders API
   description: Buy and sell crypto
   humanURL: https://safello.github.io/safello-api/api
   baseURL: https://api.safello.com
@@ -134,7 +134,7 @@ apis:
   - type: APIReference
     url: https://safello.github.io/safello-api/api
 - aid: safello:safello-prices-api
-  name: Safello prices API
+  name: Safello Prices API
   description: Price endpoints
   humanURL: https://safello.github.io/safello-api/api
   baseURL: https://api.safello.com
@@ -150,7 +150,7 @@ apis:
   - type: APIReference
     url: https://safello.github.io/safello-api/api
 - aid: safello:safello-wallet-api
-  name: Safello wallet API
+  name: Safello Wallet API
   description: User's wallet
   humanURL: https://safello.github.io/safello-api/api
   baseURL: https://api.safello.com

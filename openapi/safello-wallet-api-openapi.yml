@@ -33,7 +33,7 @@ paths:
     - url: https://app.safello.com
   /v2/wallet:
     get:
-      operationId: getWallet
+      operationId: getV2Wallet
       security:
       - OAuth2:
         - wallet
@@ -50,6 +50,8 @@ paths:
                 $ref: '#/components/schemas/Wallet_2'
         '401':
           $ref: '#/components/responses/NotAuthenticatedError_2'
+      x-operation-id-source: normalized
+      x-operation-id-original: getWallet
     servers:
     - url: https://api.safello.com
   /v2/wallet/performance:
@@ -272,21 +274,71 @@ components:
               wallet:
                 type: integer
                 description: ID of the wallet this address belongs to
-    Wallet_2:
+    WalletPerformanceHistoryDataPoint:
       type: object
+      title: WalletPerformanceHistoryDataPoint
       properties:
-        balances:
-          type: array
-          description: Current crypto holdings
-          items:
-            $ref: '#/components/schemas/CurrencyAmount'
-        created:
+        date:
           type: string
-          format: date-time
-          example: '2022-02-03T09:44:13.000Z'
-          description: 'Creation time in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-
-            '
+          format: date
+          description: The date of the data point
+        assetValues:
+          type: array
+          items:
+            type: object
+            title: AssetValue
+            properties:
+              crypto:
+                type: string
+                description: Crypto currency
+              amount:
+                type: string
+                description: How much of crypto the wallet was holding at the time
+              fiatValue:
+                type: string
+                description: How much the crypto was worth in fiat at the time
+              percentageChange:
+                type: string
+                description: How the performance of the crypto holdings was at the time in percentage (decimal 0.1 = 10%)
+              absoluteChange:
+                type: string
+                description: How the performance of the crypto holdings was at the time in fiat
+        combined:
+          type: object
+          title: Combined
+          properties:
+            fiatValue:
+              type: string
+              description: How much the combined wallet value was worth in fiat at the time
+            percentageChange:
+              type: string
+              description: How the combined performance of the wallet was at the time in percentage (decimal 0.1 = 10%)
+            absoluteChange:
+              type: string
+              description: How the combined performance of the wallet was at the time in fiat
+    WalletPerformanceHistory:
+      type: object
+      title: WalletPerformanceHistory
+      properties:
+        start:
+          type: string
+          format: date
+        end:
+          type: string
+          format: date
+        performanceSince:
+          type: string
+          format: date
+        fiat:
+          type: string
+          description: Fiat currency
+        timePeriod:
+          type: string
+        data:
+          type: array
+          description: Data points
+          items:
+            $ref: '#/components/schemas/WalletPerformanceHistoryDataPoint'
     WalletPerformance:
       type: object
       title: WalletPerformance
@@ -341,71 +393,21 @@ components:
             percentageChange:
               type: string
               description: How the performance of the crypto holdings in now in percentage (decimal 0.1 = 10%)
-    WalletPerformanceHistory:
+    Wallet_2:
       type: object
-      title: WalletPerformanceHistory
       properties:
-        start:
-          type: string
-          format: date
-        end:
-          type: string
-          format: date
-        performanceSince:
-          type: string
-          format: date
-        fiat:
-          type: string
-          description: Fiat currency
-        timePeriod:
-          type: string
-        data:
+        balances:
           type: array
-          description: Data points
+          description: Current crypto holdings
           items:
-            $ref: '#/components/schemas/WalletPerformanceHistoryDataPoint'
-    WalletPerformanceHistoryDataPoint:
-      type: object
-      title: WalletPerformanceHistoryDataPoint
-      properties:
-        date:
+            $ref: '#/components/schemas/CurrencyAmount'
+        created:
           type: string
-          format: date
-          description: The date of the data point
-        assetValues:
-          type: array
-          items:
-            type: object
-            title: AssetValue
-            properties:
-              crypto:
-                type: string
-                description: Crypto currency
-              amount:
-                type: string
-                description: How much of crypto the wallet was holding at the time
-              fiatValue:
-                type: string
-                description: How much the crypto was worth in fiat at the time
-              percentageChange:
-                type: string
-                description: How the performance of the crypto holdings was at the time in percentage (decimal 0.1 = 10%)
-              absoluteChange:
-                type: string
-                description: How the performance of the crypto holdings was at the time in fiat
-        combined:
-          type: object
-          title: Combined
-          properties:
-            fiatValue:
-              type: string
-              description: How much the combined wallet value was worth in fiat at the time
-            percentageChange:
-              type: string
-              description: How the combined performance of the wallet was at the time in percentage (decimal 0.1 = 10%)
-            absoluteChange:
-              type: string
-              description: How the combined performance of the wallet was at the time in fiat
+          format: date-time
+          example: '2022-02-03T09:44:13.000Z'
+          description: 'Creation time in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+
+            '
   responses:
     NotAuthenticatedError:
       description: Not authenticated
