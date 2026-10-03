@@ -393,6 +393,16 @@ components:
                 type: string
                 description: Short string identifying the error
                 example: VALIDATION_ERROR
+    NotAuthenticatedError:
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
     AppIdRequired:
       description: This request requires you to send an App ID
       content:
@@ -413,16 +423,6 @@ components:
                 - MISSING_APP_ID
                 description: Short string identifying the error
                 example: MISSING_APP_ID
-    NotAuthenticatedError:
-      description: Not authenticated
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Description of the error
   schemas:
     User:
       type: object
@@ -491,6 +491,25 @@ components:
           type: integer
           example: 3
           description: Relates to the maximum amount of money this user is allowed to buy
+    BankIdRequest:
+      type: object
+      title: BankIdRequest
+      required:
+      - pnr
+      properties:
+        pnr:
+          description: Personal Identity Number (12 digits)
+          type: string
+          example:
+            pnr: '195505120028'
+        corporate:
+          required: false
+          description: Set to true to get the first corporate account connected to the bank id (if it exists)
+          type: boolean
+        orgNr:
+          required: false
+          description: Specific organization number to get the corporate account connected to the bank id (if it exists)
+          type: string
     OAuth2Error:
       type: object
       title: TokenError
@@ -538,25 +557,55 @@ components:
           description: The scope of the access request
           type: string
           example: read write
-    BankIdRequest:
-      type: object
-      title: BankIdRequest
-      required:
-      - pnr
-      properties:
-        pnr:
-          description: Personal Identity Number (12 digits)
-          type: string
-          example:
-            pnr: '195505120028'
-        corporate:
-          required: false
-          description: Set to true to get the first corporate account connected to the bank id (if it exists)
-          type: boolean
-        orgNr:
-          required: false
-          description: Specific organization number to get the corporate account connected to the bank id (if it exists)
-          type: string
+  examples:
+    OAuth2InvalidGrant:
+      summary: Authorization grant invalid
+      description: 'The provided authorization grant or refresh token is
+
+        invalid, expired, revoked or was issued to another client.
+
+        '
+      value:
+        error: invalid_grant
+        error_description: Authorization grant invalid
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
+    OAuth2InvalidClient:
+      summary: Invalid client
+      description: Client authentication failed.
+      value:
+        error: invalid_client
+        error_description: Authentication failed.
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1
+    OAuth2UnauthorizedClient:
+      summary: Client Unauthorized
+      description: 'The authenticated client is not authorized to use this
+
+        authorization grant type.
+
+        '
+      value:
+        error: unauthorized_client
+    OAuth2InvalidScope:
+      summary: Scope invalid
+      description: The requested scope is invalid, unknown, malformed, or exceeds the scope granted by the resource owner.
+      value:
+        error: invalid_scope
+        error_description: Invalid scope
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-3.3
+    OAuth2InvalidRequest:
+      summary: Invalid request
+      description: "The request is missing a required parameter, includes an \nunsupported parameter value (other than grant type), \nrepeats a parameter, includes multiple credentials, \nutilizes more than one mechanism for authenticating the \nclient, or is otherwise malformed.\n"
+      value:
+        error: invalid_request
+        error_description: Missing a required parameter
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
+    OAuth2UnsupportedGrantType:
+      summary: Unsupported grant type
+      description: The authorization grant type is not supported by the authorization server.
+      value:
+        error: unsupported_grant_type
+        error_description: Grant type not supported by server
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
   headers:
     Cache-Control:
       schema:
@@ -583,55 +632,6 @@ components:
         type: string
       required: true
       example: curl/7.37.0
-  examples:
-    OAuth2InvalidGrant:
-      summary: Authorization grant invalid
-      description: 'The provided authorization grant or refresh token is
-
-        invalid, expired, revoked or was issued to another client.
-
-        '
-      value:
-        error: invalid_grant
-        error_description: Authorization grant invalid
-        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
-    OAuth2InvalidClient:
-      summary: Invalid client
-      description: Client authentication failed.
-      value:
-        error: invalid_client
-        error_description: Authentication failed.
-        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1
-    OAuth2UnsupportedGrantType:
-      summary: Unsupported grant type
-      description: The authorization grant type is not supported by the authorization server.
-      value:
-        error: unsupported_grant_type
-        error_description: Grant type not supported by server
-        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
-    OAuth2UnauthorizedClient:
-      summary: Client Unauthorized
-      description: 'The authenticated client is not authorized to use this
-
-        authorization grant type.
-
-        '
-      value:
-        error: unauthorized_client
-    OAuth2InvalidRequest:
-      summary: Invalid request
-      description: "The request is missing a required parameter, includes an \nunsupported parameter value (other than grant type), \nrepeats a parameter, includes multiple credentials, \nutilizes more than one mechanism for authenticating the \nclient, or is otherwise malformed.\n"
-      value:
-        error: invalid_request
-        error_description: Missing a required parameter
-        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
-    OAuth2InvalidScope:
-      summary: Scope invalid
-      description: The requested scope is invalid, unknown, malformed, or exceeds the scope granted by the resource owner.
-      value:
-        error: invalid_scope
-        error_description: Invalid scope
-        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-3.3
   securitySchemes:
     AccessToken:
       type: apiKey

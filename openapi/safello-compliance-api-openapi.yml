@@ -63,6 +63,71 @@ paths:
                   $ref: '#/components/schemas/ComplianceStatus'
 components:
   schemas:
+    ComplianceStatus:
+      type: object
+      properties:
+        decision:
+          type: string
+          description: Describes the outcome of the compliance assessment (ACCEPT or REJECT)
+          example: ACCEPT
+        rejections:
+          type: array
+          description: A list of reasons for the rejection (if any)
+          example:
+          - reason: KYC
+            code: BASIC
+          - reason: EMAIL
+            code: NOT_VERIFIED
+          - reason: TERMS
+            code: NOT_UP_TO_DATE
+          - '...'
+          items:
+            title: ComplianceRejection
+            type: object
+            description: A reason for rejecting a compliance verification
+            properties:
+              reason:
+                type: string
+                description: An overall reason category for the failure, such as KYC questionnaire completion
+                example: KYC
+              code:
+                type: string
+                description: A more specific code that indicates the exact cause of the failure, such as not completing their basic KYC questionnaire
+                example: BASIC
+    SellOrderInput:
+      type: object
+      required:
+      - fiatCurrency
+      - crypto
+      properties:
+        fiatCurrency:
+          type: string
+          example: SEK
+          description: Currency to convert the crypto to - must be a well formed currency code, currently SEK only
+        crypto:
+          type: object
+          description: Information about the crypto currency and amount involved in the transaction
+          example:
+            currency: BTC
+            amount: '0.00200001'
+          $ref: '#/components/schemas/CurrencyAmount'
+        bankAccountId:
+          type: string
+          format: uuid
+          description: Legacy, bank account to use when creating a sell order. If not used the user default bank account will be used instead
+        payoutMethod:
+          type: string
+          example: SE Bank transfer
+          description: Payout method used - one of 'SE Bank transfer', 'Credit card', 'SEPA', 'SWIFT'
+        payoutDetails:
+          type: object
+          additionalProperties:
+            type: string
+          description: Additional payout details
+        walletId:
+          type: string
+          format: uuid
+          description: Wallet used in sell order. If not used the default wallet will be used instead
     CurrencyAmount:
       type: object
       required:
@@ -107,71 +172,6 @@ components:
           additionalProperties:
             type: string
           description: Additional payment details
-    SellOrderInput:
-      type: object
-      required:
-      - fiatCurrency
-      - crypto
-      properties:
-        fiatCurrency:
-          type: string
-          example: SEK
-          description: Currency to convert the crypto to - must be a well formed currency code, currently SEK only
-        crypto:
-          type: object
-          description: Information about the crypto currency and amount involved in the transaction
-          example:
-            currency: BTC
-            amount: '0.00200001'
-          $ref: '#/components/schemas/CurrencyAmount'
-        bankAccountId:
-          type: string
-          format: uuid
-          description: Legacy, bank account to use when creating a sell order. If not used the user default bank account will be used instead
-        payoutMethod:
-          type: string
-          example: SE Bank transfer
-          description: Payout method used - one of 'SE Bank transfer', 'Credit card', 'SEPA', 'SWIFT'
-        payoutDetails:
-          type: object
-          additionalProperties:
-            type: string
-          description: Additional payout details
-        walletId:
-          type: string
-          format: uuid
-          description: Wallet used in sell order. If not used the default wallet will be used instead
-    ComplianceStatus:
-      type: object
-      properties:
-        decision:
-          type: string
-          description: Describes the outcome of the compliance assessment (ACCEPT or REJECT)
-          example: ACCEPT
-        rejections:
-          type: array
-          description: A list of reasons for the rejection (if any)
-          example:
-          - reason: KYC
-            code: BASIC
-          - reason: EMAIL
-            code: NOT_VERIFIED
-          - reason: TERMS
-            code: NOT_UP_TO_DATE
-          - '...'
-          items:
-            title: ComplianceRejection
-            type: object
-            description: A reason for rejecting a compliance verification
-            properties:
-              reason:
-                type: string
-                description: An overall reason category for the failure, such as KYC questionnaire completion
-                example: KYC
-              code:
-                type: string
-                description: A more specific code that indicates the exact cause of the failure, such as not completing their basic KYC questionnaire
-                example: BASIC
   securitySchemes:
     OAuth2:
       type: oauth2

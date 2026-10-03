@@ -157,6 +157,16 @@ paths:
           $ref: '#/components/responses/AppIdRequired'
 components:
   responses:
+    NotAuthenticatedError:
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
     AppIdRequired:
       description: This request requires you to send an App ID
       content:
@@ -177,16 +187,6 @@ components:
                 - MISSING_APP_ID
                 description: Short string identifying the error
                 example: MISSING_APP_ID
-    NotAuthenticatedError:
-      description: Not authenticated
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Description of the error
   securitySchemes:
     AccessToken:
       type: apiKey

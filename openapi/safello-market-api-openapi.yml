@@ -423,28 +423,62 @@ paths:
           $ref: '#/components/responses/BadRequest'
 components:
   schemas:
-    MarketChartRecord:
+    Market24hTickerData:
       type: object
-      example:
-      - timestamp: 1643038200000
-        price: '317258.03'
-      description: Object with the data point to plot.
       properties:
-        timestamp:
-          type: integer
-          format: int64
-          example: 1643037000000
-          description: 'Timestamp representing the number of milliseconds since
-
-            [UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time)
-
-            '
-        price:
+        symbol:
           type: string
-          example: '317258.03'
-          description: 'Unitary price for the cryptocurrency in COUNTER
-
-            '
+          description: The trading pair symbol
+        high:
+          type: string
+          description: The highest price in the last 24 hours.
+        low:
+          type: string
+          description: The lowest price in the last 24 hours.
+        bid:
+          type: string
+          description: The current highest bid price.
+        ask:
+          type: string
+          description: The current lowest ask price.
+        volume:
+          type: string
+          description: The 24-hour trading volume for base.
+        quoteVolume:
+          type: string
+          description: The 24-hour trading volume for counter.
+        priceChangePercent:
+          type: string
+          description: The percentage price change over the last 24 hours.
+    HistoricalOhlcvDataResponse:
+      type: object
+      properties:
+        ts:
+          type: string
+          format: date-time
+          description: Timestamp when the response was generated.
+        resolution:
+          type: string
+          enum:
+          - 1m
+          - 5m
+          - 15m
+          - 1h
+          - 4h
+          - 1d
+          - 1w
+          - 1mo
+          description: The requested timeframe resolution.
+        pair:
+          type: string
+          description: Asset pair of order
+        inverted:
+          type: boolean
+          description: Indicates whether the received data corresponds to the inverted asset pair.
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OhlcvData'
     OhlcvData:
       type: object
       properties:
@@ -470,6 +504,169 @@ components:
         ticks:
           type: integer
           description: Number of trades executed in the timeframe.
+    CryptoSymbol:
+      type: object
+      properties:
+        currency:
+          type: string
+          description: Crypto currency code
+          example: BTC
+        minorAmountDecimals:
+          type: integer
+          description: Number of decimal places to represent the smallest unit for this crypto currency
+          example: 8
+        displayName:
+          type: string
+          description: Crypto currency name
+          example: Bitcoin
+        status:
+          type: string
+          description: 'Availability of our services related to this crypto currency. It can be:
+
+
+            - `active`: All services are working and available
+
+            - `inactive`: Some or all services associated with this crypto currency are temporarily unavailable.
+
+            - `deprecated`: We don''t support trading with this cryptocurrency anymore.
+
+            '
+          example: active
+        availableActions:
+          type: array
+          example:
+          - buy
+          - sell
+          description: Lists the type of operations you can make using this cryptocurrency.
+          items:
+            type: string
+        network:
+          type: string
+          description: What network the crypto is using or null if not supported
+          example: Bitcoin
+        dateAdded:
+          type: string
+          format: date
+          description: The date when this cryptocurrency was added to Safello.
+          example: '2023-06-15'
+        color:
+          type: object
+          description: The color scheme associated with this cryptocurrency.
+          properties:
+            light:
+              type: string
+              description: Light mode color code (e.g., for UI display).
+              example: '#FFD700'
+            dark:
+              type: string
+              description: Dark mode color code (e.g., for UI display).
+              example: '#000000'
+    MarketChartRecord:
+      type: object
+      example:
+      - timestamp: 1643038200000
+        price: '317258.03'
+      description: Object with the data point to plot.
+      properties:
+        timestamp:
+          type: integer
+          format: int64
+          example: 1643037000000
+          description: 'Timestamp representing the number of milliseconds since
+
+            [UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time)
+
+            '
+        price:
+          type: string
+          example: '317258.03'
+          description: 'Unitary price for the cryptocurrency in COUNTER
+
+            '
+    TradingPair:
+      type: object
+      properties:
+        pair:
+          type: string
+          description: Trading pair symbol using underscore as delimiter.
+          example: BTC_USDC
+        baseDecimals:
+          type: integer
+          description: How many decimals base currency uses for trading
+          example: 8
+        counterDecimals:
+          type: integer
+          description: How many decimals counter currency uses for trading
+          example: 5
+        status:
+          type: string
+          description: 'Availability of our services related to this trading pair. It can be:
+
+            - `active`: All services are working and available
+
+            - `inactive`: Some or all services associated with this trading pair are temporarily unavailable.
+
+            - `deprecated`: We don''t support trading with this cryptocurrency anymore.
+
+            '
+          example: active
+        availableActions:
+          type: array
+          example:
+          - buy
+          - sell
+          description: Lists the type of operations you can make using this trading pair.
+          items:
+            type: string
+        minimumOrder:
+          type: object
+          description: Minimum order amount for pair
+          example:
+            currency: BTC
+            amount: '0.0005'
+          $ref: '#/components/schemas/CurrencyAmount'
+    FiatSymbol:
+      type: object
+      properties:
+        currency:
+          type: string
+          description: Currency code ISO 4217
+          example: SEK
+        minorAmountDecimals:
+          type: integer
+          description: Number of decimal places to represent the smallest unit for this currency
+          example: 2
+        displayName:
+          type: string
+          description: Currency name
+          example: Kronor
+        status:
+          type: string
+          description: 'Availability of our services related to this currency. It can be:
+
+
+            - `active`: All services are working and available
+
+            - `inactive`: Some or all services associated with this currency are temporarily unavailable.
+
+            - `deprecated`: We don''t support trading with this currency anymore.
+
+            '
+          example: active
+    CurrencyAmount:
+      type: object
+      required:
+      - currency
+      - amount
+      properties:
+        currency:
+          type: string
+          description: Currency (fiat or crypto) code
+          example: SEK
+        amount:
+          type: string
+          description: Value of the currency with the number of decimals as defined in the Market API.
+          example: '510.00'
     Ticker:
       type: object
       properties:
@@ -536,242 +733,27 @@ components:
           type: string
           description: Fiat currency
           example: SEK
-    CurrencyAmount:
-      type: object
-      required:
-      - currency
-      - amount
-      properties:
-        currency:
-          type: string
-          description: Currency (fiat or crypto) code
-          example: SEK
-        amount:
-          type: string
-          description: Value of the currency with the number of decimals as defined in the Market API.
-          example: '510.00'
-    FiatSymbol:
-      type: object
-      properties:
-        currency:
-          type: string
-          description: Currency code ISO 4217
-          example: SEK
-        minorAmountDecimals:
-          type: integer
-          description: Number of decimal places to represent the smallest unit for this currency
-          example: 2
-        displayName:
-          type: string
-          description: Currency name
-          example: Kronor
-        status:
-          type: string
-          description: 'Availability of our services related to this currency. It can be:
-
-
-            - `active`: All services are working and available
-
-            - `inactive`: Some or all services associated with this currency are temporarily unavailable.
-
-            - `deprecated`: We don''t support trading with this currency anymore.
-
-            '
-          example: active
-    Market24hTickerData:
-      type: object
-      properties:
-        symbol:
-          type: string
-          description: The trading pair symbol
-        high:
-          type: string
-          description: The highest price in the last 24 hours.
-        low:
-          type: string
-          description: The lowest price in the last 24 hours.
-        bid:
-          type: string
-          description: The current highest bid price.
-        ask:
-          type: string
-          description: The current lowest ask price.
-        volume:
-          type: string
-          description: The 24-hour trading volume for base.
-        quoteVolume:
-          type: string
-          description: The 24-hour trading volume for counter.
-        priceChangePercent:
-          type: string
-          description: The percentage price change over the last 24 hours.
-    TradingPair:
-      type: object
-      properties:
-        pair:
-          type: string
-          description: Trading pair symbol using underscore as delimiter.
-          example: BTC_USDC
-        baseDecimals:
-          type: integer
-          description: How many decimals base currency uses for trading
-          example: 8
-        counterDecimals:
-          type: integer
-          description: How many decimals counter currency uses for trading
-          example: 5
-        status:
-          type: string
-          description: 'Availability of our services related to this trading pair. It can be:
-
-            - `active`: All services are working and available
-
-            - `inactive`: Some or all services associated with this trading pair are temporarily unavailable.
-
-            - `deprecated`: We don''t support trading with this cryptocurrency anymore.
-
-            '
-          example: active
-        availableActions:
-          type: array
-          example:
-          - buy
-          - sell
-          description: Lists the type of operations you can make using this trading pair.
-          items:
-            type: string
-        minimumOrder:
-          type: object
-          description: Minimum order amount for pair
-          example:
-            currency: BTC
-            amount: '0.0005'
-          $ref: '#/components/schemas/CurrencyAmount'
-    HistoricalOhlcvDataResponse:
-      type: object
-      properties:
-        ts:
-          type: string
-          format: date-time
-          description: Timestamp when the response was generated.
-        resolution:
-          type: string
-          enum:
-          - 1m
-          - 5m
-          - 15m
-          - 1h
-          - 4h
-          - 1d
-          - 1w
-          - 1mo
-          description: The requested timeframe resolution.
-        pair:
-          type: string
-          description: Asset pair of order
-        inverted:
-          type: boolean
-          description: Indicates whether the received data corresponds to the inverted asset pair.
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/OhlcvData'
-    CryptoSymbol:
-      type: object
-      properties:
-        currency:
-          type: string
-          description: Crypto currency code
-          example: BTC
-        minorAmountDecimals:
-          type: integer
-          description: Number of decimal places to represent the smallest unit for this crypto currency
-          example: 8
-        displayName:
-          type: string
-          description: Crypto currency name
-          example: Bitcoin
-        status:
-          type: string
-          description: 'Availability of our services related to this crypto currency. It can be:
-
-
-            - `active`: All services are working and available
-
-            - `inactive`: Some or all services associated with this crypto currency are temporarily unavailable.
-
-            - `deprecated`: We don''t support trading with this cryptocurrency anymore.
-
-            '
-          example: active
-        availableActions:
-          type: array
-          example:
-          - buy
-          - sell
-          description: Lists the type of operations you can make using this cryptocurrency.
-          items:
-            type: string
-        network:
-          type: string
-          description: What network the crypto is using or null if not supported
-          example: Bitcoin
-        dateAdded:
-          type: string
-          format: date
-          description: The date when this cryptocurrency was added to Safello.
-          example: '2023-06-15'
-        color:
-          type: object
-          description: The color scheme associated with this cryptocurrency.
-          properties:
-            light:
-              type: string
-              description: Light mode color code (e.g., for UI display).
-              example: '#FFD700'
-            dark:
-              type: string
-              description: Dark mode color code (e.g., for UI display).
-              example: '#000000'
   responses:
-    PairPerformance:
-      description: Market best performers
+    BadRequest:
+      description: The data you have sent is not valid
       content:
         application/json:
           schema:
-            title: PairPerformance
+            title: BadRequestResponse
             type: object
             properties:
-              data:
-                type: array
-                items:
-                  title: PairPerformanceData
-                  type: object
-                  properties:
-                    pair:
-                      type: string
-                      description: Trade pair
-                      example: BTC_SEK
-                    price:
-                      type: string
-                      description: Price on pair in counter
-                      example: '1234.56'
-                    percentageChange:
-                      type: string
-                      description: Change in percentage (in decimal format)
-                      example: '0.1234'
-                    absoluteChange:
-                      type: string
-                      description: Change in counter
-                      example: '1234.56'
-    MarketChartData:
-      description: Market chart data points
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/MarketChartRecord'
+              message:
+                type: string
+                description: Description of the error
+                example: You cannot place an order higher than your buy limit of 500 SEK
+              status:
+                type: integer
+                description: Status code number
+                example: 400
+              code:
+                type: string
+                description: Short string identifying the error
+                example: BUY_LIMIT_EXCEEDED
     OrderBook:
       description: Order Book
       content:
@@ -816,26 +798,44 @@ components:
                       type: string
                       description: Amount available at this ask price
                       example: '0.45186957'
-    BadRequest:
-      description: The data you have sent is not valid
+    PairPerformance:
+      description: Market best performers
       content:
         application/json:
           schema:
-            title: BadRequestResponse
+            title: PairPerformance
             type: object
             properties:
-              message:
-                type: string
-                description: Description of the error
-                example: You cannot place an order higher than your buy limit of 500 SEK
-              status:
-                type: integer
-                description: Status code number
-                example: 400
-              code:
-                type: string
-                description: Short string identifying the error
-                example: BUY_LIMIT_EXCEEDED
+              data:
+                type: array
+                items:
+                  title: PairPerformanceData
+                  type: object
+                  properties:
+                    pair:
+                      type: string
+                      description: Trade pair
+                      example: BTC_SEK
+                    price:
+                      type: string
+                      description: Price on pair in counter
+                      example: '1234.56'
+                    percentageChange:
+                      type: string
+                      description: Change in percentage (in decimal format)
+                      example: '0.1234'
+                    absoluteChange:
+                      type: string
+                      description: Change in counter
+                      example: '1234.56'
+    MarketChartData:
+      description: Market chart data points
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/MarketChartRecord'
   securitySchemes:
     OAuth2:
       type: oauth2

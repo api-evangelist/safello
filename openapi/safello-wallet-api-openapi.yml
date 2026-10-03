@@ -316,6 +316,40 @@ components:
             absoluteChange:
               type: string
               description: How the combined performance of the wallet was at the time in fiat
+    CurrencyAmount:
+      type: object
+      required:
+      - currency
+      - amount
+      properties:
+        currency:
+          type: string
+          description: Currency (fiat or crypto) code
+          example: SEK
+        amount:
+          type: string
+          description: Value of the currency with the number of decimals as defined in the Market API.
+          example: '510.00'
+    WalletPerformance:
+      type: object
+      title: WalletPerformance
+      properties:
+        fiat:
+          type: string
+          description: Fiat currency
+        cryptos:
+          description: Individual performance for each crypto
+          additionalProperties:
+            $ref: '#/components/schemas/WalletPerformanceCrypto'
+          example:
+            BTC:
+              amount: '1.0000000'
+              fiatValue: '11000.0'
+              performance:
+                absoluteChange: '1000.0'
+                percentageChange: '0.1'
+        total:
+          $ref: '#/components/schemas/WalletPerformanceCrypto'
     WalletPerformanceHistory:
       type: object
       title: WalletPerformanceHistory
@@ -339,40 +373,6 @@ components:
           description: Data points
           items:
             $ref: '#/components/schemas/WalletPerformanceHistoryDataPoint'
-    WalletPerformance:
-      type: object
-      title: WalletPerformance
-      properties:
-        fiat:
-          type: string
-          description: Fiat currency
-        cryptos:
-          description: Individual performance for each crypto
-          additionalProperties:
-            $ref: '#/components/schemas/WalletPerformanceCrypto'
-          example:
-            BTC:
-              amount: '1.0000000'
-              fiatValue: '11000.0'
-              performance:
-                absoluteChange: '1000.0'
-                percentageChange: '0.1'
-        total:
-          $ref: '#/components/schemas/WalletPerformanceCrypto'
-    CurrencyAmount:
-      type: object
-      required:
-      - currency
-      - amount
-      properties:
-        currency:
-          type: string
-          description: Currency (fiat or crypto) code
-          example: SEK
-        amount:
-          type: string
-          description: Value of the currency with the number of decimals as defined in the Market API.
-          example: '510.00'
     WalletPerformanceCrypto:
       type: object
       title: WalletPerformanceCrypto
