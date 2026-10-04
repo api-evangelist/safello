@@ -374,6 +374,16 @@ paths:
     - url: https://api.safello.com
 components:
   responses:
+    NotAuthenticatedError:
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
     PreconditionFailed:
       description: Some required parameter was not sent
       content:
@@ -393,16 +403,6 @@ components:
                 type: string
                 description: Short string identifying the error
                 example: VALIDATION_ERROR
-    NotAuthenticatedError:
-      description: Not authenticated
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Description of the error
     AppIdRequired:
       description: This request requires you to send an App ID
       content:
@@ -558,6 +558,13 @@ components:
           type: string
           example: read write
   examples:
+    OAuth2UnsupportedGrantType:
+      summary: Unsupported grant type
+      description: The authorization grant type is not supported by the authorization server.
+      value:
+        error: unsupported_grant_type
+        error_description: Grant type not supported by server
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
     OAuth2InvalidGrant:
       summary: Authorization grant invalid
       description: 'The provided authorization grant or refresh token is
@@ -585,13 +592,6 @@ components:
         '
       value:
         error: unauthorized_client
-    OAuth2InvalidScope:
-      summary: Scope invalid
-      description: The requested scope is invalid, unknown, malformed, or exceeds the scope granted by the resource owner.
-      value:
-        error: invalid_scope
-        error_description: Invalid scope
-        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-3.3
     OAuth2InvalidRequest:
       summary: Invalid request
       description: "The request is missing a required parameter, includes an \nunsupported parameter value (other than grant type), \nrepeats a parameter, includes multiple credentials, \nutilizes more than one mechanism for authenticating the \nclient, or is otherwise malformed.\n"
@@ -599,13 +599,13 @@ components:
         error: invalid_request
         error_description: Missing a required parameter
         error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
-    OAuth2UnsupportedGrantType:
-      summary: Unsupported grant type
-      description: The authorization grant type is not supported by the authorization server.
+    OAuth2InvalidScope:
+      summary: Scope invalid
+      description: The requested scope is invalid, unknown, malformed, or exceeds the scope granted by the resource owner.
       value:
-        error: unsupported_grant_type
-        error_description: Grant type not supported by server
-        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
+        error: invalid_scope
+        error_description: Invalid scope
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-3.3
   headers:
     Cache-Control:
       schema:
@@ -616,14 +616,6 @@ components:
         type: string
       example: no-cache
   parameters:
-    sourceIpParam:
-      in: header
-      name: Source-IP-Address
-      description: IP Address of the originator of the request
-      schema:
-        type: string
-      required: true
-      example: 192.168.0.1
     userAgentParam:
       in: header
       name: Source-User-Agent
@@ -632,6 +624,14 @@ components:
         type: string
       required: true
       example: curl/7.37.0
+    sourceIpParam:
+      in: header
+      name: Source-IP-Address
+      description: IP Address of the originator of the request
+      schema:
+        type: string
+      required: true
+      example: 192.168.0.1
   securitySchemes:
     AccessToken:
       type: apiKey

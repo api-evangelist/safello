@@ -423,33 +423,6 @@ paths:
           $ref: '#/components/responses/BadRequest'
 components:
   schemas:
-    Market24hTickerData:
-      type: object
-      properties:
-        symbol:
-          type: string
-          description: The trading pair symbol
-        high:
-          type: string
-          description: The highest price in the last 24 hours.
-        low:
-          type: string
-          description: The lowest price in the last 24 hours.
-        bid:
-          type: string
-          description: The current highest bid price.
-        ask:
-          type: string
-          description: The current lowest ask price.
-        volume:
-          type: string
-          description: The 24-hour trading volume for base.
-        quoteVolume:
-          type: string
-          description: The 24-hour trading volume for counter.
-        priceChangePercent:
-          type: string
-          description: The percentage price change over the last 24 hours.
     HistoricalOhlcvDataResponse:
       type: object
       properties:
@@ -504,63 +477,41 @@ components:
         ticks:
           type: integer
           description: Number of trades executed in the timeframe.
-    CryptoSymbol:
+    Ticker:
       type: object
       properties:
-        currency:
+        pair:
           type: string
-          description: Crypto currency code
-          example: BTC
-        minorAmountDecimals:
-          type: integer
-          description: Number of decimal places to represent the smallest unit for this crypto currency
-          example: 8
-        displayName:
+          description: Trade pair
+          example: BTC_SEK
+        timestamp:
           type: string
-          description: Crypto currency name
-          example: Bitcoin
-        status:
+          format: date-time
+          description: The timestamp at which the ticker was calculated
+        quoteVolume:
           type: string
-          description: 'Availability of our services related to this crypto currency. It can be:
-
-
-            - `active`: All services are working and available
-
-            - `inactive`: Some or all services associated with this crypto currency are temporarily unavailable.
-
-            - `deprecated`: We don''t support trading with this cryptocurrency anymore.
-
-            '
-          example: active
-        availableActions:
-          type: array
-          example:
-          - buy
-          - sell
-          description: Lists the type of operations you can make using this cryptocurrency.
-          items:
-            type: string
-        network:
+          description: Volume within the last 24 hours in the quote currency
+        baseVolume:
           type: string
-          description: What network the crypto is using or null if not supported
-          example: Bitcoin
-        dateAdded:
+          description: Volume within the last 24 hours in the base currency
+        lastPrice:
           type: string
-          format: date
-          description: The date when this cryptocurrency was added to Safello.
-          example: '2023-06-15'
-        color:
-          type: object
-          description: The color scheme associated with this cryptocurrency.
-          properties:
-            light:
-              type: string
-              description: Light mode color code (e.g., for UI display).
-              example: '#FFD700'
-            dark:
-              type: string
-              description: Dark mode color code (e.g., for UI display).
-              example: '#000000'
+          description: Price of the last trade
+        bestBid:
+          type: string
+          description: Price of the current best bid
+        bestAsk:
+          type: string
+          description: Price of the current best ask
+        high:
+          type: string
+          description: Highest matched price within the last 24 hours
+        low:
+          type: string
+          description: Lowest matched price within the last 24 hours
+        mid:
+          type: string
+          description: Mid price between ask and bid
     MarketChartRecord:
       type: object
       example:
@@ -583,6 +534,33 @@ components:
           description: 'Unitary price for the cryptocurrency in COUNTER
 
             '
+    Market24hTickerData:
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: The trading pair symbol
+        high:
+          type: string
+          description: The highest price in the last 24 hours.
+        low:
+          type: string
+          description: The lowest price in the last 24 hours.
+        bid:
+          type: string
+          description: The current highest bid price.
+        ask:
+          type: string
+          description: The current lowest ask price.
+        volume:
+          type: string
+          description: The 24-hour trading volume for base.
+        quoteVolume:
+          type: string
+          description: The 24-hour trading volume for counter.
+        priceChangePercent:
+          type: string
+          description: The percentage price change over the last 24 hours.
     TradingPair:
       type: object
       properties:
@@ -653,6 +631,63 @@ components:
 
             '
           example: active
+    CryptoSymbol:
+      type: object
+      properties:
+        currency:
+          type: string
+          description: Crypto currency code
+          example: BTC
+        minorAmountDecimals:
+          type: integer
+          description: Number of decimal places to represent the smallest unit for this crypto currency
+          example: 8
+        displayName:
+          type: string
+          description: Crypto currency name
+          example: Bitcoin
+        status:
+          type: string
+          description: 'Availability of our services related to this crypto currency. It can be:
+
+
+            - `active`: All services are working and available
+
+            - `inactive`: Some or all services associated with this crypto currency are temporarily unavailable.
+
+            - `deprecated`: We don''t support trading with this cryptocurrency anymore.
+
+            '
+          example: active
+        availableActions:
+          type: array
+          example:
+          - buy
+          - sell
+          description: Lists the type of operations you can make using this cryptocurrency.
+          items:
+            type: string
+        network:
+          type: string
+          description: What network the crypto is using or null if not supported
+          example: Bitcoin
+        dateAdded:
+          type: string
+          format: date
+          description: The date when this cryptocurrency was added to Safello.
+          example: '2023-06-15'
+        color:
+          type: object
+          description: The color scheme associated with this cryptocurrency.
+          properties:
+            light:
+              type: string
+              description: Light mode color code (e.g., for UI display).
+              example: '#FFD700'
+            dark:
+              type: string
+              description: Dark mode color code (e.g., for UI display).
+              example: '#000000'
     CurrencyAmount:
       type: object
       required:
@@ -667,41 +702,6 @@ components:
           type: string
           description: Value of the currency with the number of decimals as defined in the Market API.
           example: '510.00'
-    Ticker:
-      type: object
-      properties:
-        pair:
-          type: string
-          description: Trade pair
-          example: BTC_SEK
-        timestamp:
-          type: string
-          format: date-time
-          description: The timestamp at which the ticker was calculated
-        quoteVolume:
-          type: string
-          description: Volume within the last 24 hours in the quote currency
-        baseVolume:
-          type: string
-          description: Volume within the last 24 hours in the base currency
-        lastPrice:
-          type: string
-          description: Price of the last trade
-        bestBid:
-          type: string
-          description: Price of the current best bid
-        bestAsk:
-          type: string
-          description: Price of the current best ask
-        high:
-          type: string
-          description: Highest matched price within the last 24 hours
-        low:
-          type: string
-          description: Lowest matched price within the last 24 hours
-        mid:
-          type: string
-          description: Mid price between ask and bid
     CurrencyRate:
       type: object
       properties:
@@ -734,26 +734,14 @@ components:
           description: Fiat currency
           example: SEK
   responses:
-    BadRequest:
-      description: The data you have sent is not valid
+    MarketChartData:
+      description: Market chart data points
       content:
         application/json:
           schema:
-            title: BadRequestResponse
-            type: object
-            properties:
-              message:
-                type: string
-                description: Description of the error
-                example: You cannot place an order higher than your buy limit of 500 SEK
-              status:
-                type: integer
-                description: Status code number
-                example: 400
-              code:
-                type: string
-                description: Short string identifying the error
-                example: BUY_LIMIT_EXCEEDED
+            type: array
+            items:
+              $ref: '#/components/schemas/MarketChartRecord'
     OrderBook:
       description: Order Book
       content:
@@ -798,6 +786,26 @@ components:
                       type: string
                       description: Amount available at this ask price
                       example: '0.45186957'
+    BadRequest:
+      description: The data you have sent is not valid
+      content:
+        application/json:
+          schema:
+            title: BadRequestResponse
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
+                example: You cannot place an order higher than your buy limit of 500 SEK
+              status:
+                type: integer
+                description: Status code number
+                example: 400
+              code:
+                type: string
+                description: Short string identifying the error
+                example: BUY_LIMIT_EXCEEDED
     PairPerformance:
       description: Market best performers
       content:
@@ -828,14 +836,6 @@ components:
                       type: string
                       description: Change in counter
                       example: '1234.56'
-    MarketChartData:
-      description: Market chart data points
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/MarketChartRecord'
   securitySchemes:
     OAuth2:
       type: oauth2

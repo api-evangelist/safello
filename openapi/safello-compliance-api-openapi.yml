@@ -63,6 +63,50 @@ paths:
                   $ref: '#/components/schemas/ComplianceStatus'
 components:
   schemas:
+    CurrencyAmount:
+      type: object
+      required:
+      - currency
+      - amount
+      properties:
+        currency:
+          type: string
+          description: Currency (fiat or crypto) code
+          example: SEK
+        amount:
+          type: string
+          description: Value of the currency with the number of decimals as defined in the Market API.
+          example: '510.00'
+    BuyOrderInput:
+      type: object
+      required:
+      - cryptoCurrency
+      - fiat
+      - paymentMethod
+      properties:
+        cryptoCurrency:
+          type: string
+          description: Cryptocurrency code - one of BTC, ETH, LINK, MATIC, or DOT
+          example: BTC
+        fiat:
+          type: object
+          description: Information about the fiat currency and amount involved in the transaction
+          example:
+            currency: SEK
+            amount: '510.00'
+          $ref: '#/components/schemas/CurrencyAmount'
+        walletId:
+          type: string
+          format: uuid
+          description: Wallet used in buy order. If not used the default wallet will be used instead
+        paymentMethod:
+          type: string
+          description: Payment method used - one of swish, klarna_bankgiro, klarna_sepa, credit_card, sepa, bank_transfer_dk, bank_transfer_se
+        paymentDetails:
+          type: object
+          additionalProperties:
+            type: string
+          description: Additional payment details
     ComplianceStatus:
       type: object
       properties:
@@ -128,50 +172,6 @@ components:
           type: string
           format: uuid
           description: Wallet used in sell order. If not used the default wallet will be used instead
-    CurrencyAmount:
-      type: object
-      required:
-      - currency
-      - amount
-      properties:
-        currency:
-          type: string
-          description: Currency (fiat or crypto) code
-          example: SEK
-        amount:
-          type: string
-          description: Value of the currency with the number of decimals as defined in the Market API.
-          example: '510.00'
-    BuyOrderInput:
-      type: object
-      required:
-      - cryptoCurrency
-      - fiat
-      - paymentMethod
-      properties:
-        cryptoCurrency:
-          type: string
-          description: Cryptocurrency code - one of BTC, ETH, LINK, MATIC, or DOT
-          example: BTC
-        fiat:
-          type: object
-          description: Information about the fiat currency and amount involved in the transaction
-          example:
-            currency: SEK
-            amount: '510.00'
-          $ref: '#/components/schemas/CurrencyAmount'
-        walletId:
-          type: string
-          format: uuid
-          description: Wallet used in buy order. If not used the default wallet will be used instead
-        paymentMethod:
-          type: string
-          description: Payment method used - one of swish, klarna_bankgiro, klarna_sepa, credit_card, sepa, bank_transfer_dk, bank_transfer_se
-        paymentDetails:
-          type: object
-          additionalProperties:
-            type: string
-          description: Additional payment details
   securitySchemes:
     OAuth2:
       type: oauth2

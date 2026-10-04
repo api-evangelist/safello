@@ -509,6 +509,17 @@ components:
               message:
                 type: string
                 description: Description of the error
+    NotAuthenticatedError_2:
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            title: NotAuthenticatedErrorResponse
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
     BadRequest:
       description: The data you have sent is not valid
       content:
@@ -529,18 +540,34 @@ components:
                 type: string
                 description: Short string identifying the error
                 example: BUY_LIMIT_EXCEEDED
-    NotAuthenticatedError_2:
-      description: Not authenticated
-      content:
-        application/json:
-          schema:
-            title: NotAuthenticatedErrorResponse
-            type: object
-            properties:
-              message:
-                type: string
-                description: Description of the error
   schemas:
+    BankAccountInput:
+      type: object
+      title: BankAccountInput
+      description: Bank account input object
+      required:
+      - accountNumber
+      - clearingNumber
+      - currency
+      properties:
+        name:
+          type: string
+          description: Name of the account
+          example: Savings
+        accountNumber:
+          type: string
+          description: Bank account number
+          example: '123456789'
+          pattern: ^(\d{7}|\d{11})$
+        clearingNumber:
+          type: string
+          description: Clearing number
+          example: '1234'
+          pattern: ^\d{4,5}$
+        currency:
+          type: string
+          description: Currency of the bank account
+          example: SEK
     BankAccount:
       type: object
       title: BankAccount
@@ -575,64 +602,6 @@ components:
           type: boolean
           description: If bank account is the default selected
           example: true
-    KycAnswerInput:
-      title: KycAnswerRequest
-      type: object
-      description: Answer object (i.e. the user's response to a KycQuestion)
-      required:
-      - questionnaire
-      - answers
-      properties:
-        questionnaire:
-          type: string
-          description: Which questionnaire to answer
-          example: BASIC
-        answers:
-          type: array
-          description: Array of answers
-          items:
-            type: object
-            required:
-            - questionId
-            properties:
-              questionId:
-                type: integer
-                description: Question ID
-              alternativeId:
-                type: integer
-                description: Multiple-choice answer ID
-                example: 1
-              textAnswer:
-                type: string
-                description: Text answer if the alternativ was free text
-                example: Free text
-    BankAccountInput:
-      type: object
-      title: BankAccountInput
-      description: Bank account input object
-      required:
-      - accountNumber
-      - clearingNumber
-      - currency
-      properties:
-        name:
-          type: string
-          description: Name of the account
-          example: Savings
-        accountNumber:
-          type: string
-          description: Bank account number
-          example: '123456789'
-          pattern: ^(\d{7}|\d{11})$
-        clearingNumber:
-          type: string
-          description: Clearing number
-          example: '1234'
-          pattern: ^\d{4,5}$
-        currency:
-          type: string
-          description: Currency of the bank account
-          example: SEK
     KycQuestion:
       type: object
       title: KycQuestion
@@ -725,6 +694,37 @@ components:
           type: integer
           example: 3
           description: Relates to the maximum amount of money this user is allowed to buy
+    KycAnswerInput:
+      title: KycAnswerRequest
+      type: object
+      description: Answer object (i.e. the user's response to a KycQuestion)
+      required:
+      - questionnaire
+      - answers
+      properties:
+        questionnaire:
+          type: string
+          description: Which questionnaire to answer
+          example: BASIC
+        answers:
+          type: array
+          description: Array of answers
+          items:
+            type: object
+            required:
+            - questionId
+            properties:
+              questionId:
+                type: integer
+                description: Question ID
+              alternativeId:
+                type: integer
+                description: Multiple-choice answer ID
+                example: 1
+              textAnswer:
+                type: string
+                description: Text answer if the alternativ was free text
+                example: Free text
   securitySchemes:
     AccessToken:
       type: apiKey
