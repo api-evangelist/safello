@@ -1,0 +1,35 @@
+slug: safello
+provider: Safello
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Auth
+  spec_file: safello-auth-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /v1/auth startAuth Start authentication; POST /oauth2/token obtainToken Request Access
+    Token
+  reason: Authentication/OAuth token issuance is technical plumbing; the closest honest mapping is Identity
+    & Access Management. Low-moderate confidence as auth endpoints are often best left unmapped.
+- tag: Compliance
+  spec_file: safello-compliance-api-openapi.yml
+  capability_id: BC-130.10
+  capability_id_l1: BC-130
+  capability_name: Regulatory Compliance Management
+  confidence: 0.7
+  evidence: POST /v2/compliance/verify/orders/sell  verifySellOrderCompliance  Verify compliance status
+    for a sell operation
+  reason: Operations verify regulatory compliance status before executing crypto buy/sell orders for an
+    FSA-registered brokerage, i.e. regulatory compliance checking. Schema ComplianceStatus grounds this.

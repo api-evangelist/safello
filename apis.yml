@@ -52,6 +52,7 @@ tags:
 - Trading
 - KYC
 - BankID
+- Financial Services
 apis:
 - aid: safello:safello-account-api
   name: Safello Account API
@@ -171,6 +172,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/safello-capability-edges.yml
+  name: Safello Business Capability Map
 - type: Overlay
   url: overlays/safello-institutional-overlay.yaml
 - type: Website
