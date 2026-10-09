@@ -2,7 +2,7 @@
 name: Place a Safello buy order
 description: Check buy compliance, quote fees, create a buy order, and poll it to completion for an onboarded customer.
 api: openapi/safello-institutional-openapi.json
-operations: [verifyBuyOrderCompliance, getFees, createBuyOrder, checkOrderStatus]
+operations: [verifyBuyOrderCompliance, getFees, postV2OrdersBuy, getV2OrdersByOrderId]
 ---
 
 # Place a Safello buy order

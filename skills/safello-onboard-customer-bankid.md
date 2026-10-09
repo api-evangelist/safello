@@ -2,7 +2,7 @@
 name: Onboard a Safello customer with BankID
 description: Authenticate an end customer via Swedish BankID, verify their email, capture terms acceptance, and complete the KYC questionnaire so they can trade.
 api: openapi/safello-institutional-openapi.json
-operations: [startAuth, obtainToken, getUser, sendVerificationEmail, verifyEmail, acceptTerms, requireKyc, kycQuestions, answerKyc]
+operations: [postOauth2Bankid, obtainToken, getUser, postV2AccountEmail, putV2AccountEmail, putV2AccountTerms, getV2AccountKyc, getV2AccountKycQuestions, answerKyc]
 ---
 
 # Onboard a Safello customer with BankID

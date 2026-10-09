@@ -2,7 +2,7 @@
 name: Place a Safello sell order
 description: Check sell compliance, quote fees, create a sell order, and poll it to completion, paying out to the customer's bank account.
 api: openapi/safello-institutional-openapi.json
-operations: [verifySellOrderCompliance, getFees, getBankAccounts, createSellOrder, checkOrderStatus]
+operations: [verifySellOrderCompliance, getFees, getBankAccounts, postV2OrdersSell, getV2OrdersByOrderId]
 ---
 
 # Place a Safello sell order

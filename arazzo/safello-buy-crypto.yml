@@ -3,6 +3,17 @@ info:
   title: Safello — buy cryptocurrency
   version: 1.0.0
   summary: Verify buy compliance, quote fees, create a buy order, and poll it to completion.
+  x-realizes-capability-ids:
+  - BC-130.10
+  x-capability-derivation:
+    method: 'deterministic join: sourceDescriptions -> per-tag OpenAPI -> tag/capability edge. No classification at this step.'
+    min_confidence: 0.7
+    sources:
+    - capability_id: BC-130.10
+      capability_name: Regulatory Compliance Management
+      spec: safello-compliance-api-openapi.yml
+      confidence: 0.7
+    model: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities, CC BY 4.0
 sourceDescriptions:
 - name: complianceApi
   url: ../openapi/safello-compliance-api-openapi.yml
@@ -24,11 +35,11 @@ workflows:
   - stepId: getFees
     operationId: getFees
   - stepId: createBuyOrder
-    operationId: createBuyOrder
+    operationId: postV2OrdersBuy
     outputs:
       orderId: $response.body#/id
   - stepId: checkStatus
-    operationId: checkOrderStatus
+    operationId: getV2OrdersByOrderId
     parameters:
     - name: orderId
       in: path
