@@ -422,118 +422,141 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 components:
+  responses:
+    OrderBook:
+      description: Order Book
+      content:
+        application/json:
+          schema:
+            title: OrderBook
+            type: object
+            properties:
+              pair:
+                type: string
+                description: Trade pair
+                example: BTC_USDC
+              timestamp:
+                type: string
+                format: date-time
+                description: The timestamp at which the order book was retrieved
+              bids:
+                type: array
+                description: List of bid orders
+                items:
+                  type: object
+                  properties:
+                    price:
+                      type: string
+                      description: Bid price
+                      example: '49905.65'
+                    amount:
+                      type: string
+                      description: Amount available at this bid price
+                      example: '5.31251274'
+              asks:
+                type: array
+                description: List of ask orders
+                items:
+                  type: object
+                  properties:
+                    price:
+                      type: string
+                      description: Ask price
+                      example: '50653.80'
+                    amount:
+                      type: string
+                      description: Amount available at this ask price
+                      example: '0.45186957'
+    PairPerformance:
+      description: Market best performers
+      content:
+        application/json:
+          schema:
+            title: PairPerformance
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  title: PairPerformanceData
+                  type: object
+                  properties:
+                    pair:
+                      type: string
+                      description: Trade pair
+                      example: BTC_SEK
+                    price:
+                      type: string
+                      description: Price on pair in counter
+                      example: '1234.56'
+                    percentageChange:
+                      type: string
+                      description: Change in percentage (in decimal format)
+                      example: '0.1234'
+                    absoluteChange:
+                      type: string
+                      description: Change in counter
+                      example: '1234.56'
+    MarketChartData:
+      description: Market chart data points
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/MarketChartRecord'
+    BadRequest:
+      description: The data you have sent is not valid
+      content:
+        application/json:
+          schema:
+            title: BadRequestResponse
+            type: object
+            properties:
+              message:
+                type: string
+                description: Description of the error
+                example: You cannot place an order higher than your buy limit of 500 SEK
+              status:
+                type: integer
+                description: Status code number
+                example: 400
+              code:
+                type: string
+                description: Short string identifying the error
+                example: BUY_LIMIT_EXCEEDED
   schemas:
-    HistoricalOhlcvDataResponse:
+    CurrencyRate:
       type: object
       properties:
-        ts:
+        ask:
           type: string
-          format: date-time
-          description: Timestamp when the response was generated.
-        resolution:
+          example: '343110.6053375'
+          description: Ask price
+        baseAsk:
           type: string
-          enum:
-          - 1m
-          - 5m
-          - 15m
-          - 1h
-          - 4h
-          - 1d
-          - 1w
-          - 1mo
-          description: The requested timeframe resolution.
-        pair:
-          type: string
-          description: Asset pair of order
-        inverted:
-          type: boolean
-          description: Indicates whether the received data corresponds to the inverted asset pair.
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/OhlcvData'
-    OhlcvData:
-      type: object
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-          description: Timestamp for the candlestick.
-        open:
-          type: string
-          description: Opening price.
-        high:
-          type: string
-          description: Highest price during the timeframe.
-        low:
-          type: string
-          description: Lowest price during the timeframe.
-        close:
-          type: string
-          description: Closing price.
-        volume:
-          type: string
-          description: Volume traded during the timeframe.
-        ticks:
-          type: integer
-          description: Number of trades executed in the timeframe.
-    Ticker:
-      type: object
-      properties:
-        pair:
-          type: string
-          description: Trade pair
-          example: BTC_SEK
-        timestamp:
-          type: string
-          format: date-time
-          description: The timestamp at which the ticker was calculated
-        quoteVolume:
-          type: string
-          description: Volume within the last 24 hours in the quote currency
-        baseVolume:
-          type: string
-          description: Volume within the last 24 hours in the base currency
-        lastPrice:
-          type: string
-          description: Price of the last trade
-        bestBid:
-          type: string
-          description: Price of the current best bid
-        bestAsk:
-          type: string
-          description: Price of the current best ask
-        high:
-          type: string
-          description: Highest matched price within the last 24 hours
-        low:
-          type: string
-          description: Lowest matched price within the last 24 hours
+          example: '328335.5075'
+          description: Base ask price
         mid:
           type: string
-          description: Mid price between ask and bid
-    MarketChartRecord:
-      type: object
-      example:
-      - timestamp: 1643038200000
-        price: '317258.03'
-      description: Object with the data point to plot.
-      properties:
-        timestamp:
-          type: integer
-          format: int64
-          example: 1643037000000
-          description: 'Timestamp representing the number of milliseconds since
-
-            [UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time)
-
-            '
-        price:
+          example: '330000.0000'
+          description: Mid price
+        baseBid:
           type: string
-          example: '317258.03'
-          description: 'Unitary price for the cryptocurrency in COUNTER
-
-            '
+          example: '330303.5525'
+          description: Base bid price
+        bid:
+          type: string
+          example: '313788.374875'
+          description: Bid price
+        cryptoCurrency:
+          type: string
+          description: Crypto currency code
+          example: BTC
+        currency:
+          type: string
+          description: Fiat currency
+          example: SEK
     Market24hTickerData:
       type: object
       properties:
@@ -561,76 +584,6 @@ components:
         priceChangePercent:
           type: string
           description: The percentage price change over the last 24 hours.
-    TradingPair:
-      type: object
-      properties:
-        pair:
-          type: string
-          description: Trading pair symbol using underscore as delimiter.
-          example: BTC_USDC
-        baseDecimals:
-          type: integer
-          description: How many decimals base currency uses for trading
-          example: 8
-        counterDecimals:
-          type: integer
-          description: How many decimals counter currency uses for trading
-          example: 5
-        status:
-          type: string
-          description: 'Availability of our services related to this trading pair. It can be:
-
-            - `active`: All services are working and available
-
-            - `inactive`: Some or all services associated with this trading pair are temporarily unavailable.
-
-            - `deprecated`: We don''t support trading with this cryptocurrency anymore.
-
-            '
-          example: active
-        availableActions:
-          type: array
-          example:
-          - buy
-          - sell
-          description: Lists the type of operations you can make using this trading pair.
-          items:
-            type: string
-        minimumOrder:
-          type: object
-          description: Minimum order amount for pair
-          example:
-            currency: BTC
-            amount: '0.0005'
-          $ref: '#/components/schemas/CurrencyAmount'
-    FiatSymbol:
-      type: object
-      properties:
-        currency:
-          type: string
-          description: Currency code ISO 4217
-          example: SEK
-        minorAmountDecimals:
-          type: integer
-          description: Number of decimal places to represent the smallest unit for this currency
-          example: 2
-        displayName:
-          type: string
-          description: Currency name
-          example: Kronor
-        status:
-          type: string
-          description: 'Availability of our services related to this currency. It can be:
-
-
-            - `active`: All services are working and available
-
-            - `inactive`: Some or all services associated with this currency are temporarily unavailable.
-
-            - `deprecated`: We don''t support trading with this currency anymore.
-
-            '
-          example: active
     CryptoSymbol:
       type: object
       properties:
@@ -688,6 +641,73 @@ components:
               type: string
               description: Dark mode color code (e.g., for UI display).
               example: '#000000'
+    OhlcvData:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp for the candlestick.
+        open:
+          type: string
+          description: Opening price.
+        high:
+          type: string
+          description: Highest price during the timeframe.
+        low:
+          type: string
+          description: Lowest price during the timeframe.
+        close:
+          type: string
+          description: Closing price.
+        volume:
+          type: string
+          description: Volume traded during the timeframe.
+        ticks:
+          type: integer
+          description: Number of trades executed in the timeframe.
+    TradingPair:
+      type: object
+      properties:
+        pair:
+          type: string
+          description: Trading pair symbol using underscore as delimiter.
+          example: BTC_USDC
+        baseDecimals:
+          type: integer
+          description: How many decimals base currency uses for trading
+          example: 8
+        counterDecimals:
+          type: integer
+          description: How many decimals counter currency uses for trading
+          example: 5
+        status:
+          type: string
+          description: 'Availability of our services related to this trading pair. It can be:
+
+            - `active`: All services are working and available
+
+            - `inactive`: Some or all services associated with this trading pair are temporarily unavailable.
+
+            - `deprecated`: We don''t support trading with this cryptocurrency anymore.
+
+            '
+          example: active
+        availableActions:
+          type: array
+          example:
+          - buy
+          - sell
+          description: Lists the type of operations you can make using this trading pair.
+          items:
+            type: string
+        minimumOrder:
+          type: object
+          description: Minimum order amount for pair
+          example:
+            currency: BTC
+            amount: '0.0005'
+          $ref: '#/components/schemas/CurrencyAmount'
     CurrencyAmount:
       type: object
       required:
@@ -702,140 +722,120 @@ components:
           type: string
           description: Value of the currency with the number of decimals as defined in the Market API.
           example: '510.00'
-    CurrencyRate:
+    MarketChartRecord:
+      type: object
+      example:
+      - timestamp: 1643038200000
+        price: '317258.03'
+      description: Object with the data point to plot.
+      properties:
+        timestamp:
+          type: integer
+          format: int64
+          example: 1643037000000
+          description: 'Timestamp representing the number of milliseconds since
+
+            [UNIX Epoch Time](https://en.wikipedia.org/wiki/Unix_time)
+
+            '
+        price:
+          type: string
+          example: '317258.03'
+          description: 'Unitary price for the cryptocurrency in COUNTER
+
+            '
+    Ticker:
       type: object
       properties:
-        ask:
+        pair:
           type: string
-          example: '343110.6053375'
-          description: Ask price
-        baseAsk:
+          description: Trade pair
+          example: BTC_SEK
+        timestamp:
           type: string
-          example: '328335.5075'
-          description: Base ask price
+          format: date-time
+          description: The timestamp at which the ticker was calculated
+        quoteVolume:
+          type: string
+          description: Volume within the last 24 hours in the quote currency
+        baseVolume:
+          type: string
+          description: Volume within the last 24 hours in the base currency
+        lastPrice:
+          type: string
+          description: Price of the last trade
+        bestBid:
+          type: string
+          description: Price of the current best bid
+        bestAsk:
+          type: string
+          description: Price of the current best ask
+        high:
+          type: string
+          description: Highest matched price within the last 24 hours
+        low:
+          type: string
+          description: Lowest matched price within the last 24 hours
         mid:
           type: string
-          example: '330000.0000'
-          description: Mid price
-        baseBid:
-          type: string
-          example: '330303.5525'
-          description: Base bid price
-        bid:
-          type: string
-          example: '313788.374875'
-          description: Bid price
-        cryptoCurrency:
-          type: string
-          description: Crypto currency code
-          example: BTC
+          description: Mid price between ask and bid
+    FiatSymbol:
+      type: object
+      properties:
         currency:
           type: string
-          description: Fiat currency
+          description: Currency code ISO 4217
           example: SEK
-  responses:
-    MarketChartData:
-      description: Market chart data points
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/MarketChartRecord'
-    OrderBook:
-      description: Order Book
-      content:
-        application/json:
-          schema:
-            title: OrderBook
-            type: object
-            properties:
-              pair:
-                type: string
-                description: Trade pair
-                example: BTC_USDC
-              timestamp:
-                type: string
-                format: date-time
-                description: The timestamp at which the order book was retrieved
-              bids:
-                type: array
-                description: List of bid orders
-                items:
-                  type: object
-                  properties:
-                    price:
-                      type: string
-                      description: Bid price
-                      example: '49905.65'
-                    amount:
-                      type: string
-                      description: Amount available at this bid price
-                      example: '5.31251274'
-              asks:
-                type: array
-                description: List of ask orders
-                items:
-                  type: object
-                  properties:
-                    price:
-                      type: string
-                      description: Ask price
-                      example: '50653.80'
-                    amount:
-                      type: string
-                      description: Amount available at this ask price
-                      example: '0.45186957'
-    BadRequest:
-      description: The data you have sent is not valid
-      content:
-        application/json:
-          schema:
-            title: BadRequestResponse
-            type: object
-            properties:
-              message:
-                type: string
-                description: Description of the error
-                example: You cannot place an order higher than your buy limit of 500 SEK
-              status:
-                type: integer
-                description: Status code number
-                example: 400
-              code:
-                type: string
-                description: Short string identifying the error
-                example: BUY_LIMIT_EXCEEDED
-    PairPerformance:
-      description: Market best performers
-      content:
-        application/json:
-          schema:
-            title: PairPerformance
-            type: object
-            properties:
-              data:
-                type: array
-                items:
-                  title: PairPerformanceData
-                  type: object
-                  properties:
-                    pair:
-                      type: string
-                      description: Trade pair
-                      example: BTC_SEK
-                    price:
-                      type: string
-                      description: Price on pair in counter
-                      example: '1234.56'
-                    percentageChange:
-                      type: string
-                      description: Change in percentage (in decimal format)
-                      example: '0.1234'
-                    absoluteChange:
-                      type: string
-                      description: Change in counter
-                      example: '1234.56'
+        minorAmountDecimals:
+          type: integer
+          description: Number of decimal places to represent the smallest unit for this currency
+          example: 2
+        displayName:
+          type: string
+          description: Currency name
+          example: Kronor
+        status:
+          type: string
+          description: 'Availability of our services related to this currency. It can be:
+
+
+            - `active`: All services are working and available
+
+            - `inactive`: Some or all services associated with this currency are temporarily unavailable.
+
+            - `deprecated`: We don''t support trading with this currency anymore.
+
+            '
+          example: active
+    HistoricalOhlcvDataResponse:
+      type: object
+      properties:
+        ts:
+          type: string
+          format: date-time
+          description: Timestamp when the response was generated.
+        resolution:
+          type: string
+          enum:
+          - 1m
+          - 5m
+          - 15m
+          - 1h
+          - 4h
+          - 1d
+          - 1w
+          - 1mo
+          description: The requested timeframe resolution.
+        pair:
+          type: string
+          description: Asset pair of order
+        inverted:
+          type: boolean
+          description: Indicates whether the received data corresponds to the inverted asset pair.
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OhlcvData'
   securitySchemes:
     OAuth2:
       type: oauth2

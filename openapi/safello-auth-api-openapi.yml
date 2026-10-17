@@ -510,25 +510,6 @@ components:
           required: false
           description: Specific organization number to get the corporate account connected to the bank id (if it exists)
           type: string
-    OAuth2Error:
-      type: object
-      title: TokenError
-      properties:
-        error:
-          description: Type of error.
-          type: string
-        error_description:
-          description: Additional information for understanding the error that occurred.
-          type: string
-        error_uri:
-          description: A URI to a web page with information about the error.
-          type: string
-        bank_id_qr_data:
-          description: Bank id qr code data for starting bank id
-          type: string
-        bank_id_hint:
-          description: The current progress for bank id
-          type: string
     OAuth2TokenRequest:
       type: object
       title: OAuth2TokenRequest
@@ -557,14 +538,26 @@ components:
           description: The scope of the access request
           type: string
           example: read write
+    OAuth2Error:
+      type: object
+      title: TokenError
+      properties:
+        error:
+          description: Type of error.
+          type: string
+        error_description:
+          description: Additional information for understanding the error that occurred.
+          type: string
+        error_uri:
+          description: A URI to a web page with information about the error.
+          type: string
+        bank_id_qr_data:
+          description: Bank id qr code data for starting bank id
+          type: string
+        bank_id_hint:
+          description: The current progress for bank id
+          type: string
   examples:
-    OAuth2UnsupportedGrantType:
-      summary: Unsupported grant type
-      description: The authorization grant type is not supported by the authorization server.
-      value:
-        error: unsupported_grant_type
-        error_description: Grant type not supported by server
-        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
     OAuth2InvalidGrant:
       summary: Authorization grant invalid
       description: 'The provided authorization grant or refresh token is
@@ -576,13 +569,13 @@ components:
         error: invalid_grant
         error_description: Authorization grant invalid
         error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
-    OAuth2InvalidClient:
-      summary: Invalid client
-      description: Client authentication failed.
+    OAuth2InvalidRequest:
+      summary: Invalid request
+      description: "The request is missing a required parameter, includes an \nunsupported parameter value (other than grant type), \nrepeats a parameter, includes multiple credentials, \nutilizes more than one mechanism for authenticating the \nclient, or is otherwise malformed.\n"
       value:
-        error: invalid_client
-        error_description: Authentication failed.
-        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1
+        error: invalid_request
+        error_description: Missing a required parameter
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
     OAuth2UnauthorizedClient:
       summary: Client Unauthorized
       description: 'The authenticated client is not authorized to use this
@@ -592,13 +585,20 @@ components:
         '
       value:
         error: unauthorized_client
-    OAuth2InvalidRequest:
-      summary: Invalid request
-      description: "The request is missing a required parameter, includes an \nunsupported parameter value (other than grant type), \nrepeats a parameter, includes multiple credentials, \nutilizes more than one mechanism for authenticating the \nclient, or is otherwise malformed.\n"
+    OAuth2UnsupportedGrantType:
+      summary: Unsupported grant type
+      description: The authorization grant type is not supported by the authorization server.
       value:
-        error: invalid_request
-        error_description: Missing a required parameter
+        error: unsupported_grant_type
+        error_description: Grant type not supported by server
         error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
+    OAuth2InvalidClient:
+      summary: Invalid client
+      description: Client authentication failed.
+      value:
+        error: invalid_client
+        error_description: Authentication failed.
+        error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1
     OAuth2InvalidScope:
       summary: Scope invalid
       description: The requested scope is invalid, unknown, malformed, or exceeds the scope granted by the resource owner.
@@ -606,15 +606,6 @@ components:
         error: invalid_scope
         error_description: Invalid scope
         error_uri: https://datatracker.ietf.org/doc/html/rfc6749#section-3.3
-  headers:
-    Cache-Control:
-      schema:
-        type: string
-      example: no-store
-    Pragma:
-      schema:
-        type: string
-      example: no-cache
   parameters:
     userAgentParam:
       in: header
@@ -632,6 +623,15 @@ components:
         type: string
       required: true
       example: 192.168.0.1
+  headers:
+    Pragma:
+      schema:
+        type: string
+      example: no-cache
+    Cache-Control:
+      schema:
+        type: string
+      example: no-store
   securitySchemes:
     AccessToken:
       type: apiKey
